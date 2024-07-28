@@ -23,15 +23,17 @@ Dependencies can be installed by running `npm install`. Please let the team know
     - incl button for posting new plant records
   - New Plant Form Component
   - Plant Component
+- Build Folder structure
 
 ### June:
 
 - ~~Build Front-End Repo~~
 - Build out User's Dashboard
-  - Header
+  - Header Component
     - AI text field form
   - Plants Section Component
   - New Plant Form Component
+- ~~Build Folder structure~~
 
 ### Diana:
 
