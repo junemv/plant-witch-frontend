@@ -19,7 +19,7 @@ function App() {
   // - Build function for deleting plant record
   // - Build function for editing plant record
   // var selectedUser = 1;
-  const [plantsData, setPlants] = useState([]);
+  const [plantsData, setPlantsData] = useState([]);
 
   const createNewPlantForSelectedUser = (data) => {
     axios
@@ -39,7 +39,6 @@ function App() {
         {/* What lives here? */}
         {/* - Header Component */}
         <Header />
-        <h1>Hello</h1>
       </header>
       <body>
         {/* What lives here? */}

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Plant = () => {
+const Plant = ({id, name, description, lastWatered, waterFrequency, lastRepoted, repotFrequency}) => {
   return (
     <div>
       <h1>Plant</h1>
