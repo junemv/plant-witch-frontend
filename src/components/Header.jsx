@@ -1,13 +1,11 @@
 import React from "react";
 import Dropdown from "./Dropdown";
 
+// Component includes a dropdown menu that allows the user to select a user from a list of demo users
 const Header = (props) => {
 	const demoUserData = props.demoUserData;
 	const setActiveUserCallbackFunction = props.setActiveUserCallbackFunction;
 	const activeUser = props.activeUser;
-	// TODO - 
-	// - Welcome message {first_name}
-  // - Hamburger menu for swapping pages? Can be refactored for user info editing later
 
   return (
     <div>

@@ -4,28 +4,30 @@ import Header from './components/Header';
 import PlantBoard from './components/plant_components/PlantBoard';
 import AIWitch from './components/witch_components/AIWitch';
 
+import axios from 'axios';
+
 export const UserContext = createContext(null);
 
-const userDataTemp = [
-  {
-    id: 1,
-    firstName: "June",
-    LastName: "Valentino",
-    email: "junemvalentino@gmail.com"
-  },
-  {
-    id: 2,
-    firstName: "Natasha",
-    LastName: "Zakharova",
-    email: "natashaz@gmail.com"
-  },
-  {
-    id: 3,
-    firstName: "Diana",
-    LastName: "M",
-    email: "dianam@gmail.com"
-  }
-]
+// const userDataTemp = [
+//   {
+//     id: 1,
+//     firstName: "June",
+//     LastName: "Valentino",
+//     email: "junemvalentino@gmail.com"
+//   },
+//   {
+//     id: 2,
+//     firstName: "Natasha",
+//     LastName: "Zakharova",
+//     email: "natashaz@gmail.com"
+//   },
+//   {
+//     id: 3,
+//     firstName: "Diana",
+//     LastName: "M",
+//     email: "dianam@gmail.com"
+//   }
+// ]
 
 function App() {
   const URL = process.env.REACT_APP_BACKEND_URL;
@@ -37,24 +39,27 @@ function App() {
 
 
   // USER FUNCTIONALITY:
-  // - Get all users - deprecate when userauth is added
+  // - Get all users - TODO: deprecate when userauth is added
   const fetchAllUsers = () => {
-    try {
-      // const response = await fetch(`${URL}/users/all`);
-      // const data = await response.json();
-      const data = userDataTemp;
-      setDemoUserData(data);
-    } catch (error) {
-      console.error(error);
-    }
+    axios
+      .get(`${URL}/user/all`)
+      .then((res) => {
+        setDemoUserData(res.data)
+        console.log("res.data", res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+    })
   }
 
   useEffect(fetchAllUsers, []);
 
+  // PLANT FUNCTIONALITY:
+
 
   // TODO -
-  // 1. Start with building out Active User functionality
-  // 2. Start with PlantBoard Component
+  // 1. Start with building out Active User functionality x
+  // 2. Build out PlantBoard Component
   // 3. Build out Plant Component
 
   // Adrian Notes:
@@ -62,7 +67,7 @@ function App() {
 
   // Rough TODO Items:
   // - Build AI Functionality
-  // - Build Logic for switching between users by ID
+  // - Build Logic for switching between users by ID x
   // - Build Logic for 
   //    - grabbing plant records by User ID
   //    - storing plant data in Plant components
@@ -76,8 +81,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {/* What lives here? */}
-        {/* - Header Component */}
+        {/* Header Component */}
         <Header 
         demoUserData={demoUserData}
         setActiveUserCallbackFunction={setActiveUser}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+// for demo puropses, this dropdown menu is used to set the active user
 function Dropdown(props) {
 	const demoUserData = props.demoUserData;
 	const setActiveUser = props.setActiveUserCallbackFunction;
@@ -7,6 +8,7 @@ function Dropdown(props) {
   const [isOpen, setIsOpen] = useState(false);
   const options = [];
 
+	// storing index in num and user data in user
 	if (demoUserData) {
 		for (const [num, user] of demoUserData.entries()) {
 			options.push([user.firstName, num]);
@@ -15,7 +17,7 @@ function Dropdown(props) {
 
   return (
     <div>
-      <button onClick={() => setIsOpen(!isOpen)}>Select an option</button>
+      <button onClick={() => setIsOpen(!isOpen)}>Select User</button>
       {isOpen && (
         <div>
           {options.map(option => (
