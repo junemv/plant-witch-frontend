@@ -2,6 +2,10 @@ import "./App.css";
 import Header from "./components/Header";
 import PlantBoard from "./components/plant_components/PlantBoard";
 import AIWitch from "./components/witch_components/AIWitch";
+import NewPlantForm from "./components/plant_components/NewPlantForm";
+import { useEffect, useState } from "react";
+import axios from "axios";
+/* eslint-env jest */
 
 function App() {
   // TODO -
@@ -14,14 +18,15 @@ function App() {
   // - Build form for posting new plant record
   // - Build function for deleting plant record
   // - Build function for editing plant record
-  selectedUser = 1;
+  // var selectedUser = 1;
   const [plantsData, setPlants] = useState([]);
 
-  const createNewPlantForSelectedUsert = (data) => {
+  const createNewPlantForSelectedUser = (data) => {
     axios
-      .post(`https://localhost//plants/users/${selectedUser}`, data)
+      .post(`https://localhost:8080/api/v1/plants/users/1}`, data)
       .then((response) => {
-        getPlantsForUser(selectedUser);
+        // getPlantsForUser(selectedUser);
+        console.log("It worked!");
       })
       .catch((error) => {
         console.log(error, "create plant failed.");
@@ -34,6 +39,7 @@ function App() {
         {/* What lives here? */}
         {/* - Header Component */}
         <Header />
+        <h1>Hello</h1>
       </header>
       <body>
         {/* What lives here? */}
@@ -41,7 +47,7 @@ function App() {
         <AIWitch />
         {/* - PlantBoard component */}
         <PlantBoard />
-        <NewPlantForm handleFormSubmission={createNewPlantForSelectedUsert} />
+        <NewPlantForm handleFormSubmission={createNewPlantForSelectedUser} />
       </body>
     </div>
   );

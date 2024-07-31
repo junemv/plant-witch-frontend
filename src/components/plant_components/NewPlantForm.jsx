@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import "./NewPlantForm.css"
+/* eslint-env jest */
+
 
 
 const PlantForm = (props) => {
@@ -9,7 +11,7 @@ const PlantForm = (props) => {
   const [plants, setPlants] = useState(defaultPlant);
 
   return (
-    <form onSubmit={handleFormSubmission} className="card-submit-form">
+    <form onSubmit={handleFormSubmission} className="plant-submit-form">
       <label>Name</label>
       <input
         className="name-input"
@@ -79,20 +81,20 @@ const PlantForm = (props) => {
     const domNode = event.target;
     const message = domNode.name;
     const value = domNode.value;
-    const newCards = { ...cards };
-    newCards[message] = value;
-    setCards(newCards);
+    const newPlants = { ...plants };
+    newPlants[message] = value;
+    setPlants(newPlants);
   };
 
   const handleFormSubmission = (event) => {
     event.preventDefault();
-    props.handleFormSubmission(cards);
-    setCards(defaultCard);
+    props.handleFormSubmission(plants);
+    setPlants(defaultPlant);
   };
 
 
 
-CardForm.propTypes = {
+  PlantForm.propTypes = {
   handleFormSubmission: PropTypes.func.isRequired,
 };
 
