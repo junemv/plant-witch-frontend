@@ -1,138 +1,36 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import "./NewPlantForm.css"
-import Autosuggest from 'react-autosuggest';
-import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
-import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
-import axios from "axios";
 
 /* eslint-env jest */
 
-const getListOfAllPlants = async () => {
-  try {
-    const response = await axios.get(`http://127.0.0.1:8080/api/v1/plants/species-list`);
-    console.log("HEre",response.data)
-
-    return response[0];
-  } catch (error){
-    console.log("Error fetching all plants")
-    return [];
-  }
-
-};
-
-// const plantsList = [
-//   {
-//     name: 'Aloe Vera',
-//     description: 'A succulent plant species of the genus Aloe.',
-//   },
-//   {
-//     name: 'Spider Plant',
-//     description: 'An evergreen perennial with long, thin leaves.',
-//   },
-//   {
-//     name: 'Snake Plant',
-//     description: 'A species of flowering plant in the family Asparagaceae.',
-//   }
-// ];
-
-function escapeRegexCharacters(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function getSuggestions(value, plantsList) {
-  const escapedValue = escapeRegexCharacters(value.trim());
-  
-  if (escapedValue === '') {
-    return [];
-  }
-
-  const regex = new RegExp('\\b' + escapedValue, 'i');
-  
-  return plantsList.filter(plant => regex.test(plant.common_name));
-}
-
-function getSuggestionValue(suggestion) {
-  return suggestion.common_name;
-}
-
-function renderSuggestion(suggestion, { query }) {
-  const suggestionText = suggestion.common_name;
-  const matches = AutosuggestHighlightMatch(suggestionText, query);
-  const parts = AutosuggestHighlightParse(suggestionText, matches);
-
-  return (
-    <span className="suggestion-content">
-      <span className="name">
-        {
-          parts.map((part, index) => {
-            const className = part.highlight ? 'highlight' : null;
-
-            return (
-              <span className={className} key={index}>{part.text}</span>
-            );
-          })
-        }
-      </span>
-    </span>
-  );
-}
-
 const PlantForm = (props) => {
-  const defaultPlantsData = { name: "", description: "", lastWatered: "", waterFrequency: "", lastRepoted: "", repotFrequency: ""};
+  const defaultPlantsData = { name: "", image: "", description: "", waterDate: "", waterInterval: "", repotDate: "", repotInterval: ""};
   const [plantsData, setPlantsData] = useState(defaultPlantsData);
-  const [suggestions, setSuggestions] = useState([]);
-  const [plantsList, setPlantsList] = useState([]);
 
-  useEffect(() => {
-    const fetchPlants = async () => {
-      const plants = await getListOfAllPlants();
-      setPlantsList(plants);
-    };
-    fetchPlants();
-  }, []);
-
-  const onSuggestionsFetchRequested = ({ value }) => {
-    setSuggestions(getSuggestions(value, plantsList));
+  const handleFormInput = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    const newPlantsData = { ...plantsData };
+    newPlantsData[name] = value;
+    setPlantsData(newPlantsData);
   };
 
-  const onSuggestionsClearRequested = () => {
-    setSuggestions([]);
-  };
-
-  const inputProps = {
-    placeholder: "Type a plant name",
-    value: plantsData.name,
-    onChange: (event, { newValue }) => {
-      setPlantsData((prevPlantsData) => ({
-        ...prevPlantsData,
-        name: newValue,
-      }));
-    },
-    name: 'name'
+  const handleFormSubmission = (event) => {
+    event.preventDefault();
+    const { name, waterDate, waterInterval, repotDate, repotInterval } = plantsData;
+    if (name && waterDate && waterInterval > 0 && repotDate && repotInterval > 0) {
+        props.handleFormSubmission(plantsData);
+        setPlantsData(defaultPlantsData);
+    } else {
+        alert('Please fill in all required fields.Water and Repot intervals should be more than 0.');
+    }
   };
 
   return (
     <form onSubmit={handleFormSubmission} className="plant-submit-form">
-      <label>Common name</label>
-      <Autosuggest 
-        suggestions={suggestions}
-        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-        onSuggestionsClearRequested={onSuggestionsClearRequested}
-        getSuggestionValue={getSuggestionValue}
-        renderSuggestion={renderSuggestion}
-        inputProps={inputProps}
-        // className="name-input"
-        // type="text"
-        // required
-        // name="commonName"
-        // maxLength={40}
-        // placeholder="Type a plant name"
-        // value={plantsData.commonName}
-        // onChange={handleFormInput}
-      />
-      {/* <label>Nickname</label>
+      <label>Name</label>
       <input
         className="name-input"
         type="text"
@@ -142,7 +40,7 @@ const PlantForm = (props) => {
         placeholder="Name"
         value={plantsData.name}
         onChange={handleFormInput}
-      ></input> */}
+      ></input>
       <label>Description</label>
         <input
           className="description-input"
@@ -158,10 +56,9 @@ const PlantForm = (props) => {
           className="lastWatered-input"
           type="date"
           required
-          name="lastWatered"
-          maxLength={40}
+          name="waterDate"
           placeholder="Last watered"
-          value={plantsData.lastWatered}
+          value={plantsData.waterDate}
           onChange={handleFormInput}
       ></input>
       <label>Frequency</label>
@@ -169,10 +66,9 @@ const PlantForm = (props) => {
           className="waterFrequency-input"
           type="number"
           required
-          name="waterFrequency"
-          maxLength={40}
-          placeholder="Water Frequency"
-          value={plantsData.waterFrequency}
+          name="waterInterval"
+          placeholder="Days interval"
+          value={plantsData.waterInterval}
           onChange={handleFormInput}
       ></input>
       <label>Last Repoted</label>
@@ -180,10 +76,9 @@ const PlantForm = (props) => {
           className="lastRepoted-input"
           type="date"
           required
-          name="lastRepoted"
-          maxLength={40}
+          name="repotDate"
           placeholder="Last repoted"
-          value={plantsData.lastRepoted}
+          value={plantsData.repotDate}
           onChange={handleFormInput}
       ></input>
       <label>Frequency</label>
@@ -191,33 +86,15 @@ const PlantForm = (props) => {
           className="repotFrequency-input"
           type="number"
           required
-          name="repotFrequency"
-          maxLength={40}
-          placeholder="Repot Frequency"
-          value={plantsData.repotFrequency}
+          name="repotInterval"
+          placeholder="Days interval"
+          value={plantsData.repotInterval}
           onChange={handleFormInput}
       ></input>
       <input className="button" type="submit" value="Submit" />
     </form>
   );
 }
-
-  const handleFormInput = (event) => {
-    // const domNode = event.target;
-    // const message = domNode.name;
-    // const value = domNode.value;
-    // const newPlantsData = { ...plantsData };
-    // newPlantsData[message] = value;
-    // setPlantsData(newPlantsData);
-  };
-
-  const handleFormSubmission = (event) => {
-    // event.preventDefault();
-    // props.handleFormSubmission(plantsData);
-    // setPlantsData(defaultPlantsData);
-  };
-
-
 
   PlantForm.propTypes = {
   handleFormSubmission: PropTypes.func.isRequired,
