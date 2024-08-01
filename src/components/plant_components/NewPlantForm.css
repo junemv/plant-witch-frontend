@@ -1,0 +1,19 @@
+.plant-submit-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    border-radius: 5px;
+    width: fit-content;
+    max-height: fit-content;
+    background-color: #8ec0c7;;
+    box-shadow: 7px 7px 10px #2134389f;
+
+}
+
+    .input-container {
+    }
+
+    .label {
+        margin-right: 30px;
+    }

@@ -30,6 +30,7 @@ const PlantForm = (props) => {
 
   return (
     <form onSubmit={handleFormSubmission} className="plant-submit-form">
+      <div className="input-container">
       <label>Name</label>
       <input
         className="name-input"
@@ -41,6 +42,8 @@ const PlantForm = (props) => {
         value={plantsData.name}
         onChange={handleFormInput}
       ></input>
+      </div>
+      <div className="input-container">
       <label>Description</label>
         <input
           className="description-input"
@@ -51,6 +54,8 @@ const PlantForm = (props) => {
           value={plantsData.description}
           onChange={handleFormInput}
       ></input>
+      </div>
+      <div className="input-container">
       <label>Last Watered</label>
         <input
           className="lastWatered-input"
@@ -61,6 +66,8 @@ const PlantForm = (props) => {
           value={plantsData.waterDate}
           onChange={handleFormInput}
       ></input>
+      </div>
+      <div className="input-container">
       <label>Frequency</label>
         <input
           className="waterFrequency-input"
@@ -71,6 +78,8 @@ const PlantForm = (props) => {
           value={plantsData.waterInterval}
           onChange={handleFormInput}
       ></input>
+      </div>
+      <div className="input-container">
       <label>Last Repoted</label>
       <input
           className="lastRepoted-input"
@@ -81,6 +90,8 @@ const PlantForm = (props) => {
           value={plantsData.repotDate}
           onChange={handleFormInput}
       ></input>
+      </div>
+      <div className="input-container">
       <label>Frequency</label>
         <input
           className="repotFrequency-input"
@@ -91,6 +102,7 @@ const PlantForm = (props) => {
           value={plantsData.repotInterval}
           onChange={handleFormInput}
       ></input>
+      </div>
       <input className="button" type="submit" value="Submit" />
     </form>
   );
