@@ -11,10 +11,10 @@ import axios from "axios";
 
 const getListOfAllPlants = async () => {
   try {
-    const response = await axios.get(`http://127.0.0.1:8080/api/v1/plants/species-list`);
-    console.log("HEre",response.data)
+    const response = await axios.get(`https://perenual.com/api/species-list?key=sk-y6bd66a7fd00b2eb36377`);
+    console.log("HEre",response.data.common_name)
 
-    return response[0];
+    return response.data;
   } catch (error){
     console.log("Error fetching all plants")
     return [];
@@ -49,7 +49,7 @@ function getSuggestions(value, plantsList) {
   }
 
   const regex = new RegExp('\\b' + escapedValue, 'i');
-  
+  console.log("LIST", plantsList)
   return plantsList.filter(plant => regex.test(plant.common_name));
 }
 
@@ -88,13 +88,17 @@ const PlantForm = (props) => {
   useEffect(() => {
     const fetchPlants = async () => {
       const plants = await getListOfAllPlants();
+      // const newPlants = plants
       setPlantsList(plants);
+      console.log("PLANTS LIST", plantsList);
     };
     fetchPlants();
   }, []);
 
   const onSuggestionsFetchRequested = ({ value }) => {
+    
     setSuggestions(getSuggestions(value, plantsList));
+    
   };
 
   const onSuggestionsClearRequested = () => {
