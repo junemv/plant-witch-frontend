@@ -28,15 +28,16 @@ Dependencies can be installed by running `npm install`. Please let the team know
 ### June:
 
 - ~~Build Front-End Repo~~
+- ~~Build Set Active User Functionality~~
 - Build out User's Dashboard
   - Header Component
     - AI text field form
-  - Plants Section Component
-  - New Plant Form Component
+  - ~~Plants Board Component~~
+  - ~~Plant Component~~
 - ~~Build Folder structure~~
 
 ### Diana:
 
 ### Natasha:
 
-- Build Plant Component
+- New Plant Form Component

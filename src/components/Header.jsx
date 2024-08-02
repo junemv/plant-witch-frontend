@@ -6,6 +6,7 @@ const Header = (props) => {
 	const demoUserData = props.demoUserData;
 	const setActiveUserCallbackFunction = props.setActiveUserCallbackFunction;
 	const activeUser = props.activeUser;
+	const fetchAllPlantsByUserIdCallbackFunction = props.fetchAllPlantsByUserIdCallbackFunction;
 
   return (
     <div>
@@ -15,6 +16,7 @@ const Header = (props) => {
 			<Dropdown 
 			demoUserData={demoUserData}
 			setActiveUserCallbackFunction={setActiveUserCallbackFunction}
+			fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserIdCallbackFunction}
 			/>
     </div>
   );

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 function Dropdown(props) {
 	const demoUserData = props.demoUserData;
 	const setActiveUser = props.setActiveUserCallbackFunction;
+	const fetchAllPlantsByUserId = props.fetchAllPlantsByUserIdCallbackFunction;
 
   const [isOpen, setIsOpen] = useState(false);
   const options = [];
@@ -15,13 +16,19 @@ function Dropdown(props) {
 		}
 	}
 
+	// set active user and fetch all plants by user ID
+	const handleUserSelect = (user) => {
+		setActiveUser(user);
+		fetchAllPlantsByUserId(user.id);
+	}
+
   return (
     <div>
       <button onClick={() => setIsOpen(!isOpen)}>Select User</button>
       {isOpen && (
         <div>
           {options.map(option => (
-            <button key={option[0]} onClick={() => setActiveUser(demoUserData[option[1]])}>
+            <button key={option[0]} onClick={() => handleUserSelect(demoUserData[option[1]])}>
               {option[0]}
             </button>
           ))}
