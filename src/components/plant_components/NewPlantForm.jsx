@@ -1,7 +1,8 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import "./NewPlantForm.css"
+import axios from "axios";
+import debounce from "lodash.debounce";
 
 /* eslint-env jest */
 
@@ -9,11 +10,14 @@ const PlantForm = (props) => {
   const defaultPlantsData = { name: "", image: "", description: "", waterDate: "", waterInterval: "", repotDate: "", repotInterval: ""};
   const [plantsData, setPlantsData] = useState(defaultPlantsData);
 
-  const handleFormInput = (event) => {
+  const handleFormInput = async (event) => {
     const name = event.target.name;
     const value = event.target.value;
     const newPlantsData = { ...plantsData };
     newPlantsData[name] = value;
+    if (name === "name") {
+      await debouncedFindImageUrl(value);
+    }
     setPlantsData(newPlantsData);
   };
 
@@ -27,6 +31,23 @@ const PlantForm = (props) => {
         alert('Please fill in all required fields.Water and Repot intervals should be more than 0.');
     }
   };
+
+  const findImageUrl = async (plantName) => {
+    try {
+      const response = await axios.get(`https://perenual.com/api/species-list?key=sk-FByX66acedc92197c6409&q=${plantName}`);
+      const plantDetails = response.data.data[0];
+      const imageURL = plantDetails.default_image.medium_url;
+      // console.log("Plant", plantDetails.common_name);
+      console.log("IM HERE 2", imageURL);;
+      setPlantsData((prevData) => ({ ...prevData, image: imageURL }));
+      
+      } catch (error) {
+        console.error("Error fetching plants data:", error);
+    };
+  };
+
+  const debouncedFindImageUrl = useCallback(debounce(findImageUrl, 5000), []);
+
 
   return (
     <form onSubmit={handleFormSubmission} className="plant-submit-form">

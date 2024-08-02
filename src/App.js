@@ -79,7 +79,7 @@ function App() {
 
   const createNewPlantForSelectedUser = (data) => {
     axios
-      .post(`${URL}/plants/users/1`, data)
+      .post(`${URL}/api/v1/plants/users/1`, data)
       .then((response) => {
         // getPlantsForUser(activeUser.id);
         console.log("It worked!");
