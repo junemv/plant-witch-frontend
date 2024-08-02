@@ -15,8 +15,9 @@ const Plant = (props) => {
 
   // callback functions
   const deletePlant = props.deletePlantCallbackFunction; // TODO - implement with edit and delete functionality
-  const updatePlantWateredOrRepotted = props.updatePlantWateredOrRepottedCallbackFunction;
   const updatePlant = props.updatePlantCallbackFunction;
+  const updatePlantWateredOrRepotted = props.updatePlantWateredOrRepottedCallbackFunction;
+
 
   const [editMode, setEditMode] = useState(false);
   const [updatedPlantFormFields, setUpdatedPlantFormFields] = useState({
@@ -48,7 +49,6 @@ const Plant = (props) => {
     })
   }
 
-  // TODO - debug why onSubmit is not working - Plant isn't being updated, edit mode isn't toggling back
   const onSubmit = (e) => {
     console.log("onSubmit")
     e.preventDefault();
