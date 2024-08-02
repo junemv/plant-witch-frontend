@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 
+// TODO - uncmment commonName in props once implemented
 const Plant = (props) => {
   // props
   const key = props.key;
   const id = props.id;
   const name = props.name;
+  // const commonName = props.commonName;
   const image = props.image;
   const description = props.description;
   const waterDate = props.waterDate;
@@ -18,16 +20,19 @@ const Plant = (props) => {
   const updatePlant = props.updatePlantCallbackFunction;
   const updatePlantWateredOrRepotted = props.updatePlantWateredOrRepottedCallbackFunction;
 
-
+  // state variables
   const [editMode, setEditMode] = useState(false);
   const [updatedPlantFormFields, setUpdatedPlantFormFields] = useState({
     name: name,
     description: description
   });
 
+  // Switches between edit and view modes
   const toggleEditMode = () => {
     setEditMode(!editMode);
   }
+
+  // event handler for deleting plants
   const handleDelete = (id) => {
     if (window.confirm(`Are you sure you want to delete ${name}?`) === true) {
       deletePlant(id);
@@ -46,6 +51,13 @@ const Plant = (props) => {
     setUpdatedPlantFormFields({
       ...updatedPlantFormFields,
       description: e.target.value
+    })
+  }
+
+  const onPlantCommonNameChange = (e) => {
+    setUpdatedPlantFormFields({
+      ...updatedPlantFormFields,
+      commonName: e.target.value
     })
   }
 
@@ -68,7 +80,9 @@ const Plant = (props) => {
         <img src={image} alt={`${name} pic`} />
         { !editMode && (
           <div>
-            <h2>Name: {name}</h2>
+            <h2>Nickname: {name}</h2>
+            {/* TODO - uncomment Common Name once implemented */}
+            {/* <h3>Common Name: {commonName}</h3> */}
             <p>Description: {description}</p>
           </div>
         )}
@@ -79,17 +93,28 @@ const Plant = (props) => {
                 Name:
                 <input name="name"
                 value={updatedPlantFormFields.name}
-                placeholder="Your plant's name..." 
+                placeholder="Mr. Planty McPlantface, Kevin..." 
                 onChange={onPlantNameChange}
                 />
               </h2>
             </div>
+            {/* TODO - uncomment once implemented in backend */}
+            {/* <div>
+              <h2>
+                Common Name:
+                <input name="common-name"
+                value={updatedPlantFormFields.commonName}
+                placeholder="Snake Plant, Monstera Deliciosa..." 
+                onChange={onPlantNameChange}
+                />
+              </h2>
+            </div> */}
             <div>
               <p>
                 Description:
                 <input name="description"
                 value={updatedPlantFormFields.description}
-                placeholder="Describe your plant..." 
+                placeholder="The happy plant by the window..." 
                 onChange={onPlantDescriptionChange}
                 />
               </p>

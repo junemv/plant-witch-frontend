@@ -173,19 +173,6 @@ function App() {
     })
   }
 
-
-  // TODO -
-
-  // Adrian Notes:
-  // > State variables should live in app and be passed down.
-
-  // Rough TODO Items:
-  // - Build AI Functionality
-  // - Build form for posting new plant record
-  // - Build function for editing plant record
-
-
-
   return (
     <div className="App">
       <header className="App-header">
@@ -197,20 +184,21 @@ function App() {
         fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserId}
         />
       </header>
-      <div className="body">
+      { activeUser.id && (
+        <div className="body">
         {/* - AI Component */}
         <AIWitch />
         {/* - PlantBoard component */}
         <PlantBoard 
         activeUsersPlants={activeUsersPlants}
         plantWateringAndRepottingIntervals={plantWateringAndRepottingIntervals}
-        fetchPlantByIdCallbackFunction={fetchPlantById}
         deletePlantCallbackFunction={deletePlant}
         updatePlantWateredOrRepottedCallbackFunction={updatePlantWateredOrRepotted}
         updatePlantCallbackFunction={updatePlant}
         createNewPlantForSelectedUserCallbackFunction={createNewPlantForSelectedUser}
         />
       </div>
+      )}
     </div>
   );
 }

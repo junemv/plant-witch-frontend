@@ -7,7 +7,6 @@ const PlantBoard = (props) => {
   const plantWateringAndRepottingIntervals= props.plantWateringAndRepottingIntervals
 
   // callback functions
-  const fetchPlantById = props.fetchPlantByIdCallbackFunction;
   const deletePlantCallbackFunction = props.deletePlantCallbackFunction;
   const updatePlantWateredOrRepottedCallbackFunction = props.updatePlantWateredOrRepottedCallbackFunction;
   const updatePlantCallbackFunction = props.updatePlantCallbackFunction;
@@ -16,7 +15,8 @@ const PlantBoard = (props) => {
   // state variables
   const [createPlant, setCreatePlant] = useState(false);
 
-  // TODO - 
+  // TODO - uncomment commonName prop once implemented in backend
+  // Loop builds list of Plant components using active user's Plant state variable 
   const activeUsersPlantComponents = []
   if (activeUsersPlants) {
     for (const plant of activeUsersPlants) {
@@ -25,6 +25,7 @@ const PlantBoard = (props) => {
           key={plant.id}
           id={plant.id}
           name={plant.name}
+          // commonName={plant.commonName}
           image={plant.image}
           description={plant.description}
           waterDate={plant.waterDate}
@@ -40,6 +41,7 @@ const PlantBoard = (props) => {
     }
   }
 
+  // Toggle create plant form
   const toggleCreatePlant = () => {
     setCreatePlant(!createPlant);
   }
@@ -47,11 +49,13 @@ const PlantBoard = (props) => {
 
   return (
     <div>
-      <h1>Plant Board</h1>
+      <h1>My Plants</h1>
+      {/* Plant Creation Form */}
       <button onClick={()=>{toggleCreatePlant()}}>Create Plant</button>
       {createPlant && <NewPlantForm 
         createNewPlantForSelectedUserCallbackFunction={createNewPlantForSelectedUserCallbackFunction}
       />}
+      {/* Active User's Plant List */}
       <ul>{activeUsersPlantComponents}</ul>
     </div>
   );
