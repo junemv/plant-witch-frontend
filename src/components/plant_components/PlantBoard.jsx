@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Plant from './Plant';
+import NewPlantForm from './NewPlantForm';
 
 const PlantBoard = (props) => {
   const activeUsersPlants = props.activeUsersPlants;
@@ -10,6 +11,10 @@ const PlantBoard = (props) => {
   const deletePlantCallbackFunction = props.deletePlantCallbackFunction;
   const updatePlantWateredOrRepottedCallbackFunction = props.updatePlantWateredOrRepottedCallbackFunction;
   const updatePlantCallbackFunction = props.updatePlantCallbackFunction;
+  const createNewPlantForSelectedUserCallbackFunction = props.createNewPlantForSelectedUserCallbackFunction;
+
+  // state variables
+  const [createPlant, setCreatePlant] = useState(false);
 
   // TODO - 
   const activeUsersPlantComponents = []
@@ -35,10 +40,18 @@ const PlantBoard = (props) => {
     }
   }
 
+  const toggleCreatePlant = () => {
+    setCreatePlant(!createPlant);
+  }
+
 
   return (
     <div>
       <h1>Plant Board</h1>
+      <button onClick={()=>{toggleCreatePlant()}}>Create Plant</button>
+      {createPlant && <NewPlantForm 
+        createNewPlantForSelectedUserCallbackFunction={createNewPlantForSelectedUserCallbackFunction}
+      />}
       <ul>{activeUsersPlantComponents}</ul>
     </div>
   );

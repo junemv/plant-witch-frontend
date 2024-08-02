@@ -9,27 +9,6 @@ import axios from "axios";
 
 export const UserContext = createContext(null);
 
-// const userDataTemp = [
-//   {
-//     id: 1,
-//     firstName: "June",
-//     LastName: "Valentino",
-//     email: "junemvalentino@gmail.com"
-//   },
-//   {
-//     id: 2,
-//     firstName: "Natasha",
-//     LastName: "Zakharova",
-//     email: "natashaz@gmail.com"
-//   },
-//   {
-//     id: 3,
-//     firstName: "Diana",
-//     LastName: "M",
-//     email: "dianam@gmail.com"
-//   }
-// ]
-
 function App() {
   const URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -87,9 +66,15 @@ function App() {
   // Add new plant
   const createNewPlantForSelectedUser = (data) => {
     axios
-      .post(`${URL}/plants/users/1`, data)
+      .post(`${URL}/api/v1/plants/users/${activeUser.id}`, data)
       .then((response) => {
-        // getPlantsForUser(activeUser.id);
+        const newPlantList = [];
+        for (const plant of activeUsersPlants) {
+          newPlantList.push(plant);
+        }
+        newPlantList.push(data);
+        setActiveUsersPlants(newPlantList);
+        console.log("new plant data", data)
         console.log("It worked!");
       })
       .catch((error) => {
@@ -167,27 +152,25 @@ function App() {
 
   // Delete plant
   const deletePlant = (plantId) => {
-    // TODO - Uncomment once backend route is set up
-    // axios
-    //   .delete(`${URL}/api/v1/plants/${plantId}`)
-    //   .then((res) => {
-    //     console.log("res.data", res.data)
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    // })
-    // TODO - move into .then condition once you have the delete route set up
-    const newPlantList = []
-    let deletedPlantName = "";
-    for (const plant of activeUsersPlants) {
-      if (plant.id !== plantId) {
-        newPlantList.push(plant);
-      } else {
-        deletedPlantName = plant.name;
-      }
-    }
-    setActiveUsersPlants(newPlantList);
-    alert(`Goodbye, ${deletedPlantName} :(`)
+    axios
+      .delete(`${URL}/api/v1/plants/delete/${plantId}`)
+      .then((res) => {
+        console.log("res.data", res.data)
+        const newPlantList = []
+        let deletedPlantName = "";
+        for (const plant of activeUsersPlants) {
+          if (plant.id !== plantId) {
+            newPlantList.push(plant);
+          } else {
+            deletedPlantName = plant.name;
+          }
+        }
+        setActiveUsersPlants(newPlantList);
+        alert(`Goodbye, ${deletedPlantName} :(`)
+      })
+      .catch((err) => {
+        console.log(err)
+    })
   }
 
 
@@ -225,6 +208,7 @@ function App() {
         deletePlantCallbackFunction={deletePlant}
         updatePlantWateredOrRepottedCallbackFunction={updatePlantWateredOrRepotted}
         updatePlantCallbackFunction={updatePlant}
+        createNewPlantForSelectedUserCallbackFunction={createNewPlantForSelectedUser}
         />
       </div>
     </div>

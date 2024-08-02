@@ -6,6 +6,8 @@ import "./NewPlantForm.css"
 /* eslint-env jest */
 
 const PlantForm = (props) => {
+  const createNewPlantForSelectedUser = props.createNewPlantForSelectedUserCallbackFunction
+  
   const defaultPlantsData = { name: "", image: "", description: "", waterDate: "", waterInterval: "", repotDate: "", repotInterval: ""};
   const [plantsData, setPlantsData] = useState(defaultPlantsData);
 
@@ -21,7 +23,7 @@ const PlantForm = (props) => {
     event.preventDefault();
     const { name, waterDate, waterInterval, repotDate, repotInterval } = plantsData;
     if (name && waterDate && waterInterval > 0 && repotDate && repotInterval > 0) {
-        props.handleFormSubmission(plantsData);
+        createNewPlantForSelectedUser(plantsData);
         setPlantsData(defaultPlantsData);
     } else {
         alert('Please fill in all required fields.Water and Repot intervals should be more than 0.');
