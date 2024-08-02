@@ -9,6 +9,7 @@ const PlantBoard = (props) => {
   const fetchPlantById = props.fetchPlantByIdCallbackFunction;
   const deletePlantCallbackFunction = props.deletePlantCallbackFunction;
   const updatePlantWateredOrRepottedCallbackFunction = props.updatePlantWateredOrRepottedCallbackFunction;
+  const updatePlantCallbackFunction = props.updatePlantCallbackFunction;
 
   // TODO - 
   const activeUsersPlantComponents = []
@@ -28,6 +29,7 @@ const PlantBoard = (props) => {
           plantWateringAndRepottingIntervals={plantWateringAndRepottingIntervals}
           deletePlantCallbackFunction={deletePlantCallbackFunction}
           updatePlantWateredOrRepottedCallbackFunction={updatePlantWateredOrRepottedCallbackFunction}
+          updatePlantCallbackFunction={updatePlantCallbackFunction}
         />
       )
     }

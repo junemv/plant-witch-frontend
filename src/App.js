@@ -86,8 +86,28 @@ function App() {
   // Add new plant
   // Natasha built this!
   
-  // Edit plant name and description
+  // Update plant name and description
   // TODO - Diana is building backend route
+  const updatePlant = (plantId, updatedPlantData) => {
+    // TODO - Uncomment once backend route is set up
+    // axios
+    //   .patch(`${URL}/api/v1/plants/${plantId}`, updatedPlantData)
+    //   .then((res) => {
+    //     // Frontend plant update logic goes here
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    // })
+    const updatedPlantList = []
+    for (const plant of activeUsersPlants) {
+      if (plant.id === plantId) {
+        plant.name = updatedPlantData.name;
+        plant.description = updatedPlantData.description;
+      }
+      updatedPlantList.push(plant);
+    }
+    setActiveUsersPlants(updatedPlantList);
+  }
 
   // Get Watering and Repotting Interval {daysUntilNextWatering : n, daysUntilNextRepotting : n}
   // TODO - may need to be refactored or deprecated once get all backend route is finished
@@ -136,6 +156,7 @@ function App() {
 
   // Delete plant
   const deletePlant = (plantId) => {
+    // TODO - Uncomment once backend route is set up
     // axios
     //   .delete(`${URL}/api/v1/plants/${plantId}`)
     //   .then((res) => {
@@ -192,6 +213,7 @@ function App() {
         fetchPlantByIdCallbackFunction={fetchPlantById}
         deletePlantCallbackFunction={deletePlant}
         updatePlantWateredOrRepottedCallbackFunction={updatePlantWateredOrRepotted}
+        updatePlantCallbackFunction={updatePlant}
         />
       </div>
     </div>
