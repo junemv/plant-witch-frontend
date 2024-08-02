@@ -1,10 +1,11 @@
-import { createContext, useState, useEffect } from 'react';
-import './App.css';
-import Header from './components/Header';
-import PlantBoard from './components/plant_components/PlantBoard';
-import AIWitch from './components/witch_components/AIWitch';
+import { createContext, useState, useEffect } from "react";
+import "./App.css";
+import Header from "./components/Header";
+import PlantBoard from "./components/plant_components/PlantBoard";
+import AIWitch from "./components/witch_components/AIWitch";
+import NewPlantForm from "./components/plant_components/NewPlantForm";
 
-import axios from 'axios';
+import axios from "axios";
 
 export const UserContext = createContext(null);
 
@@ -84,7 +85,17 @@ function App() {
   }
 
   // Add new plant
-  // Natasha built this!
+  const createNewPlantForSelectedUser = (data) => {
+    axios
+      .post(`${URL}/plants/users/1`, data)
+      .then((response) => {
+        // getPlantsForUser(activeUser.id);
+        console.log("It worked!");
+      })
+      .catch((error) => {
+        console.log(error, "create plant failed.");
+      });
+  };
   
   // Update plant name and description
   // TODO - Diana is building backend route
