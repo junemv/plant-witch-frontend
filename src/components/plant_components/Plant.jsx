@@ -13,7 +13,7 @@ const Plant = (props) => {
   const repotDate = props.repotDate;
   const waterInterval = props.waterInterval;
   const repotInterval = props.repotInterval;
-  const plantWateringAndRepottingIntervals = props.plantWateringAndRepottingIntervals;
+  const plantsWateringAndRepottingSchedule = props.plantsWateringAndRepottingSchedule;
 
   // callback functions
   const deletePlant = props.deletePlantCallbackFunction; // TODO - implement with edit and delete functionality
@@ -62,7 +62,6 @@ const Plant = (props) => {
   }
 
   const onSubmit = (e) => {
-    console.log("onSubmit")
     e.preventDefault();
     updatePlant(id, updatedPlantFormFields);
     toggleEditMode(!editMode);
@@ -129,8 +128,8 @@ const Plant = (props) => {
         <p>Repot Date: {repotDate}</p>
         <p>Water Interval: {waterInterval}</p>
         <p>Repot Interval: {repotInterval}</p> */}
-        {/* <p>Water Me in: {plantWateringAndRepottingIntervals[id].daysUntilNextWatering} days</p>
-        <p>Repot Me in: {plantWateringAndRepottingIntervals[id].daysUntilNextRepotting} days</p> */}
+        <p>Water Me in: {plantsWateringAndRepottingSchedule[id].daysUntilNextWatering} days</p>
+        <p>Repot Me in: {plantsWateringAndRepottingSchedule[id].daysUntilNextRepotting} days</p>
         { !editMode && (
           <button onClick={() => {toggleEditMode()}}>
             Edit Plant

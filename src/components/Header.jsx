@@ -7,6 +7,7 @@ const Header = (props) => {
 	const setActiveUserCallbackFunction = props.setActiveUserCallbackFunction;
 	const activeUser = props.activeUser;
 	const fetchAllPlantsByUserIdCallbackFunction = props.fetchAllPlantsByUserIdCallbackFunction;
+	const fetchWateringAndRepottingScheduleByUserIdCallbackFunction = props.fetchWateringAndRepottingScheduleByUserIdCallbackFunction;
 
   return (
     <div>
@@ -17,6 +18,7 @@ const Header = (props) => {
 			demoUserData={demoUserData}
 			setActiveUserCallbackFunction={setActiveUserCallbackFunction}
 			fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserIdCallbackFunction}
+			fetchWateringAndRepottingScheduleByUserIdCallbackFunction={fetchWateringAndRepottingScheduleByUserIdCallbackFunction}
 			/>
     </div>
   );

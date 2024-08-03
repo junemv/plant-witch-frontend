@@ -18,7 +18,7 @@ function App() {
   const [activeUser, setActiveUser] = useState({firstName: "Guest"});
   const [activeUsersPlants, setActiveUsersPlants] = useState([]);
   // stored by {id: {daysUntilNextWatering: 0, daysUntilNextRepotting: 0}}
-  const [plantWateringAndRepottingIntervals, setPlantWateringAndRepottingIntervals] = useState({});
+  const [plantsWateringAndRepottingSchedule, setPlantsWateringAndRepottingSchedule] = useState({});
 
   // USER FUNCTIONALITY:
   // Get all users - TODO: deprecate when userauth is added
@@ -42,9 +42,6 @@ function App() {
       .get(`${URL}/api/v1/plants/users/${userId}`)
       .then((res) => {
         setActiveUsersPlants(res.data);
-        console.log("res.data", res.data);
-        // createWateringAndRepottingEntry(res.data);
-
       })
       .catch((err) => {
         console.log(err)
@@ -63,19 +60,25 @@ function App() {
     })
   }
 
-  // Add new plant
+  // Add new plant - sets plant to plant list and updates watering and repotting schedule
   const createNewPlantForSelectedUser = (data) => {
     axios
       .post(`${URL}/api/v1/plants/users/${activeUser.id}`, data)
-      .then((response) => {
-        const newPlantList = [];
-        for (const plant of activeUsersPlants) {
-          newPlantList.push(plant);
-        }
-        newPlantList.push(data);
-        setActiveUsersPlants(newPlantList);
-        console.log("new plant data", data)
-        console.log("It worked!");
+      .then((res) => {
+        fetchWateringAndRepottingScheduleByPlant(res.data.id)
+        console.log("plant data", res.data)
+
+        alert(`Welcome, ${res.data.name}!`)
+        // Delay timer included to allow for watering and repotting schedule to be updated
+        setTimeout(() => {
+          const newPlantList = [];
+          for (const plant of activeUsersPlants) {
+            newPlantList.push(plant);
+          }
+          newPlantList.push(res.data);
+
+          setActiveUsersPlants(newPlantList);
+        }, 1000)
       })
       .catch((error) => {
         console.log(error, "create plant failed.");
@@ -105,14 +108,30 @@ function App() {
     setActiveUsersPlants(updatedPlantList);
   }
 
+  // Get all watering and repotting schedules by user ID - shape: {plantId: {wateringDate: n, repottingDate: n}}
+  const fetchWateringAndRepottingScheduleByUserId = (userId) => {
+    axios
+      .get(`${URL}/api/v1/plants/users/${userId}/plants_schedule`)
+      .then((res) => {
+        // console.log("watering and repotting days: ", res.data)
+        setPlantsWateringAndRepottingSchedule(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+    })
+  }
+
   // Get Watering and Repotting Interval {daysUntilNextWatering : n, daysUntilNextRepotting : n}
-  // TODO - may need to be refactored or deprecated once get all backend route is finished
-  const fetchWateringAndRepottingInterval = async (plantId) => {
+  const fetchWateringAndRepottingScheduleByPlant = async (plantId) => {
     await axios 
       .get(`${URL}/api/v1/plants/${plantId}/schedule`)
       .then((res) => {
-        console.log("plant id:", plantId, "res.data:", res.data)
-        return res.data;
+        // console.log("plant id:", plantId, "res.data:", res.data)
+        const newPlantsWateringAndRepottingSchedule = createWateringAndRepottingEntry(plantId);
+        newPlantsWateringAndRepottingSchedule[plantId] = res.data;
+
+        // console.log("new Plant Schedule", newPlantsWateringAndRepottingSchedule)
+        setPlantsWateringAndRepottingSchedule(newPlantsWateringAndRepottingSchedule);
       })
       .catch((err) => {
         console.log(err)
@@ -121,13 +140,13 @@ function App() {
   
   // helper - Set watering and repotting interval by id
   // TODO - may need to be refactored or deprecated once get all backend route is finished
-  const createWateringAndRepottingEntry = (res) => {
-    const wateringAndRepottingEntry = {}
-        for (const plant of res) {
-          wateringAndRepottingEntry[plant.id] = fetchWateringAndRepottingInterval(plant.id);
-        }
-        console.log("THIS IS A WATERING AND REPOTTING ENTRY: ", wateringAndRepottingEntry)
-        setPlantWateringAndRepottingIntervals(wateringAndRepottingEntry);
+  const createWateringAndRepottingEntry = (plantId) => {
+    const newPlantsWateringAndRepottingSchedule = plantsWateringAndRepottingSchedule;
+    newPlantsWateringAndRepottingSchedule[plantId] = {};
+
+    return newPlantsWateringAndRepottingSchedule
+    
+    // setPlantsWateringAndRepottingSchedule(newPlantWateringAndRepottingIntervals);
   }
 
 
@@ -155,7 +174,6 @@ function App() {
     axios
       .delete(`${URL}/api/v1/plants/delete/${plantId}`)
       .then((res) => {
-        console.log("res.data", res.data)
         const newPlantList = []
         let deletedPlantName = "";
         for (const plant of activeUsersPlants) {
@@ -182,6 +200,7 @@ function App() {
         setActiveUserCallbackFunction={setActiveUser}
         activeUser={activeUser}
         fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserId}
+        fetchWateringAndRepottingScheduleByUserIdCallbackFunction={fetchWateringAndRepottingScheduleByUserId}
         />
       </header>
       { activeUser.id && (
@@ -191,7 +210,7 @@ function App() {
         {/* - PlantBoard component */}
         <PlantBoard 
         activeUsersPlants={activeUsersPlants}
-        plantWateringAndRepottingIntervals={plantWateringAndRepottingIntervals}
+        plantsWateringAndRepottingSchedule={plantsWateringAndRepottingSchedule}
         deletePlantCallbackFunction={deletePlant}
         updatePlantWateredOrRepottedCallbackFunction={updatePlantWateredOrRepotted}
         updatePlantCallbackFunction={updatePlant}
