@@ -4,7 +4,7 @@ import NewPlantForm from './NewPlantForm';
 
 const PlantBoard = (props) => {
   const activeUsersPlants = props.activeUsersPlants;
-  const plantWateringAndRepottingIntervals= props.plantWateringAndRepottingIntervals
+  const plantsWateringAndRepottingSchedule= props.plantsWateringAndRepottingSchedule
 
   // callback functions
   const deletePlantCallbackFunction = props.deletePlantCallbackFunction;
@@ -32,7 +32,7 @@ const PlantBoard = (props) => {
           repotDate={plant.repotDate}
           waterInterval={plant.waterInterval}
           repotInterval={plant.repotInterval}
-          plantWateringAndRepottingIntervals={plantWateringAndRepottingIntervals}
+          plantsWateringAndRepottingSchedule={plantsWateringAndRepottingSchedule}
           deletePlantCallbackFunction={deletePlantCallbackFunction}
           updatePlantWateredOrRepottedCallbackFunction={updatePlantWateredOrRepottedCallbackFunction}
           updatePlantCallbackFunction={updatePlantCallbackFunction}
@@ -54,6 +54,7 @@ const PlantBoard = (props) => {
       <button onClick={()=>{toggleCreatePlant()}}>Create Plant</button>
       {createPlant && <NewPlantForm 
         createNewPlantForSelectedUserCallbackFunction={createNewPlantForSelectedUserCallbackFunction}
+        toggleCreatePlantCallbackFunction={toggleCreatePlant}
       />}
       {/* Active User's Plant List */}
       <ul>{activeUsersPlantComponents}</ul>
