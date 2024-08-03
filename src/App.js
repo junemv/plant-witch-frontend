@@ -3,7 +3,6 @@ import "./App.css";
 import Header from "./components/Header";
 import PlantBoard from "./components/plant_components/PlantBoard";
 import AIWitch from "./components/witch_components/AIWitch";
-import NewPlantForm from "./components/plant_components/NewPlantForm";
 
 import axios from "axios";
 
@@ -85,27 +84,26 @@ function App() {
       });
   };
   
-  // Update plant name and description
-  // TODO - Diana is building backend route
+  // Update plant name, common name and description
   const updatePlant = (plantId, updatedPlantData) => {
-    // TODO - Uncomment once backend route is set up
-    // axios
-    //   .patch(`${URL}/api/v1/plants/${plantId}`, updatedPlantData)
-    //   .then((res) => {
-    //     // Frontend plant update logic goes here
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    // })
-    const updatedPlantList = []
-    for (const plant of activeUsersPlants) {
-      if (plant.id === plantId) {
-        plant.name = updatedPlantData.name;
-        plant.description = updatedPlantData.description;
-      }
-      updatedPlantList.push(plant);
-    }
-    setActiveUsersPlants(updatedPlantList);
+    axios
+      .patch(`${URL}/api/v1/plants/updates/${plantId}`, updatedPlantData)
+      .then((res) => {
+        const updatedPlantList = []
+        for (const plant of activeUsersPlants) {
+          if (plant.id === plantId) {
+            plant.name = updatedPlantData.name;
+            plant.description = updatedPlantData.description;
+            // TODO - uncomment once implemented in backend
+            // plant.commonName = updatedPlantData.commonName;
+          }
+          updatedPlantList.push(plant);
+        }
+        setActiveUsersPlants(updatedPlantList);
+      })
+      .catch((err) => {
+        console.log(err)
+    })
   }
 
   // Get all watering and repotting schedules by user ID - shape: {plantId: {wateringDate: n, repottingDate: n}}
@@ -121,7 +119,7 @@ function App() {
     })
   }
 
-  // Get Watering and Repotting Interval {daysUntilNextWatering : n, daysUntilNextRepotting : n}
+  // Get and Set Watering and Repotting Interval - shape: {daysUntilNextWatering : n, daysUntilNextRepotting : n}
   const fetchWateringAndRepottingScheduleByPlant = async (plantId) => {
     await axios 
       .get(`${URL}/api/v1/plants/${plantId}/schedule`)
@@ -138,15 +136,12 @@ function App() {
     })
   }
   
-  // helper - Set watering and repotting interval by id
-  // TODO - may need to be refactored or deprecated once get all backend route is finished
+  // helper - Adds empty dictionary entry for plantId - shape: {plantId: {}}
   const createWateringAndRepottingEntry = (plantId) => {
     const newPlantsWateringAndRepottingSchedule = plantsWateringAndRepottingSchedule;
     newPlantsWateringAndRepottingSchedule[plantId] = {};
 
     return newPlantsWateringAndRepottingSchedule
-    
-    // setPlantsWateringAndRepottingSchedule(newPlantWateringAndRepottingIntervals);
   }
 
 
