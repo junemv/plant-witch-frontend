@@ -9,19 +9,20 @@ const Header = (props) => {
 	const fetchAllPlantsByUserIdCallbackFunction = props.fetchAllPlantsByUserIdCallbackFunction;
 	const fetchWateringAndRepottingScheduleByUserIdCallbackFunction = props.fetchWateringAndRepottingScheduleByUserIdCallbackFunction;
 
-  return (
-    <div>
-      <h1>Header</h1>
-			<h3>Welcome {activeUser.firstName}!
+	return (
+		<div>
+			<h1>Plant Witch</h1>
+			<h3>
+				Welcome {activeUser.firstName}!
 			</h3>
-			<Dropdown 
-			demoUserData={demoUserData}
-			setActiveUserCallbackFunction={setActiveUserCallbackFunction}
-			fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserIdCallbackFunction}
-			fetchWateringAndRepottingScheduleByUserIdCallbackFunction={fetchWateringAndRepottingScheduleByUserIdCallbackFunction}
-			/>
-    </div>
-  );
+				<Dropdown 
+				demoUserData={demoUserData}
+				setActiveUserCallbackFunction={setActiveUserCallbackFunction}
+				fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserIdCallbackFunction}
+				fetchWateringAndRepottingScheduleByUserIdCallbackFunction={fetchWateringAndRepottingScheduleByUserIdCallbackFunction}
+				/>
+		</div>
+	);
 }
 
 export default Header;

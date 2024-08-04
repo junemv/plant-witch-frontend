@@ -187,8 +187,8 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div id="App">
+      <header id="App-header">
         {/* Header Component */}
         <Header 
         demoUserData={demoUserData}
@@ -199,7 +199,7 @@ function App() {
         />
       </header>
       { activeUser.id && (
-        <div className="body">
+        <div id="App-body">
         {/* - AI Component */}
         <AIWitch />
         {/* - PlantBoard component */}

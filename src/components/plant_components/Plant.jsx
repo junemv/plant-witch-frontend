@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './Plant.css';
 
 // TODO - uncmment commonName in props once implemented
 const Plant = (props) => {
@@ -74,12 +75,12 @@ const Plant = (props) => {
   }
 
   return (
-    <div>
+    <div id="plant">
       <li key={key}>
         <img src={image} alt={`${name} pic`} />
         { !editMode && (
           <div>
-            <h2>Nickname: {name}</h2>
+            <h2>{name}</h2>
             {/* TODO - uncomment Common Name once implemented */}
             {/* <h3>Common Name: {commonName}</h3> */}
             <p>Description: {description}</p>
@@ -88,14 +89,14 @@ const Plant = (props) => {
         { editMode && (
           <form onSubmit={onSubmit} onKeyDown={preventEnterSubmit}>
             <div>
-              <h2>
-                Name:
+              <h3>
+                Nickname:
                 <input name="name"
                 value={updatedPlantFormFields.name}
                 placeholder="Mr. Planty McPlantface, Kevin..." 
                 onChange={onPlantNameChange}
                 />
-              </h2>
+              </h3>
             </div>
             {/* TODO - uncomment once implemented in backend */}
             {/* <div>

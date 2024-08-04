@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Plant from './Plant';
 import NewPlantForm from './NewPlantForm';
+import './PlantBoard.css';
 
 const PlantBoard = (props) => {
   const activeUsersPlants = props.activeUsersPlants;
@@ -48,7 +49,7 @@ const PlantBoard = (props) => {
 
 
   return (
-    <div>
+    <div id="plant-board">
       <h1>My Plants</h1>
       {/* Plant Creation Form */}
       <button onClick={()=>{toggleCreatePlant()}}>Create Plant</button>
@@ -57,7 +58,7 @@ const PlantBoard = (props) => {
         toggleCreatePlantCallbackFunction={toggleCreatePlant}
       />}
       {/* Active User's Plant List */}
-      <ul>{activeUsersPlantComponents}</ul>
+      <ul id="plant-list">{activeUsersPlantComponents}</ul>
     </div>
   );
 }

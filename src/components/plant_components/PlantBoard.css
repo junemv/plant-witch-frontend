@@ -1,0 +1,13 @@
+/* IDs */
+#plant-board {
+    /* colors */
+    background: var(--section-bg);
+    
+    grid-row: var(--container-row);
+}
+
+#plant-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
