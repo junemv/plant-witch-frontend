@@ -5,6 +5,7 @@ function Dropdown(props) {
 	const demoUserData = props.demoUserData;
 	const setActiveUser = props.setActiveUserCallbackFunction;
 	const fetchAllPlantsByUserId = props.fetchAllPlantsByUserIdCallbackFunction;
+  const fetchWateringAndRepottingScheduleByUserId = props.fetchWateringAndRepottingScheduleByUserIdCallbackFunction;
 
   const [isOpen, setIsOpen] = useState(false);
   const options = [];
@@ -20,6 +21,7 @@ function Dropdown(props) {
 	const handleUserSelect = (user) => {
 		setActiveUser(user);
 		fetchAllPlantsByUserId(user.id);
+    fetchWateringAndRepottingScheduleByUserId(user.id);
 	}
 
   return (

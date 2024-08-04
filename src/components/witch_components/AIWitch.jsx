@@ -1,8 +1,9 @@
 import React from 'react';
+import './AIWitch.css';
 
 const AIWitch = () => {
 return (
-	<div>
+	<div id="ai-witch">
       <h1>AI Witch</h1>
     </div>
   );
