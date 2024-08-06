@@ -18,6 +18,8 @@ function App() {
   const [activeUsersPlants, setActiveUsersPlants] = useState([]);
   // stored by {id: {daysUntilNextWatering: 0, daysUntilNextRepotting: 0}}
   const [plantsWateringAndRepottingSchedule, setPlantsWateringAndRepottingSchedule] = useState({});
+  //AI Witch variable
+  const [aiResponse, setAiResponse] = useState(null);
 
   // USER FUNCTIONALITY:
   // Get all users - TODO: deprecate when userauth is added
@@ -186,6 +188,20 @@ function App() {
     })
   }
 
+  //Call WitchAI
+  const askWitchAI = (prompt) => {
+      const userId = activeUser.id;
+
+      axios
+          .post(`${URL}/api/v1/witch_ai/ask_witch/${userId}`, {prompt})
+          .then ((res) => {
+            setAiResponse(res.data);
+      })
+          .catch((err) => {
+              console.log(err);
+          });
+  }
+
   return (
     <div id="App">
       <header id="App-header">
@@ -201,7 +217,10 @@ function App() {
       { activeUser.id && (
         <div id="App-body">
         {/* - AI Component */}
-        <AIWitch />
+        <AIWitch
+        askWitchAI={askWitchAI}
+        aiResponse={aiResponse}
+        />
         {/* - PlantBoard component */}
         <PlantBoard 
         activeUsersPlants={activeUsersPlants}
