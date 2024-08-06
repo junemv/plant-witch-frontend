@@ -18,6 +18,8 @@ function App() {
   const [activeUsersPlants, setActiveUsersPlants] = useState([]);
   // stored by {id: {daysUntilNextWatering: 0, daysUntilNextRepotting: 0}}
   const [plantsWateringAndRepottingSchedule, setPlantsWateringAndRepottingSchedule] = useState({});
+  const [activeUserPlantComponents, setActiveUserPlantComponents] = useState([]);
+  const [displayPlantsComponents, setDisplayPlantsComponents] = useState(false);
 
   // USER FUNCTIONALITY:
   // Get all users - TODO: deprecate when userauth is added
@@ -41,6 +43,7 @@ function App() {
       .get(`${URL}/api/v1/plants/users/${userId}`)
       .then((res) => {
         setActiveUsersPlants(res.data);
+        console.log("plants:", res.data)
       })
       .catch((err) => {
         console.log(err)
@@ -77,7 +80,7 @@ function App() {
           newPlantList.push(res.data);
 
           setActiveUsersPlants(newPlantList);
-        }, 1000)
+        }, 500)
       })
       .catch((error) => {
         console.log(error, "create plant failed.");
@@ -186,16 +189,22 @@ function App() {
     })
   }
 
+  // console.log("activeUser", activeUser, "activeUsersPlants", activeUsersPlants, "plantsWateringAndRepottingSchedule", plantsWateringAndRepottingSchedule, "ActiveUserPlantComponents", activeUserPlantComponents)
+
   return (
     <div id="App">
       <header id="App-header">
         {/* Header Component */}
+        {}
         <Header 
-        demoUserData={demoUserData}
-        setActiveUserCallbackFunction={setActiveUser}
-        activeUser={activeUser}
-        fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserId}
-        fetchWateringAndRepottingScheduleByUserIdCallbackFunction={fetchWateringAndRepottingScheduleByUserId}
+          demoUserData={demoUserData}
+          activeUser={activeUser}
+          setActiveUserCallbackFunction={setActiveUser}
+          fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserId}
+          fetchWateringAndRepottingScheduleByUserIdCallbackFunction={fetchWateringAndRepottingScheduleByUserId}
+          setActiveUsersPlantsCallbackFunction={setActiveUsersPlants}
+          setPlantsWateringAndRepottingScheduleCallbackFunction={setPlantsWateringAndRepottingSchedule}
+          setDisplayPlantsComponentsCallbackFunction={setDisplayPlantsComponents}
         />
       </header>
       { activeUser.id && (
@@ -204,12 +213,15 @@ function App() {
         <AIWitch />
         {/* - PlantBoard component */}
         <PlantBoard 
-        activeUsersPlants={activeUsersPlants}
-        plantsWateringAndRepottingSchedule={plantsWateringAndRepottingSchedule}
-        deletePlantCallbackFunction={deletePlant}
-        updatePlantWateredOrRepottedCallbackFunction={updatePlantWateredOrRepotted}
-        updatePlantCallbackFunction={updatePlant}
-        createNewPlantForSelectedUserCallbackFunction={createNewPlantForSelectedUser}
+          activeUsersPlants={activeUsersPlants}
+          plantsWateringAndRepottingSchedule={plantsWateringAndRepottingSchedule}
+          activeUserPlantComponents={activeUserPlantComponents}
+          displayPlantsComponents={displayPlantsComponents}
+          deletePlantCallbackFunction={deletePlant}
+          updatePlantWateredOrRepottedCallbackFunction={updatePlantWateredOrRepotted}
+          updatePlantCallbackFunction={updatePlant}
+          createNewPlantForSelectedUserCallbackFunction={createNewPlantForSelectedUser}
+          setActiveUserPlantComponentsCallbackFunction={setActiveUserPlantComponents}
         />
       </div>
       )}

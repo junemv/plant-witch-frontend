@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './Plant.css';
+import defaultImg from '../../assets/potted-plant-doodle.jpg';
 
 // TODO - uncmment commonName in props once implemented
 const Plant = (props) => {
@@ -77,7 +78,10 @@ const Plant = (props) => {
   return (
     <div id="plant">
       <li key={key}>
-        <img src={image} alt={`${name} pic`} />
+        <img src={ 
+          !image && (defaultImg || image)
+          // defaultImg
+          } alt={`${name}`} />
         { !editMode && (
           <div>
             <h2>{name}</h2>
