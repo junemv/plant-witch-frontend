@@ -18,6 +18,10 @@ function App() {
   const [activeUsersPlants, setActiveUsersPlants] = useState([]);
   // stored by {id: {daysUntilNextWatering: 0, daysUntilNextRepotting: 0}}
   const [plantsWateringAndRepottingSchedule, setPlantsWateringAndRepottingSchedule] = useState({});
+
+  //AI Witch variable
+  const [aiResponse, setAiResponse] = useState(null);
+
   const [activeUserPlantComponents, setActiveUserPlantComponents] = useState([]);
   const [displayPlantsComponents, setDisplayPlantsComponents] = useState(false);
 
@@ -189,7 +193,19 @@ function App() {
     })
   }
 
-  // console.log("activeUser", activeUser, "activeUsersPlants", activeUsersPlants, "plantsWateringAndRepottingSchedule", plantsWateringAndRepottingSchedule, "ActiveUserPlantComponents", activeUserPlantComponents)
+  //Call WitchAI
+  const askWitchAI = (prompt) => {
+      const userId = activeUser.id;
+
+      axios
+          .post(`${URL}/api/v1/witch_ai/ask_witch/${userId}`, {prompt})
+          .then ((res) => {
+            setAiResponse(res.data);
+      })
+          .catch((err) => {
+              console.log(err);
+          });
+  }
 
   return (
     <div id="App">
@@ -210,7 +226,10 @@ function App() {
       { activeUser.id && (
         <div id="App-body">
         {/* - AI Component */}
-        <AIWitch />
+        <AIWitch
+        askWitchAI={askWitchAI}
+        aiResponse={aiResponse}
+        />
         {/* - PlantBoard component */}
         <PlantBoard 
           activeUsersPlants={activeUsersPlants}
