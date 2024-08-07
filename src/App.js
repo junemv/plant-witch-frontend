@@ -106,8 +106,7 @@ function App() {
           if (plant.id === plantId) {
             plant.name = updatedPlantData.name;
             plant.description = updatedPlantData.description;
-            // TODO - uncomment once implemented in backend
-            // plant.commonName = updatedPlantData.commonName;
+            plant.commonName = updatedPlantData.commonName;
           }
           updatedPlantList.push(plant);
         }

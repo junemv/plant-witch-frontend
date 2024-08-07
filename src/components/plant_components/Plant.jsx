@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import './Plant.css';
 import defaultImg from '../../assets/potted-plant-doodle.jpg';
 
-// TODO - uncmment commonName in props once implemented
 const Plant = (props) => {
   // props
   const key = props.key;
   const id = props.id;
   const name = props.name;
-  // const commonName = props.commonName;
+  const commonName = props.commonName;
   const image = props.image;
   const description = props.description;
   const waterDate = props.waterDate;
@@ -79,14 +78,14 @@ const Plant = (props) => {
     <div id="plant">
       <li key={key}>
         <img src={ 
-          !image && (defaultImg || image)
+          image || defaultImg
           // defaultImg
           } alt={`${name}`} />
         { !editMode && (
           <div>
             <h2>{name}</h2>
             {/* TODO - uncomment Common Name once implemented */}
-            {/* <h3>Common Name: {commonName}</h3> */}
+            <h3>Common Name: {commonName}</h3>
             <p>Description: {description}</p>
           </div>
         )}
@@ -102,8 +101,7 @@ const Plant = (props) => {
                 />
               </h3>
             </div>
-            {/* TODO - uncomment once implemented in backend */}
-            {/* <div>
+            <div>
               <h2>
                 Common Name:
                 <input name="common-name"
@@ -112,7 +110,7 @@ const Plant = (props) => {
                 onChange={onPlantNameChange}
                 />
               </h2>
-            </div> */}
+            </div>
             <div>
               <p>
                 Description:
