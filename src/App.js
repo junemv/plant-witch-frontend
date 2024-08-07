@@ -3,32 +3,10 @@ import "./App.css";
 import Header from "./components/Header";
 import PlantBoard from "./components/plant_components/PlantBoard";
 import AIWitch from "./components/witch_components/AIWitch";
-import NewPlantForm from "./components/plant_components/NewPlantForm";
 
 import axios from "axios";
 
 export const UserContext = createContext(null);
-
-// const userDataTemp = [
-//   {
-//     id: 1,
-//     firstName: "June",
-//     LastName: "Valentino",
-//     email: "junemvalentino@gmail.com"
-//   },
-//   {
-//     id: 2,
-//     firstName: "Natasha",
-//     LastName: "Zakharova",
-//     email: "natashaz@gmail.com"
-//   },
-//   {
-//     id: 3,
-//     firstName: "Diana",
-//     LastName: "M",
-//     email: "dianam@gmail.com"
-//   }
-// ]
 
 function App() {
   const URL = process.env.REACT_APP_BACKEND_URL;
@@ -37,76 +15,252 @@ function App() {
   // User variables
   const [demoUserData, setDemoUserData] = useState([]);
   const [activeUser, setActiveUser] = useState({ firstName: "Guest" });
-  const [plantsData, setPlantsData] = useState([]);
+  const [activeUsersPlants, setActiveUsersPlants] = useState([]);
+  // stored by {id: {daysUntilNextWatering: 0, daysUntilNextRepotting: 0}}
+  const [
+    plantsWateringAndRepottingSchedule,
+    setPlantsWateringAndRepottingSchedule,
+  ] = useState({});
+
+  //AI Witch variable
+  const [aiResponse, setAiResponse] = useState(null);
+
+  const [activeUserPlantComponents, setActiveUserPlantComponents] = useState(
+    []
+  );
+  const [displayPlantsComponents, setDisplayPlantsComponents] = useState(false);
 
   // USER FUNCTIONALITY:
-  // - Get all users - TODO: deprecate when userauth is added
-  // const fetchAllUsers = () => {
-  //   axios
-  //     .get(`${URL}/user/all`)
-  //     .then((res) => {
-  //       setDemoUserData(res.data);
-  //       console.log("res.data", res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+  // Get all users - TODO: deprecate when userauth is added
+  const fetchAllUsers = () => {
+    axios
+      .get(`${URL}/api/v1/users/all`)
+      .then((res) => {
+        setDemoUserData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-  // useEffect(fetchAllUsers, []);
+  useEffect(fetchAllUsers, []);
 
   // PLANT FUNCTIONALITY:
+  // Get all plants by user ID
+  const fetchAllPlantsByUserId = (userId) => {
+    axios
+      .get(`${URL}/api/v1/plants/users/${userId}`)
+      .then((res) => {
+        setActiveUsersPlants(res.data);
+        console.log("plants:", res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-  // TODO -
-  // 1. Start with building out Active User functionality x
-  // 2. Build out PlantBoard Component
-  // 3. Build out Plant Component
+  // Get one plant by ID
+  const fetchPlantById = (plantId) => {
+    axios
+      .get(`${URL}/api/v1/plants/${plantId}`)
+      .then((res) => {
+        console.log("res.data", res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-  // Adrian Notes:
-  // > State variables should live in app and be passed down.
-
-  // Rough TODO Items:
-  // - Build AI Functionality
-  // - Build Logic for switching between users by ID x
-  // - Build Logic for
-  //    - grabbing plant records by User ID
-  //    - storing plant data in Plant components
-  //    - storing Plant components as list in PlantBoard
-  // - Build form for posting new plant record
-  // - Build function for deleting plant record
-  // - Build function for editing plant record
-  // var selectedUser = 1;
-
+  // Add new plant - sets plant to plant list and updates watering and repotting schedule
   const createNewPlantForSelectedUser = (data) => {
     axios
-      .post(`${URL}/api/v1/plants/users/1`, data)
-      .then((response) => {
-        // getPlantsForUser(activeUser.id);
-        console.log("It worked!");
+      .post(`${URL}/api/v1/plants/users/${activeUser.id}`, data)
+      .then((res) => {
+        fetchWateringAndRepottingScheduleByPlant(res.data.id);
+        console.log("plant data", res.data);
+
+        alert(`Welcome, ${res.data.name}!`);
+        // Delay timer included to allow for watering and repotting schedule to be updated
+        setTimeout(() => {
+          const newPlantList = [];
+          for (const plant of activeUsersPlants) {
+            newPlantList.push(plant);
+          }
+          newPlantList.push(res.data);
+
+          setActiveUsersPlants(newPlantList);
+        }, 500);
       })
       .catch((error) => {
         console.log(error, "create plant failed.");
       });
   };
 
+  // Update plant name, common name and description
+  const updatePlant = (plantId, updatedPlantData) => {
+    axios
+      .patch(`${URL}/api/v1/plants/updates/${plantId}`, updatedPlantData)
+      .then((res) => {
+        const updatedPlantList = [];
+        for (const plant of activeUsersPlants) {
+          if (plant.id === plantId) {
+            plant.name = updatedPlantData.name;
+            plant.description = updatedPlantData.description;
+            // TODO - uncomment once implemented in backend
+            // plant.commonName = updatedPlantData.commonName;
+          }
+          updatedPlantList.push(plant);
+        }
+        setActiveUsersPlants(updatedPlantList);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // Get all watering and repotting schedules by user ID - shape: {plantId: {wateringDate: n, repottingDate: n}}
+  const fetchWateringAndRepottingScheduleByUserId = (userId) => {
+    axios
+      .get(`${URL}/api/v1/plants/users/${userId}/plants_schedule`)
+      .then((res) => {
+        // console.log("watering and repotting days: ", res.data)
+        setPlantsWateringAndRepottingSchedule(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // Get and Set Watering and Repotting Interval - shape: {daysUntilNextWatering : n, daysUntilNextRepotting : n}
+  const fetchWateringAndRepottingScheduleByPlant = async (plantId) => {
+    await axios
+      .get(`${URL}/api/v1/plants/${plantId}/schedule`)
+      .then((res) => {
+        // console.log("plant id:", plantId, "res.data:", res.data)
+        const newPlantsWateringAndRepottingSchedule =
+          createWateringAndRepottingEntry(plantId);
+        newPlantsWateringAndRepottingSchedule[plantId] = res.data;
+
+        // console.log("new Plant Schedule", newPlantsWateringAndRepottingSchedule)
+        setPlantsWateringAndRepottingSchedule(
+          newPlantsWateringAndRepottingSchedule
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // helper - Adds empty dictionary entry for plantId - shape: {plantId: {}}
+  const createWateringAndRepottingEntry = (plantId) => {
+    const newPlantsWateringAndRepottingSchedule =
+      plantsWateringAndRepottingSchedule;
+    newPlantsWateringAndRepottingSchedule[plantId] = {};
+
+    return newPlantsWateringAndRepottingSchedule;
+  };
+
+  // Update plant when watered or repotted
+  const updatePlantWateredOrRepotted = (plantId, endPoint) => {
+    axios.patch(`${URL}/api/v1/plants/${plantId}/${endPoint}`).then(() => {
+      const newPlantList = [];
+      for (const plant of activeUsersPlants) {
+        if (plant.id === plantId) {
+          if (endPoint === "water-date") {
+            plant.waterDate = new Date().toString();
+          } else if (endPoint === "repot-date") {
+            plant.repotDate = new Date().toString();
+          }
+        }
+        newPlantList.push(plant);
+      }
+    });
+  };
+
+  // Delete plant
+  const deletePlant = (plantId) => {
+    axios
+      .delete(`${URL}/api/v1/plants/delete/${plantId}`)
+      .then((res) => {
+        const newPlantList = [];
+        let deletedPlantName = "";
+        for (const plant of activeUsersPlants) {
+          if (plant.id !== plantId) {
+            newPlantList.push(plant);
+          } else {
+            deletedPlantName = plant.name;
+          }
+        }
+        setActiveUsersPlants(newPlantList);
+        alert(`Goodbye, ${deletedPlantName} :(`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  //Call WitchAI
+  const askWitchAI = (prompt) => {
+    const userId = activeUser.id;
+
+    axios
+      .post(`${URL}/api/v1/witch_ai/ask_witch/${userId}`, { prompt })
+      .then((res) => {
+        setAiResponse(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
+    <div id="App">
+      <header id="App-header">
         {/* Header Component */}
+        {}
         <Header
           demoUserData={demoUserData}
-          setActiveUserCallbackFunction={setActiveUser}
           activeUser={activeUser}
+          setActiveUserCallbackFunction={setActiveUser}
+          fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserId}
+          fetchWateringAndRepottingScheduleByUserIdCallbackFunction={
+            fetchWateringAndRepottingScheduleByUserId
+          }
+          setActiveUsersPlantsCallbackFunction={setActiveUsersPlants}
+          setPlantsWateringAndRepottingScheduleCallbackFunction={
+            setPlantsWateringAndRepottingSchedule
+          }
+          setDisplayPlantsComponentsCallbackFunction={
+            setDisplayPlantsComponents
+          }
         />
       </header>
-      <div className="body">
-        {/* What lives here? */}
-        {/* - AI Component */}
-        <AIWitch />
-        {/* - PlantBoard component */}
-        <PlantBoard />
-        <NewPlantForm handleFormSubmission={createNewPlantForSelectedUser} />
-      </div>
+      {activeUser.id && (
+        <div id="App-body">
+          {/* - AI Component */}
+          <AIWitch askWitchAI={askWitchAI} aiResponse={aiResponse} />
+          {/* - PlantBoard component */}
+          <PlantBoard
+            activeUsersPlants={activeUsersPlants}
+            plantsWateringAndRepottingSchedule={
+              plantsWateringAndRepottingSchedule
+            }
+            activeUserPlantComponents={activeUserPlantComponents}
+            displayPlantsComponents={displayPlantsComponents}
+            deletePlantCallbackFunction={deletePlant}
+            updatePlantWateredOrRepottedCallbackFunction={
+              updatePlantWateredOrRepotted
+            }
+            updatePlantCallbackFunction={updatePlant}
+            createNewPlantForSelectedUserCallbackFunction={
+              createNewPlantForSelectedUser
+            }
+            setActiveUserPlantComponentsCallbackFunction={
+              setActiveUserPlantComponents
+            }
+          />
+        </div>
+      )}
     </div>
   );
 }

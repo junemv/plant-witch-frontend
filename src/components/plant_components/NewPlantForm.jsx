@@ -6,8 +6,21 @@ import debounce from "lodash.debounce";
 
 /* eslint-env jest */
 
+// TODO - uncomment commonName variable and form entry once implemented in backend
 const PlantForm = (props) => {
-  const defaultPlantsData = { name: "", image: "", description: "", waterDate: "", waterInterval: "", repotDate: "", repotInterval: ""};
+  // callback Functions
+  const createNewPlantForSelectedUser = props.createNewPlantForSelectedUserCallbackFunction
+  const toggleCreatePlant = props.toggleCreatePlantCallbackFunction
+  
+  const defaultPlantsData = { 
+    name: "", 
+    // commonName: "",
+    image: "", 
+    description: "", 
+    waterDate: "", 
+    waterInterval: "", 
+    repotDate: "", 
+    repotInterval: ""};
   const [plantsData, setPlantsData] = useState(defaultPlantsData);
 
   const handleFormInput = async (event) => {
@@ -23,10 +36,11 @@ const PlantForm = (props) => {
 
   const handleFormSubmission = (event) => {
     event.preventDefault();
-    const { name, waterDate, waterInterval, repotDate, repotInterval } = plantsData;
+    const { name, /* commonName, */ waterDate, waterInterval, repotDate, repotInterval } = plantsData;
     if (name && waterDate && waterInterval > 0 && repotDate && repotInterval > 0) {
-        props.handleFormSubmission(plantsData);
+        createNewPlantForSelectedUser(plantsData);
         setPlantsData(defaultPlantsData);
+        toggleCreatePlant();
     } else {
         alert('Please fill in all required fields.Water and Repot intervals should be more than 0.');
     }
@@ -52,32 +66,45 @@ const PlantForm = (props) => {
   return (
     <form onSubmit={handleFormSubmission} className="plant-submit-form">
       <div className="input-container">
-      <label>Name</label>
+      <label>Nickname: </label>
       <input
         className="name-input"
         type="text"
         required
         name="name"
         maxLength={40}
-        placeholder="Name"
+        placeholder="Mr. Planty McPlantface, Kevin..."
         value={plantsData.name}
         onChange={handleFormInput}
       ></input>
       </div>
+      {/* <div className="input-container">
+      <label>Common Name: </label>
+      <input
+        className="commonName-input"
+        type="text"
+        required
+        name="common-name"
+        maxLength={40}
+        placeholder="Snake Plant, Monstera Deliciosa..."
+        value={plantsData.commonName}
+        onChange={handleFormInput}
+      ></input>
+      </div> */}
       <div className="input-container">
-      <label>Description</label>
+      <label>Description: </label>
         <input
           className="description-input"
           type="text"
           name="description"
           maxLength={40}
-          placeholder="Description"
+          placeholder="The happy plant by the window..."
           value={plantsData.description}
           onChange={handleFormInput}
       ></input>
       </div>
       <div className="input-container">
-      <label>Last Watered</label>
+      <label>Last Watered: </label>
         <input
           className="lastWatered-input"
           type="date"
@@ -89,7 +116,7 @@ const PlantForm = (props) => {
       ></input>
       </div>
       <div className="input-container">
-      <label>Frequency</label>
+      <label>Frequency: </label>
         <input
           className="waterFrequency-input"
           type="number"
@@ -101,7 +128,7 @@ const PlantForm = (props) => {
       ></input>
       </div>
       <div className="input-container">
-      <label>Last Repoted</label>
+      <label>Last Repoted: </label>
       <input
           className="lastRepoted-input"
           type="date"
@@ -113,7 +140,7 @@ const PlantForm = (props) => {
       ></input>
       </div>
       <div className="input-container">
-      <label>Frequency</label>
+      <label>Frequency: </label>
         <input
           className="repotFrequency-input"
           type="number"

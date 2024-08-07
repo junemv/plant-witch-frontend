@@ -15,28 +15,40 @@ Dependencies can be installed by running `npm install`. Please let the team know
 ## Milestone Tracking:
 ### TODO:
 - ~~Build Front-End Repo~~
-- Build out User's Dashboard
+- ~~Build out User's Dashboard~~
   - Header Component
     - AI text field form
       - Display logic or chatbot for handling AI responses
-  - My Plants Component
-    - incl button for posting new plant records
-  - New Plant Form Component
-  - Plant Component
-- Build Folder structure
+  - ~~My Plants Component~~
+    - ~~incl button for posting new plant records~~
+  - ~~New Plant Form Component~~
+  - ~~Plant Component~~
+- ~~Build Folder structure~~
 
 ### June:
 
 - ~~Build Front-End Repo~~
-- Build out User's Dashboard
-  - Header Component
-    - AI text field form
-  - Plants Section Component
-  - New Plant Form Component
+- ~~Build Set Active User Functionality~~
+- ~~Build out User's Dashboard~~
+  - ~~Plants Board Component~~
+  - ~~Plant Component~~
 - ~~Build Folder structure~~
+- Update Watering and Repotting logic
+- Basic CSS Styling
+  - App
+  - PlantBoard
+  - Plant
+  - Dropdown
+  - Header
+  - NewPlantForm
+  - AIWitch
 
 ### Diana:
+- Header Component
+  - AI text field form
+- Finished CSS Styling
+  - AIWitch
 
 ### Natasha:
 
-- Build Plant Component
+- ~~New Plant Form Component~~
