@@ -40,8 +40,7 @@ function Dropdown(props) {
       setActiveUsersPlants([]);
       setPlantsWateringAndRepottingSchedule({});
       setDisplayPlantsComponents(false);
-      // alert("You have been logged out.")
-      console.log(activeUser)
+      // console.log(activeUser)
     }
   }
 

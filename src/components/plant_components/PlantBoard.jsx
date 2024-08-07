@@ -21,18 +21,11 @@ const PlantBoard = (props) => {
 
   // TODO - uncomment commonName prop once implemented in backend
   // Loop builds list of Plant components using active user's Plant state variable 
-
-  // TODO - I'm thinking instead of rendering with this loop I will build a handlePlantComponents function
-  // that I can call on login that sets the plant components
-  const handlePlantComponents = () => {
-    
-  }
   setTimeout(() => {
     const newActiveUsersPlantComponents = []
   
     if (activeUsersPlants) {
       for (const plant of activeUsersPlants) {
-        console.log("IN THE LOOP")
         newActiveUsersPlantComponents.push(
           <Plant 
             key={plant.id}

@@ -43,7 +43,7 @@ function App() {
       .get(`${URL}/api/v1/plants/users/${userId}`)
       .then((res) => {
         setActiveUsersPlants(res.data);
-        console.log("plants:", res.data)
+        // console.log("plants:", res.data)
       })
       .catch((err) => {
         console.log(err)
@@ -164,6 +164,7 @@ function App() {
             }
             newPlantList.push(plant);
           }
+          setActiveUsersPlants(newPlantList);
         })
     }
 

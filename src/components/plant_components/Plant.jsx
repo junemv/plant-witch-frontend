@@ -18,7 +18,7 @@ const Plant = (props) => {
   const plantsWateringAndRepottingSchedule = props.plantsWateringAndRepottingSchedule;
 
   // callback functions
-  const deletePlant = props.deletePlantCallbackFunction; // TODO - implement with edit and delete functionality
+  const deletePlant = props.deletePlantCallbackFunction;
   const updatePlant = props.updatePlantCallbackFunction;
   const updatePlantWateredOrRepotted = props.updatePlantWateredOrRepottedCallbackFunction;
 
@@ -28,6 +28,10 @@ const Plant = (props) => {
     name: name,
     description: description
   });
+  // TODO - create a state variable to store the three CSS style states for watering/repotting
+  //  > green = 3+ days
+  //  > yellow = 0-2 days
+  //  > red = -n days
 
   // Switches between edit and view modes
   const toggleEditMode = () => {
@@ -38,6 +42,19 @@ const Plant = (props) => {
   const handleDelete = (id) => {
     if (window.confirm(`Are you sure you want to delete ${name}?`) === true) {
       deletePlant(id);
+    }
+  }
+
+  // event handler for watering and repotting plants
+  const handleWateringAndRepottingq = (id, name, type) => {
+    let waterOrRepot = ""
+    if (type === "water-date") {
+      waterOrRepot = "water"
+    } else if (type === "repot-date") {
+      waterOrRepot = "repot"
+    }
+    if (window.confirm(`Did you ${waterOrRepot} ${name}?`) === true) {
+      updatePlantWateredOrRepotted(id, type);
     }
   }
 
@@ -74,6 +91,9 @@ const Plant = (props) => {
       e.preventDefault()
     };
   }
+
+  // TODO - 
+  // > turn watering and repotting days into button to reset to current date
 
   return (
     <div id="plant">
@@ -133,8 +153,8 @@ const Plant = (props) => {
         <p>Repot Date: {repotDate}</p>
         <p>Water Interval: {waterInterval}</p>
         <p>Repot Interval: {repotInterval}</p> */}
-        <p>Water Me in: {plantsWateringAndRepottingSchedule[id].daysUntilNextWatering} days</p>
-        <p>Repot Me in: {plantsWateringAndRepottingSchedule[id].daysUntilNextRepotting} days</p>
+        <p onClick={() => handleWateringAndRepottingq(id, name, "water-date")}>Water Me in: {plantsWateringAndRepottingSchedule[id].daysUntilNextWatering} days</p>
+        <p onClick={() => handleWateringAndRepottingq(id, name, "repot-date")}>Repot Me in: {plantsWateringAndRepottingSchedule[id].daysUntilNextRepotting} days</p>
         { !editMode && (
           <button onClick={() => {toggleEditMode()}}>
             Edit Plant
