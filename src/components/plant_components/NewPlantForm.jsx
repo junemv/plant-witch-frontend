@@ -1,7 +1,8 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import "./NewPlantForm.css"
+import axios from "axios";
+import debounce from "lodash.debounce";
 
 /* eslint-env jest */
 
@@ -13,7 +14,7 @@ const PlantForm = (props) => {
   
   const defaultPlantsData = { 
     name: "", 
-    // commonName: "",
+    commonName: "",
     image: "", 
     description: "", 
     waterDate: "", 
@@ -22,17 +23,20 @@ const PlantForm = (props) => {
     repotInterval: ""};
   const [plantsData, setPlantsData] = useState(defaultPlantsData);
 
-  const handleFormInput = (event) => {
+  const handleFormInput = async (event) => {
     const name = event.target.name;
     const value = event.target.value;
     const newPlantsData = { ...plantsData };
     newPlantsData[name] = value;
+    if (name === "commonName") {
+      await debouncedFindImageUrl(value);
+    }
     setPlantsData(newPlantsData);
   };
 
   const handleFormSubmission = (event) => {
     event.preventDefault();
-    const { name, /* commonName, */ waterDate, waterInterval, repotDate, repotInterval } = plantsData;
+    const { name, commonName, waterDate, waterInterval, repotDate, repotInterval } = plantsData;
     if (name && waterDate && waterInterval > 0 && repotDate && repotInterval > 0) {
         createNewPlantForSelectedUser(plantsData);
         setPlantsData(defaultPlantsData);
@@ -41,6 +45,29 @@ const PlantForm = (props) => {
         alert('Please fill in all required fields.Water and Repot intervals should be more than 0.');
     }
   };
+
+  const findImageUrlAndCommonName = async (plantName) => {
+    try {
+      const response = await axios.get(`https://perenual.com/api/species-list?key=sk-FByX66acedc92197c6409&q=${plantName}`);
+      const plantDetails = response.data.data[0];
+      const imageURL = plantDetails.default_image.small_url;
+      const commonNameFetched = plantDetails.common_name;
+      // console.log("Plant", plantDetails.common_name);
+      // console.log("Photo", imageURL);
+      if (imageURL !== "https://perenual.com/storage/image/upgrade_access.jpg") {
+        setPlantsData((prevData) => ({ ...prevData, image: imageURL }));
+      }
+      setPlantsData((prevData) => ({ ...prevData, commonName: commonNameFetched }));
+      } catch (error) {
+        console.error("Error fetching plants data:", error);
+        if (error === TypeError) {
+          setPlantsData((prevData) => ({ ...prevData, commonName: plantsData.commonName }));
+        }
+    };
+  };
+
+  const debouncedFindImageUrl = useCallback(debounce(findImageUrlAndCommonName, 5000), []);
+
 
   return (
     <form onSubmit={handleFormSubmission} className="plant-submit-form">
@@ -57,19 +84,19 @@ const PlantForm = (props) => {
         onChange={handleFormInput}
       ></input>
       </div>
-      {/* <div className="input-container">
+      <div className="input-container">
       <label>Common Name: </label>
       <input
         className="commonName-input"
         type="text"
         required
-        name="common-name"
+        name="commonName"
         maxLength={40}
         placeholder="Snake Plant, Monstera Deliciosa..."
         value={plantsData.commonName}
         onChange={handleFormInput}
       ></input>
-      </div> */}
+      </div>
       <div className="input-container">
       <label>Description: </label>
         <input
