@@ -13,12 +13,14 @@
 	background-color: greenyellow;
 	width: 200px;
 	height: 25px;
+	cursor: pointer;
 }
 
 .schedule-yellow {
 	background-color: gold;
 	width: 200px;
 	height: 25px;
+	cursor: pointer;
 }
 
 .schedule-red {
@@ -26,4 +28,5 @@
 	color: white;
 	width: 200px;
 	height: 25px;
+	cursor: pointer;
 }

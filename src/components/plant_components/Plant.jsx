@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './Plant.css';
 import defaultImg from '../../assets/potted-plant-doodle.jpg';
 
@@ -30,7 +30,10 @@ const Plant = (props) => {
     // commonName: commonName,
     description: description
   });
-  const [scheduleBtnStyle, setScheduleBtnStyle] = useState("green");
+  const [scheduleBtnStyle, setScheduleBtnStyle] = useState({
+    watering: {style: "schedule-green", msg: `Water Me in: ${thisPlantsNextWatering} days`}, 
+    repotting: {style: "schedule-green", msg: `Repot Me in: ${thisPlantsNextWatering} days`}
+  });
   // TODO 8/7 - 
   // 1. create a state variable to store the three CSS style states for watering/repotting
   //  > green = 3+ days
@@ -53,7 +56,7 @@ const Plant = (props) => {
     }
   }
 
-  // event handler for watering and repotting plants
+  // allows user to set the last watered or repotted date to current date
   const handleWateringAndRepotting = (id, name, type) => {
     let waterOrRepot = ""
     if (type === "water-date") {
@@ -65,6 +68,59 @@ const Plant = (props) => {
       updatePlantWateredOrRepotted(id, type);
     }
   }
+
+  // updating watering and repotting CSS styling and message
+  const handleWateringAndRepottingStyle = (days, type) => {
+    const newScheduleBtnStyle = scheduleBtnStyle;
+    // TODO - dry up this code, can we use this set of conditions and identify if the days coming in are watering or repotting?
+
+    if (type === "watering") {
+      if (days > 2) {
+        newScheduleBtnStyle.watering.style = "schedule-green";
+        newScheduleBtnStyle.watering.msg = `Water Me in: ${days} days`;
+      } else if (days === 2) {
+        newScheduleBtnStyle.watering.style = "schedule-yellow";
+        newScheduleBtnStyle.watering.msg = `Water Me in: ${days} days`;
+      } else if (days === 1) {
+        newScheduleBtnStyle.watering.style = "schedule-yellow";
+        newScheduleBtnStyle.watering.msg = `Water Me in: ${days} day`;
+      } else if (days === 0) {
+        newScheduleBtnStyle.watering.style = "schedule-red";
+        newScheduleBtnStyle.watering.msg = `Water Me Today!`;
+      } else if (days === -1) {
+        newScheduleBtnStyle.watering.style = "schedule-red";
+        newScheduleBtnStyle.watering.msg = `Water me! ${days * -1} day late!`;
+      } else {
+        newScheduleBtnStyle.watering.style = "schedule-red";
+        newScheduleBtnStyle.watering.msg = `Water me! ${days * -1} days late!`;
+      }
+    } else if (type === "repotting") {
+      if (days > 2) {
+        newScheduleBtnStyle.repotting.style = "schedule-green";
+        newScheduleBtnStyle.repotting.msg = `Repot Me in: ${days} days`;
+      } else if (days === 2) {
+        newScheduleBtnStyle.repotting.style = "schedule-yellow";
+        newScheduleBtnStyle.repotting.msg = `Repot Me in: ${days} days`;
+      } else if (days === 1) {
+        newScheduleBtnStyle.repotting.style = "schedule-yellow";
+        newScheduleBtnStyle.repotting.msg = `Repot Me in: ${days} day`;
+      } else if (days === 0) {
+        newScheduleBtnStyle.repotting.style = "schedule-red";
+        newScheduleBtnStyle.repotting.msg = `Repot Me Today!`;
+      } else if (days === -1) {
+        newScheduleBtnStyle.repotting.style = "schedule-red";
+        newScheduleBtnStyle.repotting.msg = `Repot me! ${days * -1} day late!`;
+      } else {
+        newScheduleBtnStyle.repotting.style = "schedule-red";
+        newScheduleBtnStyle.repotting.msg = `Repot me! ${days * -1} days late!`;
+      }
+    }
+    setScheduleBtnStyle(newScheduleBtnStyle);
+  }
+  useEffect(() => {
+    handleWateringAndRepottingStyle(thisPlantsNextWatering, "watering")
+    handleWateringAndRepottingStyle(thisPlantsNextRepotting, "repotting")
+  }, [])
 
   // FORM FUNCTIONS
   const onPlantNameChange = (e) => {
@@ -160,8 +216,8 @@ const Plant = (props) => {
         <p>Repot Date: {repotDate}</p>
         <p>Water Interval: {waterInterval}</p>
         <p>Repot Interval: {repotInterval}</p> */}
-        <p onClick={() => handleWateringAndRepotting(id, name, "water-date")} className={scheduleBtnStyle}>Water Me in: {thisPlantsNextWatering} days</p>
-        <p onClick={() => handleWateringAndRepotting(id, name, "repot-date")} className={scheduleBtnStyle}>Repot Me in: {thisPlantsNextRepotting} days</p>
+        <p onClick={() => handleWateringAndRepotting(id, name, "water-date")} className={scheduleBtnStyle.watering.style}>{scheduleBtnStyle.watering.msg}</p>
+        <p onClick={() => handleWateringAndRepotting(id, name, "repot-date")} className={scheduleBtnStyle.repotting.style}>{scheduleBtnStyle.repotting.msg}</p>
         { !editMode && (
           <button onClick={() => {toggleEditMode()}}>
             Edit Plant
