@@ -10,7 +10,7 @@ import debounce from "lodash.debounce";
 const PlantForm = (props) => {
   // callback Functions
   const createNewPlantForSelectedUser = props.createNewPlantForSelectedUserCallbackFunction
-  const toggleCreatePlant = props.toggleCreatePlantCallbackFunction
+  // const toggleCreatePlant = props.toggleCreatePlantCallbackFunction
   
   const defaultPlantsData = { 
     name: "", 
@@ -40,7 +40,7 @@ const PlantForm = (props) => {
     if (name && waterDate && waterInterval > 0 && repotDate && repotInterval > 0) {
         createNewPlantForSelectedUser(plantsData);
         setPlantsData(defaultPlantsData);
-        toggleCreatePlant();
+        // toggleCreatePlant();
     } else {
         alert('Please fill in all required fields.Water and Repot intervals should be more than 0.');
     }

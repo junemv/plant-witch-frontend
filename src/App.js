@@ -2,9 +2,11 @@ import { createContext, useState, useEffect } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import PlantBoard from "./components/plant_components/PlantBoard";
+import NewPlantForm from "./components/plant_components/NewPlantForm";
 import AIWitch from "./components/witch_components/AIWitch";
 
 import axios from "axios";
+import Modal from "./components/Modal";
 
 export const UserContext = createContext(null);
 
@@ -29,6 +31,9 @@ function App() {
     []
   );
   const [displayPlantsComponents, setDisplayPlantsComponents] = useState(false);
+
+  // Modal variables
+  const [showModal, setShowModal] = useState(false);
 
   // USER FUNCTIONALITY:
   // Get all users - TODO: deprecate when userauth is added
@@ -212,6 +217,21 @@ function App() {
       });
   };
 
+  // Handle Modal show up
+  const handleCreateNewPlant = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleSaveModal = () => {
+    // const newPlant = { name: newPlantName }; // Collect the new plant data
+    // createNewPlantForSelectedUser(newPlant);
+    setShowModal(false);
+  };
+
   return (
     <div id="App">
       <header id="App-header">
@@ -238,6 +258,16 @@ function App() {
         <div id="App-body">
           {/* - AI Component */}
           <AIWitch askWitchAI={askWitchAI} aiResponse={aiResponse} />
+          {/* - Create New Plant component (using Modal component) */}
+          <button onClick={handleCreateNewPlant}>Create Plant</button>
+          <Modal show={showModal} onClose={handleCloseModal}>
+            <NewPlantForm
+              createNewPlantForSelectedUserCallbackFunction={
+                createNewPlantForSelectedUser
+              }
+            />
+          </Modal>
+
           {/* - PlantBoard component */}
           <PlantBoard
             activeUsersPlants={activeUsersPlants}
@@ -251,9 +281,6 @@ function App() {
               updatePlantWateredOrRepotted
             }
             updatePlantCallbackFunction={updatePlant}
-            createNewPlantForSelectedUserCallbackFunction={
-              createNewPlantForSelectedUser
-            }
             setActiveUserPlantComponentsCallbackFunction={
               setActiveUserPlantComponents
             }
