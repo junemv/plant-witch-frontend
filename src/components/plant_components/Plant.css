@@ -1,9 +1,29 @@
 /* IDs */
-#plant {
+#plant-component {
 	background: white;
 	list-style: none;
 	margin: 2%;
 	padding: 15px;
 	width: 250px;
 	border-radius: 10px;
+}
+
+/* classes */
+.schedule-green {
+	background-color: greenyellow;
+	width: 200px;
+	height: 25px;
+}
+
+.schedule-yellow {
+	background-color: gold;
+	width: 200px;
+	height: 25px;
+}
+
+.schedule-red {
+	background-color: mediumvioletred;
+	color: white;
+	width: 200px;
+	height: 25px;
 }

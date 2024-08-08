@@ -16,9 +16,11 @@ const Plant = (props) => {
   const waterInterval = props.waterInterval;
   const repotInterval = props.repotInterval;
   const plantsWateringAndRepottingSchedule = props.plantsWateringAndRepottingSchedule;
+  const thisPlantsNextWatering = plantsWateringAndRepottingSchedule[id].daysUntilNextWatering
+  const thisPlantsNextRepotting = plantsWateringAndRepottingSchedule[id].daysUntilNextRepotting
 
   // callback functions
-  const deletePlant = props.deletePlantCallbackFunction; // TODO - implement with edit and delete functionality
+  const deletePlant = props.deletePlantCallbackFunction;
   const updatePlant = props.updatePlantCallbackFunction;
   const updatePlantWateredOrRepotted = props.updatePlantWateredOrRepottedCallbackFunction;
 
@@ -26,8 +28,19 @@ const Plant = (props) => {
   const [editMode, setEditMode] = useState(false);
   const [updatedPlantFormFields, setUpdatedPlantFormFields] = useState({
     name: name,
+    // commonName: commonName,
     description: description
   });
+  const [scheduleBtnStyle, setScheduleBtnStyle] = useState("green");
+  // TODO 8/7 - 
+  // 1. create a state variable to store the three CSS style states for watering/repotting
+  //  > green = 3+ days
+  //  > yellow = 0-2 days
+  //  > red = -n days
+  // 2. Figure out margin issue 
+  // 3. build function to calculate watering/repotting days on frontend
+  // calc: watering interval - (current date - last watered/repotted date)
+  // 4. styling
 
   // Switches between edit and view modes
   const toggleEditMode = () => {
@@ -38,6 +51,19 @@ const Plant = (props) => {
   const handleDelete = (id) => {
     if (window.confirm(`Are you sure you want to delete ${name}?`) === true) {
       deletePlant(id);
+    }
+  }
+
+  // event handler for watering and repotting plants
+  const handleWateringAndRepotting = (id, name, type) => {
+    let waterOrRepot = ""
+    if (type === "water-date") {
+      waterOrRepot = "water"
+    } else if (type === "repot-date") {
+      waterOrRepot = "repot"
+    }
+    if (window.confirm(`Did you ${waterOrRepot} ${name}?`) === true) {
+      updatePlantWateredOrRepotted(id, type);
     }
   }
 
@@ -75,8 +101,11 @@ const Plant = (props) => {
     };
   }
 
+  // TODO - 
+  // > turn watering and repotting days into button to reset to current date
+
   return (
-    <div id="plant">
+    <div id="plant-component">
       <li key={key}>
         <img src={ 
           !image && (defaultImg || image)
@@ -133,8 +162,8 @@ const Plant = (props) => {
         <p>Repot Date: {repotDate}</p>
         <p>Water Interval: {waterInterval}</p>
         <p>Repot Interval: {repotInterval}</p> */}
-        <p>Water Me in: {plantsWateringAndRepottingSchedule[id].daysUntilNextWatering} days</p>
-        <p>Repot Me in: {plantsWateringAndRepottingSchedule[id].daysUntilNextRepotting} days</p>
+        <p onClick={() => handleWateringAndRepotting(id, name, "water-date")} className={scheduleBtnStyle}>Water Me in: {thisPlantsNextWatering} days</p>
+        <p onClick={() => handleWateringAndRepotting(id, name, "repot-date")} className={scheduleBtnStyle}>Repot Me in: {thisPlantsNextRepotting} days</p>
         { !editMode && (
           <button onClick={() => {toggleEditMode()}}>
             Edit Plant
