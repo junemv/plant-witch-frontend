@@ -19,7 +19,6 @@ const PlantBoard = (props) => {
   // state variables
   const [createPlant, setCreatePlant] = useState(false);
 
-  // TODO - uncomment commonName prop once implemented in backend
   // Loop builds list of Plant components using active user's Plant state variable 
   setTimeout(() => {
     const newActiveUsersPlantComponents = []
@@ -32,7 +31,7 @@ const PlantBoard = (props) => {
             key={plant.id}
             id={plant.id}
             name={plant.name}
-            // commonName={plant.commonName}
+            commonName={plant.commonName}
             image={plant.image}
             description={plant.description}
             waterDate={plant.waterDate}

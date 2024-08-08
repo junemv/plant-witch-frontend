@@ -14,15 +14,20 @@ function App() {
   // STATE VARIABLES:
   // User variables
   const [demoUserData, setDemoUserData] = useState([]);
-  const [activeUser, setActiveUser] = useState({firstName: "Guest"});
+  const [activeUser, setActiveUser] = useState({ firstName: "Guest" });
   const [activeUsersPlants, setActiveUsersPlants] = useState([]);
   // stored by {id: {daysUntilNextWatering: 0, daysUntilNextRepotting: 0}}
-  const [plantsWateringAndRepottingSchedule, setPlantsWateringAndRepottingSchedule] = useState({});
+  const [
+    plantsWateringAndRepottingSchedule,
+    setPlantsWateringAndRepottingSchedule,
+  ] = useState({});
 
   //AI Witch variable
   const [aiResponse, setAiResponse] = useState(null);
 
-  const [activeUserPlantComponents, setActiveUserPlantComponents] = useState([]);
+  const [activeUserPlantComponents, setActiveUserPlantComponents] = useState(
+    []
+  );
   const [displayPlantsComponents, setDisplayPlantsComponents] = useState(false);
 
   // USER FUNCTIONALITY:
@@ -31,12 +36,12 @@ function App() {
     axios
       .get(`${URL}/api/v1/users/all`)
       .then((res) => {
-        setDemoUserData(res.data)
+        setDemoUserData(res.data);
       })
       .catch((err) => {
-        console.log(err)
-    })
-  }
+        console.log(err);
+      });
+  };
 
   useEffect(fetchAllUsers, []);
 
@@ -47,34 +52,34 @@ function App() {
       .get(`${URL}/api/v1/plants/users/${userId}`)
       .then((res) => {
         setActiveUsersPlants(res.data);
-        console.log("plants:", res.data)
+        console.log("plants:", res.data);
       })
       .catch((err) => {
-        console.log(err)
-    })
-  }
+        console.log(err);
+      });
+  };
 
   // Get one plant by ID
   const fetchPlantById = (plantId) => {
     axios
       .get(`${URL}/api/v1/plants/${plantId}`)
       .then((res) => {
-        console.log("res.data", res.data)
+        console.log("res.data", res.data);
       })
       .catch((err) => {
-        console.log(err)
-    })
-  }
+        console.log(err);
+      });
+  };
 
   // Add new plant - sets plant to plant list and updates watering and repotting schedule
   const createNewPlantForSelectedUser = (data) => {
     axios
       .post(`${URL}/api/v1/plants/users/${activeUser.id}`, data)
       .then((res) => {
-        fetchWateringAndRepottingScheduleByPlant(res.data.id)
-        console.log("plant data", res.data)
+        fetchWateringAndRepottingScheduleByPlant(res.data.id);
+        console.log("plant data", res.data);
 
-        alert(`Welcome, ${res.data.name}!`)
+        alert(`Welcome, ${res.data.name}!`);
         // Delay timer included to allow for watering and repotting schedule to be updated
         setTimeout(() => {
           const newPlantList = [];
@@ -84,34 +89,33 @@ function App() {
           newPlantList.push(res.data);
 
           setActiveUsersPlants(newPlantList);
-        }, 500)
+        }, 500);
       })
       .catch((error) => {
         console.log(error, "create plant failed.");
       });
   };
-  
+
   // Update plant name, common name and description
   const updatePlant = (plantId, updatedPlantData) => {
     axios
       .patch(`${URL}/api/v1/plants/updates/${plantId}`, updatedPlantData)
       .then((res) => {
-        const updatedPlantList = []
+        const updatedPlantList = [];
         for (const plant of activeUsersPlants) {
           if (plant.id === plantId) {
             plant.name = updatedPlantData.name;
             plant.description = updatedPlantData.description;
-            // TODO - uncomment once implemented in backend
-            // plant.commonName = updatedPlantData.commonName;
+            plant.commonName = updatedPlantData.commonName;
           }
           updatedPlantList.push(plant);
         }
         setActiveUsersPlants(updatedPlantList);
       })
       .catch((err) => {
-        console.log(err)
-    })
-  }
+        console.log(err);
+      });
+  };
 
   // Get all watering and repotting schedules by user ID - shape: {plantId: {wateringDate: n, repottingDate: n}}
   const fetchWateringAndRepottingScheduleByUserId = (userId) => {
@@ -119,64 +123,65 @@ function App() {
       .get(`${URL}/api/v1/plants/users/${userId}/plants_schedule`)
       .then((res) => {
         // console.log("watering and repotting days: ", res.data)
-        setPlantsWateringAndRepottingSchedule(res.data)
+        setPlantsWateringAndRepottingSchedule(res.data);
       })
       .catch((err) => {
-        console.log(err)
-    })
-  }
+        console.log(err);
+      });
+  };
 
   // Get and Set Watering and Repotting Interval - shape: {daysUntilNextWatering : n, daysUntilNextRepotting : n}
   const fetchWateringAndRepottingScheduleByPlant = async (plantId) => {
-    await axios 
+    await axios
       .get(`${URL}/api/v1/plants/${plantId}/schedule`)
       .then((res) => {
         // console.log("plant id:", plantId, "res.data:", res.data)
-        const newPlantsWateringAndRepottingSchedule = createWateringAndRepottingEntry(plantId);
+        const newPlantsWateringAndRepottingSchedule =
+          createWateringAndRepottingEntry(plantId);
         newPlantsWateringAndRepottingSchedule[plantId] = res.data;
 
         // console.log("new Plant Schedule", newPlantsWateringAndRepottingSchedule)
-        setPlantsWateringAndRepottingSchedule(newPlantsWateringAndRepottingSchedule);
+        setPlantsWateringAndRepottingSchedule(
+          newPlantsWateringAndRepottingSchedule
+        );
       })
       .catch((err) => {
-        console.log(err)
-    })
-  }
-  
+        console.log(err);
+      });
+  };
+
   // helper - Adds empty dictionary entry for plantId - shape: {plantId: {}}
   const createWateringAndRepottingEntry = (plantId) => {
-    const newPlantsWateringAndRepottingSchedule = plantsWateringAndRepottingSchedule;
+    const newPlantsWateringAndRepottingSchedule =
+      plantsWateringAndRepottingSchedule;
     newPlantsWateringAndRepottingSchedule[plantId] = {};
 
-    return newPlantsWateringAndRepottingSchedule
-  }
-
+    return newPlantsWateringAndRepottingSchedule;
+  };
 
   // Update plant when watered or repotted
-    const updatePlantWateredOrRepotted = (plantId, endPoint) => {
-      axios
-        .patch(`${URL}/api/v1/plants/${plantId}/${endPoint}`)
-        .then(()=>{
-          const newPlantList = []
-          for (const plant of activeUsersPlants) {
-            if (plant.id === plantId) {
-              if (endPoint === "water-date") {
-                plant.waterDate = new Date().toString();
-              } else if (endPoint === "repot-date") {
-                plant.repotDate = new Date().toString();
-              }
-            }
-            newPlantList.push(plant);
+  const updatePlantWateredOrRepotted = (plantId, endPoint) => {
+    axios.patch(`${URL}/api/v1/plants/${plantId}/${endPoint}`).then(() => {
+      const newPlantList = [];
+      for (const plant of activeUsersPlants) {
+        if (plant.id === plantId) {
+          if (endPoint === "water-date") {
+            plant.waterDate = new Date().toString();
+          } else if (endPoint === "repot-date") {
+            plant.repotDate = new Date().toString();
           }
-        })
-    }
+        }
+        newPlantList.push(plant);
+      }
+    });
+  };
 
   // Delete plant
   const deletePlant = (plantId) => {
     axios
       .delete(`${URL}/api/v1/plants/delete/${plantId}`)
       .then((res) => {
-        const newPlantList = []
+        const newPlantList = [];
         let deletedPlantName = "";
         for (const plant of activeUsersPlants) {
           if (plant.id !== plantId) {
@@ -186,63 +191,74 @@ function App() {
           }
         }
         setActiveUsersPlants(newPlantList);
-        alert(`Goodbye, ${deletedPlantName} :(`)
+        alert(`Goodbye, ${deletedPlantName} :(`);
       })
       .catch((err) => {
-        console.log(err)
-    })
-  }
+        console.log(err);
+      });
+  };
 
   //Call WitchAI
   const askWitchAI = (prompt) => {
-      const userId = activeUser.id;
+    const userId = activeUser.id;
 
-      axios
-          .post(`${URL}/api/v1/witch_ai/ask_witch/${userId}`, {prompt})
-          .then ((res) => {
-            setAiResponse(res.data);
+    axios
+      .post(`${URL}/api/v1/witch_ai/ask_witch/${userId}`, { prompt })
+      .then((res) => {
+        setAiResponse(res.data);
       })
-          .catch((err) => {
-              console.log(err);
-          });
-  }
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div id="App">
       <header id="App-header">
         {/* Header Component */}
         {}
-        <Header 
+        <Header
           demoUserData={demoUserData}
           activeUser={activeUser}
           setActiveUserCallbackFunction={setActiveUser}
           fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserId}
-          fetchWateringAndRepottingScheduleByUserIdCallbackFunction={fetchWateringAndRepottingScheduleByUserId}
+          fetchWateringAndRepottingScheduleByUserIdCallbackFunction={
+            fetchWateringAndRepottingScheduleByUserId
+          }
           setActiveUsersPlantsCallbackFunction={setActiveUsersPlants}
-          setPlantsWateringAndRepottingScheduleCallbackFunction={setPlantsWateringAndRepottingSchedule}
-          setDisplayPlantsComponentsCallbackFunction={setDisplayPlantsComponents}
+          setPlantsWateringAndRepottingScheduleCallbackFunction={
+            setPlantsWateringAndRepottingSchedule
+          }
+          setDisplayPlantsComponentsCallbackFunction={
+            setDisplayPlantsComponents
+          }
         />
       </header>
-      { activeUser.id && (
+      {activeUser.id && (
         <div id="App-body">
-        {/* - AI Component */}
-        <AIWitch
-        askWitchAI={askWitchAI}
-        aiResponse={aiResponse}
-        />
-        {/* - PlantBoard component */}
-        <PlantBoard 
-          activeUsersPlants={activeUsersPlants}
-          plantsWateringAndRepottingSchedule={plantsWateringAndRepottingSchedule}
-          activeUserPlantComponents={activeUserPlantComponents}
-          displayPlantsComponents={displayPlantsComponents}
-          deletePlantCallbackFunction={deletePlant}
-          updatePlantWateredOrRepottedCallbackFunction={updatePlantWateredOrRepotted}
-          updatePlantCallbackFunction={updatePlant}
-          createNewPlantForSelectedUserCallbackFunction={createNewPlantForSelectedUser}
-          setActiveUserPlantComponentsCallbackFunction={setActiveUserPlantComponents}
-        />
-      </div>
+          {/* - AI Component */}
+          <AIWitch askWitchAI={askWitchAI} aiResponse={aiResponse} />
+          {/* - PlantBoard component */}
+          <PlantBoard
+            activeUsersPlants={activeUsersPlants}
+            plantsWateringAndRepottingSchedule={
+              plantsWateringAndRepottingSchedule
+            }
+            activeUserPlantComponents={activeUserPlantComponents}
+            displayPlantsComponents={displayPlantsComponents}
+            deletePlantCallbackFunction={deletePlant}
+            updatePlantWateredOrRepottedCallbackFunction={
+              updatePlantWateredOrRepotted
+            }
+            updatePlantCallbackFunction={updatePlant}
+            createNewPlantForSelectedUserCallbackFunction={
+              createNewPlantForSelectedUser
+            }
+            setActiveUserPlantComponentsCallbackFunction={
+              setActiveUserPlantComponents
+            }
+          />
+        </div>
       )}
     </div>
   );
