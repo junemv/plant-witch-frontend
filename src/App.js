@@ -226,12 +226,6 @@ function App() {
     setShowModal(false);
   };
 
-  const handleSaveModal = () => {
-    // const newPlant = { name: newPlantName }; // Collect the new plant data
-    // createNewPlantForSelectedUser(newPlant);
-    setShowModal(false);
-  };
-
   return (
     <div id="App">
       <header id="App-header">
@@ -265,6 +259,7 @@ function App() {
               createNewPlantForSelectedUserCallbackFunction={
                 createNewPlantForSelectedUser
               }
+              handleCloseModalCallbackFunction={handleCloseModal}
             />
           </Modal>
 
