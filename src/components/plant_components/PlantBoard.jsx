@@ -25,7 +25,6 @@ const PlantBoard = (props) => {
   
     if (activeUsersPlants) {
       for (const plant of activeUsersPlants) {
-        console.log("IN THE LOOP")
         newActiveUsersPlantComponents.push(
           <Plant 
             key={plant.id}
