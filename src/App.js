@@ -163,7 +163,8 @@ function App() {
     return newPlantsWateringAndRepottingSchedule;
   };
 
-  // WORKING HERE
+  // Updates watering and repotting dates in frontend
+  // maybe can be deprecated since we're handling this in Plant? Triple check my spaghetti code - June
   const updateWateringAndRepottingEntry = (plantId, endPoint, interval) => {
     const newPlantsWateringAndRepottingSchedule =
       plantsWateringAndRepottingSchedule;

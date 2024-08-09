@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import Plant from './Plant';
-import NewPlantForm from './NewPlantForm';
 import './PlantBoard.css';
 
 const PlantBoard = (props) => {
@@ -13,11 +12,7 @@ const PlantBoard = (props) => {
   const deletePlantCallbackFunction = props.deletePlantCallbackFunction;
   const updatePlantWateredOrRepottedCallbackFunction = props.updatePlantWateredOrRepottedCallbackFunction;
   const updatePlantCallbackFunction = props.updatePlantCallbackFunction;
-  // const createNewPlantForSelectedUserCallbackFunction = props.createNewPlantForSelectedUserCallbackFunction;
   const setActiveUserPlantComponents = props.setActiveUserPlantComponentsCallbackFunction;
-
-  // state variables
-  const [createPlant, setCreatePlant] = useState(false);
 
   // Loop builds list of Plant components using active user's Plant state variable 
   setTimeout(() => {
@@ -49,23 +44,11 @@ const PlantBoard = (props) => {
       setActiveUserPlantComponents([])
     }
   }, 500)
-  
-
-  // // Toggle create plant form
-  // const toggleCreatePlant = () => {
-  //   setCreatePlant(!createPlant);
-  // }
 
 
   return (
     <div id="plant-board">
       <h1>My Plants</h1>
-      {/* Plant Creation Form
-      <button onClick={()=>{toggleCreatePlant()}}>Create Plant</button>
-      {createPlant && <NewPlantForm 
-        createNewPlantForSelectedUserCallbackFunction={createNewPlantForSelectedUserCallbackFunction}
-        toggleCreatePlantCallbackFunction={toggleCreatePlant}
-      />} */}
       {/* Active User's Plant List */}
       {displayPlantsComponents && <ul id="plant-list">{activeUserPlantComponents}</ul>}
     </div>

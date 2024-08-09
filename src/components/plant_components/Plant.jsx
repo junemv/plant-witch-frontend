@@ -199,7 +199,7 @@ const Plant = (props) => {
                 <input name="common-name"
                 value={updatedPlantFormFields.commonName}
                 placeholder="Snake Plant, Monstera Deliciosa..." 
-                onChange={onPlantNameChange}
+                onChange={onPlantCommonNameChange}
                 />
               </h2>
             </div>
