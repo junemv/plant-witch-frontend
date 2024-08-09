@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './Plant.css';
+import waterCanIcon from '../../watering-can.png';
+import plantPot from '../../potted-plant.png'
 import defaultImg from '../../assets/potted-plant-doodle.jpg';
 
 const Plant = (props) => {
@@ -216,8 +218,14 @@ const Plant = (props) => {
         <p>Repot Date: {repotDate}</p>
         <p>Water Interval: {waterInterval}</p>
         <p>Repot Interval: {repotInterval}</p> */}
-        <p onClick={() => handleWateringAndRepotting(id, name, "water-date")} className={scheduleBtnStyle.watering.style}>{scheduleBtnStyle.watering.msg}</p>
-        <p onClick={() => handleWateringAndRepotting(id, name, "repot-date")} className={scheduleBtnStyle.repotting.style}>{scheduleBtnStyle.repotting.msg}</p>
+        <div className="">
+          <p className={scheduleBtnStyle.watering.style}>{scheduleBtnStyle.watering.msg}</p>
+        <button onClick={() => handleWateringAndRepotting(id, name, "water-date")} ><img src={plantPot} alt="plant-in-the-pot-icon" style={{ width: "30px", height: "30px", background: "white" }} /></button>
+        </div>
+        <div>
+          <p className={scheduleBtnStyle.repotting.style}>{scheduleBtnStyle.repotting.msg}</p>
+          <button onClick={() => handleWateringAndRepotting(id, name, "repot-date")} > <img src={waterCanIcon} alt="watering-can-icon" style={{ width: "30px", height: "30px", background: "white" }} /></button>
+        </div>
         { !editMode && (
           <button onClick={() => {toggleEditMode()}}>
             Edit Plant
