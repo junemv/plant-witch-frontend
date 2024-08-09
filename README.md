@@ -33,22 +33,28 @@ Dependencies can be installed by running `npm install`. Please let the team know
   - ~~Plants Board Component~~
   - ~~Plant Component~~
 - ~~Build Folder structure~~
-- Update Watering and Repotting logic
+- ~~Update Watering and Repotting logic~~
 - Basic CSS Styling
   - App
   - PlantBoard
   - Plant
   - Dropdown
   - Header
-  - NewPlantForm
   - AIWitch
+- Move schedule calculation to the frontend
+- Update watering/repotting should update the plant component in the components variable
 
 ### Diana:
-- Header Component
+- ~~Header Component~~
   - AI text field form
 - Finished CSS Styling
   - AIWitch
+- Working on building the docker container for deployment of backend
 
 ### Natasha:
 
 - ~~New Plant Form Component~~
+- CSS Styling:
+  - NewPlantForm
+- Finish Modal component
+
