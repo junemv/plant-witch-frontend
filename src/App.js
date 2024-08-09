@@ -17,12 +17,11 @@ function App() {
   // User variables
   const [demoUserData, setDemoUserData] = useState([]);
   const [activeUser, setActiveUser] = useState({ firstName: "Guest" });
+
+  // Plant Variables
   const [activeUsersPlants, setActiveUsersPlants] = useState([]);
   // stored by {id: {daysUntilNextWatering: 0, daysUntilNextRepotting: 0}}
-  const [
-    plantsWateringAndRepottingSchedule,
-    setPlantsWateringAndRepottingSchedule,
-  ] = useState({});
+  const [plantsWateringAndRepottingSchedule, setPlantsWateringAndRepottingSchedule] = useState({});
 
   //AI Witch variable
   const [aiResponse, setAiResponse] = useState(null);
@@ -164,20 +163,39 @@ function App() {
     return newPlantsWateringAndRepottingSchedule;
   };
 
+  // Updates watering and repotting dates in frontend
+  // maybe can be deprecated since we're handling this in Plant? Triple check my spaghetti code - June
+  const updateWateringAndRepottingEntry = (plantId, endPoint, interval) => {
+    const newPlantsWateringAndRepottingSchedule =
+      plantsWateringAndRepottingSchedule;
+
+    if (endPoint === "water-date")  {
+      newPlantsWateringAndRepottingSchedule[plantId]["daysUntilNextWatering"] = interval;
+      setPlantsWateringAndRepottingSchedule(newPlantsWateringAndRepottingSchedule);
+    } else if (endPoint === "repot-date") {
+      newPlantsWateringAndRepottingSchedule[plantId]["daysUntilNextRepotting"] = interval;
+      setPlantsWateringAndRepottingSchedule(newPlantsWateringAndRepottingSchedule);
+    }
+  }
+
   // Update plant when watered or repotted
   const updatePlantWateredOrRepotted = (plantId, endPoint) => {
     axios.patch(`${URL}/api/v1/plants/${plantId}/${endPoint}`).then(() => {
+      console.log("old plant schedule", plantsWateringAndRepottingSchedule)
       const newPlantList = [];
       for (const plant of activeUsersPlants) {
         if (plant.id === plantId) {
           if (endPoint === "water-date") {
             plant.waterDate = new Date().toString();
+            updateWateringAndRepottingEntry(plantId, endPoint, plant.waterInterval);
           } else if (endPoint === "repot-date") {
             plant.repotDate = new Date().toString();
+            updateWateringAndRepottingEntry(plantId, endPoint, plant.repotInterval);
           }
         }
         newPlantList.push(plant);
       }
+      setActiveUsersPlants(newPlantList);
     });
   };
 

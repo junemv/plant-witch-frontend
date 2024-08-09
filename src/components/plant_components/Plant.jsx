@@ -17,6 +17,9 @@ const Plant = (props) => {
   const waterInterval = props.waterInterval;
   const repotInterval = props.repotInterval;
   const plantsWateringAndRepottingSchedule = props.plantsWateringAndRepottingSchedule;
+  // const scheduleBtnStyle = props.scheduleBtnStyle
+
+  // variables
   const thisPlantsNextWatering = plantsWateringAndRepottingSchedule[id].daysUntilNextWatering
   const thisPlantsNextRepotting = plantsWateringAndRepottingSchedule[id].daysUntilNextRepotting
 
@@ -68,6 +71,11 @@ const Plant = (props) => {
     }
     if (window.confirm(`Did you ${waterOrRepot} ${name}?`) === true) {
       updatePlantWateredOrRepotted(id, type);
+      if (type === "water-date") {
+        handleWateringAndRepottingStyle(waterInterval, type)
+      } else if (type === "repot-date") {
+        handleWateringAndRepottingStyle(repotInterval, type)
+      }
     }
   }
 
@@ -76,7 +84,7 @@ const Plant = (props) => {
     const newScheduleBtnStyle = scheduleBtnStyle;
     // TODO - dry up this code, can we use this set of conditions and identify if the days coming in are watering or repotting?
 
-    if (type === "watering") {
+    if (type === "water-date") {
       if (days > 2) {
         newScheduleBtnStyle.watering.style = "schedule-green";
         newScheduleBtnStyle.watering.msg = `Water Me in: ${days} days`;
@@ -96,7 +104,7 @@ const Plant = (props) => {
         newScheduleBtnStyle.watering.style = "schedule-red";
         newScheduleBtnStyle.watering.msg = `Water me! ${days * -1} days late!`;
       }
-    } else if (type === "repotting") {
+    } else if (type === "repot-date") {
       if (days > 2) {
         newScheduleBtnStyle.repotting.style = "schedule-green";
         newScheduleBtnStyle.repotting.msg = `Repot Me in: ${days} days`;
@@ -119,9 +127,10 @@ const Plant = (props) => {
     }
     setScheduleBtnStyle(newScheduleBtnStyle);
   }
+
   useEffect(() => {
-    handleWateringAndRepottingStyle(thisPlantsNextWatering, "watering")
-    handleWateringAndRepottingStyle(thisPlantsNextRepotting, "repotting")
+    handleWateringAndRepottingStyle(thisPlantsNextWatering, "water-date")
+    handleWateringAndRepottingStyle(thisPlantsNextRepotting, "repot-date")
   }, [])
 
   // FORM FUNCTIONS
@@ -158,8 +167,6 @@ const Plant = (props) => {
     };
   }
 
-  // TODO - 
-  // > turn watering and repotting days into button to reset to current date
 
   return (
     <div id="plant-component">
@@ -194,7 +201,7 @@ const Plant = (props) => {
                 <input name="common-name"
                 value={updatedPlantFormFields.commonName}
                 placeholder="Snake Plant, Monstera Deliciosa..." 
-                onChange={onPlantNameChange}
+                onChange={onPlantCommonNameChange}
                 />
               </h2>
             </div>
