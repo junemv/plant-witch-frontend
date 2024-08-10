@@ -6,12 +6,10 @@ import debounce from "lodash.debounce";
 
 /* eslint-env jest */
 
-// TODO - uncomment commonName variable and form entry once implemented in backend
 const PlantForm = (props) => {
-  // callback Functions
   const createNewPlantForSelectedUser = props.createNewPlantForSelectedUserCallbackFunction
-  // const toggleCreatePlant = props.toggleCreatePlantCallbackFunction
-  
+  const handleCloseModal = props.handleCloseModalCallbackFunction;
+
   const defaultPlantsData = { 
     name: "", 
     commonName: "",
@@ -40,7 +38,7 @@ const PlantForm = (props) => {
     if (name && waterDate && waterInterval > 0 && repotDate && repotInterval > 0) {
         createNewPlantForSelectedUser(plantsData);
         setPlantsData(defaultPlantsData);
-        // toggleCreatePlant();
+        handleCloseModal();
     } else {
         alert('Please fill in all required fields.Water and Repot intervals should be more than 0.');
     }
@@ -52,7 +50,7 @@ const PlantForm = (props) => {
       const plantDetails = response.data.data[0];
       const imageURL = plantDetails.default_image.small_url;
       const commonNameFetched = plantDetails.common_name;
-      // console.log("Plant", plantDetails.common_name);
+      // console.log("Plant", plantDetails);
       // console.log("Photo", imageURL);
       if (imageURL !== "https://perenual.com/storage/image/upgrade_access.jpg") {
         setPlantsData((prevData) => ({ ...prevData, image: imageURL }));
@@ -71,10 +69,11 @@ const PlantForm = (props) => {
 
   return (
     <form onSubmit={handleFormSubmission} className="plant-submit-form">
+      <h1>Create New Plant</h1>
       <div className="input-container">
       <label>Nickname: </label>
       <input
-        className="name-input"
+        className="input-item name-input"
         type="text"
         required
         name="name"
@@ -87,7 +86,7 @@ const PlantForm = (props) => {
       <div className="input-container">
       <label>Common Name: </label>
       <input
-        className="commonName-input"
+        className=" input-item commonName-input"
         type="text"
         required
         name="commonName"
@@ -100,7 +99,7 @@ const PlantForm = (props) => {
       <div className="input-container">
       <label>Description: </label>
         <input
-          className="description-input"
+          className="input-item description-input"
           type="text"
           name="description"
           maxLength={40}
@@ -112,7 +111,7 @@ const PlantForm = (props) => {
       <div className="input-container">
       <label>Last Watered: </label>
         <input
-          className="lastWatered-input"
+          className="input-item lastWatered-input"
           type="date"
           required
           name="waterDate"
@@ -124,7 +123,7 @@ const PlantForm = (props) => {
       <div className="input-container">
       <label>Frequency: </label>
         <input
-          className="waterFrequency-input"
+          className="input-item waterFrequency-input"
           type="number"
           required
           name="waterInterval"
@@ -136,7 +135,7 @@ const PlantForm = (props) => {
       <div className="input-container">
       <label>Last Repoted: </label>
       <input
-          className="lastRepoted-input"
+          className="input-item lastRepoted-input"
           type="date"
           required
           name="repotDate"
@@ -148,7 +147,7 @@ const PlantForm = (props) => {
       <div className="input-container">
       <label>Frequency: </label>
         <input
-          className="repotFrequency-input"
+          className="input-item repotFrequency-input"
           type="number"
           required
           name="repotInterval"
@@ -157,7 +156,10 @@ const PlantForm = (props) => {
           onChange={handleFormInput}
       ></input>
       </div>
-      <input className="button" type="submit" value="Submit" />
+      <div className="buttons">
+        <input className="button" type="submit" value="Submit" />
+        <button type="button" className="cancel-button" onClick={handleCloseModal}>Cancel</button>      
+      </div>
     </form>
   );
 }

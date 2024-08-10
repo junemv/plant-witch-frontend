@@ -4,30 +4,58 @@
 	list-style: none;
 	margin: 2%;
 	padding: 15px;
-	width: 250px;
+	width: 350px;
 	border-radius: 10px;
 }
 
 /* classes */
+/* Schedule Display Contextual CSS */
 .schedule-green {
-	background-color: greenyellow;
-	width: 200px;
-	height: 25px;
+	background-color: #54c676;
+	color: white;
+	font-weight: bold;
+	padding-top: 10px;
+	width: 250px;
+	height: 30px;
+	display: inline-block
+	/* cursor: pointer; */
 }
 
 .schedule-yellow {
-	background-color: gold;
-	width: 200px;
-	height: 25px;
+	background-color: rgb(255, 196, 0);
+	color: white;
+	font-weight: bold;
+	padding-top: 10px;
+	width: 250px;
+	height: 30px;
+	display: inline-block
+	/* cursor: pointer; */
 }
 
 .schedule-red {
-	background-color: mediumvioletred;
+	background-color: #af4f4c;
 	color: white;
-	width: 200px;
-	height: 25px;
+	font-weight: bold;
+	padding-top: 10px;
+	width: 250px;
+	height: 30px;
+	display: inline-block
+	/* cursor: pointer; */
 }
 
-.schedule-style {
-	display: flex;
+/* plant image */
+.plant-img {
+	width: 250px;
+	height: 250px;
+	padding-top: 30px;
+}
+
+/* watering and repotting section */
+.water-repot-sec {
+	display: block;
+}
+
+.water-repot-btn {
+	display: inline-block;
+	padding: 10px;
 }
