@@ -225,13 +225,13 @@ const Plant = (props) => {
         <p>Repot Date: {repotDate}</p>
         <p>Water Interval: {waterInterval}</p>
         <p>Repot Interval: {repotInterval}</p> */}
-        <div className="">
+        <div className="schedule-style">
           <p className={scheduleBtnStyle.watering.style}>{scheduleBtnStyle.watering.msg}</p>
-        <button onClick={() => handleWateringAndRepotting(id, name, "water-date")} ><img src={plantPot} alt="plant-in-the-pot-icon" style={{ width: "30px", height: "30px", background: "white" }} /></button>
+        <button onClick={() => handleWateringAndRepotting(id, name, "water-date")} ><img src={waterCanIcon} alt="watering-can-icon" style={{ width: "30px", height: "30px", background: "white" }} /></button>
         </div>
-        <div>
+        <div className="schedule-style">
           <p className={scheduleBtnStyle.repotting.style}>{scheduleBtnStyle.repotting.msg}</p>
-          <button onClick={() => handleWateringAndRepotting(id, name, "repot-date")} > <img src={waterCanIcon} alt="watering-can-icon" style={{ width: "30px", height: "30px", background: "white" }} /></button>
+          <button onClick={() => handleWateringAndRepotting(id, name, "repot-date")}> <img src={plantPot} alt="plant-in-the-pot-icon" style={{ width: "30px", height: "30px", background: "white" }} /></button>
         </div>
         { !editMode && (
           <button onClick={() => {toggleEditMode()}}>
