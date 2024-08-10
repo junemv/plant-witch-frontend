@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import PlantBoard from "./components/plant_components/PlantBoard";
 import NewPlantForm from "./components/plant_components/NewPlantForm";
 import AIWitch from "./components/witch_components/AIWitch";
+import sproutIcon from "./sprout.png";
 
 import axios from "axios";
 import Modal from "./components/Modal";
@@ -21,7 +22,10 @@ function App() {
   // Plant Variables
   const [activeUsersPlants, setActiveUsersPlants] = useState([]);
   // stored by {id: {daysUntilNextWatering: 0, daysUntilNextRepotting: 0}}
-  const [plantsWateringAndRepottingSchedule, setPlantsWateringAndRepottingSchedule] = useState({});
+  const [
+    plantsWateringAndRepottingSchedule,
+    setPlantsWateringAndRepottingSchedule,
+  ] = useState({});
 
   //AI Witch variable
   const [aiResponse, setAiResponse] = useState(null);
@@ -169,28 +173,42 @@ function App() {
     const newPlantsWateringAndRepottingSchedule =
       plantsWateringAndRepottingSchedule;
 
-    if (endPoint === "water-date")  {
-      newPlantsWateringAndRepottingSchedule[plantId]["daysUntilNextWatering"] = interval;
-      setPlantsWateringAndRepottingSchedule(newPlantsWateringAndRepottingSchedule);
+    if (endPoint === "water-date") {
+      newPlantsWateringAndRepottingSchedule[plantId]["daysUntilNextWatering"] =
+        interval;
+      setPlantsWateringAndRepottingSchedule(
+        newPlantsWateringAndRepottingSchedule
+      );
     } else if (endPoint === "repot-date") {
-      newPlantsWateringAndRepottingSchedule[plantId]["daysUntilNextRepotting"] = interval;
-      setPlantsWateringAndRepottingSchedule(newPlantsWateringAndRepottingSchedule);
+      newPlantsWateringAndRepottingSchedule[plantId]["daysUntilNextRepotting"] =
+        interval;
+      setPlantsWateringAndRepottingSchedule(
+        newPlantsWateringAndRepottingSchedule
+      );
     }
-  }
+  };
 
   // Update plant when watered or repotted
   const updatePlantWateredOrRepotted = (plantId, endPoint) => {
     axios.patch(`${URL}/api/v1/plants/${plantId}/${endPoint}`).then(() => {
-      console.log("old plant schedule", plantsWateringAndRepottingSchedule)
+      console.log("old plant schedule", plantsWateringAndRepottingSchedule);
       const newPlantList = [];
       for (const plant of activeUsersPlants) {
         if (plant.id === plantId) {
           if (endPoint === "water-date") {
             plant.waterDate = new Date().toString();
-            updateWateringAndRepottingEntry(plantId, endPoint, plant.waterInterval);
+            updateWateringAndRepottingEntry(
+              plantId,
+              endPoint,
+              plant.waterInterval
+            );
           } else if (endPoint === "repot-date") {
             plant.repotDate = new Date().toString();
-            updateWateringAndRepottingEntry(plantId, endPoint, plant.repotInterval);
+            updateWateringAndRepottingEntry(
+              plantId,
+              endPoint,
+              plant.repotInterval
+            );
           }
         }
         newPlantList.push(plant);
@@ -271,7 +289,14 @@ function App() {
           {/* - AI Component */}
           <AIWitch askWitchAI={askWitchAI} aiResponse={aiResponse} />
           {/* - Create New Plant component (using Modal component) */}
-          <button onClick={handleCreateNewPlant}>Create Plant</button>
+          <button className="add-new-plant-btn" onClick={handleCreateNewPlant}>
+            <img
+              className="sprout-icon"
+              src={sproutIcon}
+              alt="new-sprout-icon"
+            />
+            Add New Plant
+          </button>
           <Modal show={showModal} onClose={handleCloseModal}>
             <NewPlantForm
               createNewPlantForSelectedUserCallbackFunction={
