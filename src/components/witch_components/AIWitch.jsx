@@ -19,24 +19,24 @@ const AIWitch = (props) => {
 
 return (
 	<div id="ai-witch">
-      <h1>AI Witch</h1>
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                value={prompt}
-                placeholder="Ask me anything about plants!"
-                onChange={handleFormInput}
-                />
-            <button type="submit">Ask me!</button>
-        </form>
+		<div className="medium-heading">Have Any Plant Questions?</div>
+			<form onSubmit={handleSubmit}>
+				<input className="input-item"
+						type="text"
+						value={prompt}
+						placeholder="Ask me anything about plants!"
+						onChange={handleFormInput}
+						/>
+				<button type="submit">Ask me!</button>
+			</form>
 
-        {aiResponse && (
-        <div>
-            <h3>My witchy response:</h3>
-            <p>{aiResponse.response}</p>
-        </div>
-        )}
-    </div>
+			{aiResponse && (
+			<div>
+				<h3>My witchy response:</h3>
+				<p>{aiResponse.response}</p>
+			</div>
+			)}
+	</div>
 );
 }
 
