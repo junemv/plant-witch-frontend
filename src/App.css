@@ -8,6 +8,7 @@
   background-color: var(--section-bg);
 	/* grid-column: 1 / 1; */
 	grid-row: var(--container-row);
+  	/* grid-row: var(--container-row); */
 }
 
 .add-new-plant-btn {
@@ -58,3 +59,5 @@
   height: 40px;
   padding-right: 5px;
 }
+
+
