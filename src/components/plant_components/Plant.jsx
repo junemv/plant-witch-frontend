@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import './Plant.css';
 import defaultImg from '../../assets/potted-plant-doodle.jpg';
+import shovelIcon from '../../shovel.png'
+import waterCanIcon from '../../watering-can.png';
 
 const Plant = (props) => {
   // props
@@ -229,9 +231,11 @@ const Plant = (props) => {
           <div>
             <div className="water-repot-sec">
               <div className={scheduleBtnStyle.watering.style}>{scheduleBtnStyle.watering.msg}</div>
-              <button className="water-repot-btn" onClick={() => handleWateringAndRepotting(id, name, "water-date")} >Water</button>
+              <button className="water-repot-btn" onClick={() => handleWateringAndRepotting(id, name, "water-date")} ><img className="button-icon" src={waterCanIcon} alt="watering-can-icon"/></button>
+            </div>
+            <div className="water-repot-sec">  
               <div className={scheduleBtnStyle.repotting.style}>{scheduleBtnStyle.repotting.msg}</div>
-              <button className="water-repot-btn" onClick={() => handleWateringAndRepotting(id, name, "repot-date")}>Repot</button>
+              <button className="water-repot-btn" onClick={() => handleWateringAndRepotting(id, name, "repot-date")}><img className="button-icon" src={shovelIcon} alt="shovel-icon"/></button>
             </div>
             <button onClick={() => {toggleEditMode()}}>
               Edit Plant
