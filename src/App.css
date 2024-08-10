@@ -6,6 +6,5 @@
 
 #App-header {
   background-color: var(--section-bg);
-	/* grid-column: 1 / 1; */
-	grid-row: var(--container-row);
+	/* grid-row: var(--container-row); */
 }

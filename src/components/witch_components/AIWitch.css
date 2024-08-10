@@ -1,5 +1,20 @@
 /* IDs */
 #ai-witch {
-	background: var(--section-bg);
+	background: white;
 	grid-row: var(--container-row);
+	/* margin: 2%;
+	margin-bottom: 2%; */
+	border-radius: 10px;
+	padding: 30px;
+}
+
+/* classes */
+.input-item {
+	background-color: #D4F1B6;
+	border: 2px solid #5bd780;
+	border-radius: 3px;
+	padding: 10px;
+	margin: 5px 8px 10px;
+	width: calc(100% -20px);
+	
 }

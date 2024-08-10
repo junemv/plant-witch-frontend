@@ -179,7 +179,10 @@ const Plant = (props) => {
             {/* TODO - uncomment Common Name once implemented */}
             <h3>Common Name: {commonName}</h3>
             {description && (
-              <h3>Notes: {description}</h3>
+              <p>
+                <b>Notes: </b>
+                {description}
+              </p>
             )}
           </div>
         )}

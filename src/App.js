@@ -221,6 +221,7 @@ function App() {
       });
   };
 
+  // AI FUNCTIONALITY:
   //Call WitchAI
   const askWitchAI = (prompt) => {
     const userId = activeUser.id;
@@ -252,6 +253,7 @@ function App() {
         <Header
           demoUserData={demoUserData}
           activeUser={activeUser}
+          aiResponse={aiResponse}
           setActiveUserCallbackFunction={setActiveUser}
           fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserId}
           fetchWateringAndRepottingScheduleByUserIdCallbackFunction={
@@ -264,12 +266,11 @@ function App() {
           setDisplayPlantsComponentsCallbackFunction={
             setDisplayPlantsComponents
           }
+          askWitchAICallbackFunction={askWitchAI}
         />
       </header>
       {activeUser.id && (
         <div id="App-body">
-          {/* - AI Component */}
-          <AIWitch askWitchAI={askWitchAI} aiResponse={aiResponse} />
           {/* - Create New Plant component (using Modal component) */}
           <button onClick={handleCreateNewPlant}>Create Plant</button>
           <Modal show={showModal} onClose={handleCloseModal}>
