@@ -56,6 +56,7 @@ Dependencies can be installed by running `npm install`. Please let the team know
 - ~~New Plant Form Component~~
 - CSS Styling:
   - ~~NewPlantForm~~
-  - Adding icons for water and repot buttons
+  - ~~Adding icons for water and repot buttons~~
+  - Styling "Add new plant" button
 - ~~Finish Modal component~~
 
