@@ -60,12 +60,25 @@ function App() {
       .get(`${URL}/api/v1/plants/users/${userId}`)
       .then((res) => {
         setActiveUsersPlants(res.data);
-        console.log("plants:", res.data);
+        // console.log("plants:", res.data);
+        buildScheduleFromPlants(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const buildScheduleFromPlants = (plants) => {
+    // console.log("plants", plants)
+    const newPlantsWateringAndRepottingSchedule = {};
+    for (const plant of plants) {
+      // console.log("plant", plant)
+      newPlantsWateringAndRepottingSchedule[plant.id] = calculateDaysUntilNextWateringRepotting(plant)
+    }
+
+    // console.log("newPlantData", newPlantsWateringAndRepottingSchedule)
+    setPlantsWateringAndRepottingSchedule(newPlantsWateringAndRepottingSchedule);
+  }
 
   // Get one plant by ID
   const fetchPlantById = (plantId) => {
@@ -84,20 +97,30 @@ function App() {
     axios
       .post(`${URL}/api/v1/plants/users/${activeUser.id}`, data)
       .then((res) => {
-        fetchWateringAndRepottingScheduleByPlant(res.data.id);
-        console.log("plant data", res.data);
+        // fetchWateringAndRepottingScheduleByPlant(res.data.id);
+        const plantWateringRepottingSchedule = calculateDaysUntilNextWateringRepotting(res.data);
+        const newWateringRepottingSchedule = createWateringAndRepottingEntry(res.data.id)
+        newWateringRepottingSchedule[res.data.id] = plantWateringRepottingSchedule;
+        setPlantsWateringAndRepottingSchedule(newWateringRepottingSchedule);
 
         alert(`Welcome, ${res.data.name}!`);
-        // Delay timer included to allow for watering and repotting schedule to be updated
-        setTimeout(() => {
-          const newPlantList = [];
+        const newPlantList = [];
           for (const plant of activeUsersPlants) {
             newPlantList.push(plant);
           }
           newPlantList.push(res.data);
 
           setActiveUsersPlants(newPlantList);
-        }, 500);
+        // Delay timer included to allow for watering and repotting schedule to be updated
+        // setTimeout(() => {
+        //   const newPlantList = [];
+        //   for (const plant of activeUsersPlants) {
+        //     newPlantList.push(plant);
+        //   }
+        //   newPlantList.push(res.data);
+
+        //   setActiveUsersPlants(newPlantList);
+        // }, 500);
       })
       .catch((error) => {
         console.log(error, "create plant failed.");
@@ -126,36 +149,54 @@ function App() {
   };
 
   // Get all watering and repotting schedules by user ID - shape: {plantId: {wateringDate: n, repottingDate: n}}
-  const fetchWateringAndRepottingScheduleByUserId = (userId) => {
-    axios
-      .get(`${URL}/api/v1/plants/users/${userId}/plants_schedule`)
-      .then((res) => {
-        // console.log("watering and repotting days: ", res.data)
-        setPlantsWateringAndRepottingSchedule(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const fetchWateringAndRepottingScheduleByUserId = (userId) => {
+  //   axios
+  //     .get(`${URL}/api/v1/plants/users/${userId}/plants_schedule`)
+  //     .then((res) => {
+  //       // console.log("watering and repotting days: ", res.data)
+  //       setPlantsWateringAndRepottingSchedule(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   // Get and Set Watering and Repotting Interval - shape: {daysUntilNextWatering : n, daysUntilNextRepotting : n}
-  const fetchWateringAndRepottingScheduleByPlant = async (plantId) => {
-    await axios
-      .get(`${URL}/api/v1/plants/${plantId}/schedule`)
-      .then((res) => {
-        // console.log("plant id:", plantId, "res.data:", res.data)
-        const newPlantsWateringAndRepottingSchedule =
-          createWateringAndRepottingEntry(plantId);
-        newPlantsWateringAndRepottingSchedule[plantId] = res.data;
+  // const fetchWateringAndRepottingScheduleByPlant = async (plantId) => {
+  //   await axios
+  //     .get(`${URL}/api/v1/plants/${plantId}/schedule`)
+  //     .then((res) => {
+  //       // console.log("plant id:", plantId, "res.data:", res.data)
+  //       const newPlantsWateringAndRepottingSchedule =
+  //         createWateringAndRepottingEntry(plantId);
+  //       newPlantsWateringAndRepottingSchedule[plantId] = res.data;
 
-        // console.log("new Plant Schedule", newPlantsWateringAndRepottingSchedule)
-        setPlantsWateringAndRepottingSchedule(
-          newPlantsWateringAndRepottingSchedule
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  //       // console.log("new Plant Schedule", newPlantsWateringAndRepottingSchedule)
+  //       setPlantsWateringAndRepottingSchedule(
+  //         newPlantsWateringAndRepottingSchedule
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+  // calculate days until next watering or repotting - returns { daysUntilNextWatering : n, daysUntilNextRepotting : n }
+  const calculateDaysUntilNextWateringRepotting = (plant) => {
+    const todaysDate = new Date();
+
+    const prevWaterDate = new Date(plant.waterDate);
+    const prevRepotDate = new Date(plant.repotDate);
+    const waterInterval = plant.waterInterval;
+    const repotInterval = plant.repotInterval;
+
+    const daysUntilNextWatering = waterInterval - Math.floor(
+      (todaysDate - prevWaterDate) / (1000 * 60 * 60 * 24)
+    );
+    const daysUntilNextRepotting = repotInterval - Math.floor(
+      (todaysDate - prevRepotDate) / (1000 * 60 * 60 * 24)
+    );
+
+    return {daysUntilNextWatering : daysUntilNextWatering, daysUntilNextRepotting : daysUntilNextRepotting};
   };
 
   // helper - Adds empty dictionary entry for plantId - shape: {plantId: {}}
@@ -274,9 +315,6 @@ function App() {
           aiResponse={aiResponse}
           setActiveUserCallbackFunction={setActiveUser}
           fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserId}
-          fetchWateringAndRepottingScheduleByUserIdCallbackFunction={
-            fetchWateringAndRepottingScheduleByUserId
-          }
           setActiveUsersPlantsCallbackFunction={setActiveUsersPlants}
           setPlantsWateringAndRepottingScheduleCallbackFunction={
             setPlantsWateringAndRepottingSchedule
