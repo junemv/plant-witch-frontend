@@ -8,7 +8,6 @@ function Dropdown(props) {
   // callback functions
 	const setActiveUser = props.setActiveUserCallbackFunction;
 	const fetchAllPlantsByUserId = props.fetchAllPlantsByUserIdCallbackFunction;
-  const fetchWateringAndRepottingScheduleByUserId = props.fetchWateringAndRepottingScheduleByUserIdCallbackFunction;
   const setActiveUsersPlants = props.setActiveUsersPlantsCallbackFunction;
 	const setPlantsWateringAndRepottingSchedule = props.setPlantsWateringAndRepottingScheduleCallbackFunction;
   const setDisplayPlantsComponents = props.setDisplayPlantsComponentsCallbackFunction;
@@ -28,7 +27,6 @@ function Dropdown(props) {
     setIsOpen(!isOpen)
 		setActiveUser(user);
 		fetchAllPlantsByUserId(user.id);
-    fetchWateringAndRepottingScheduleByUserId(user.id);
     setTimeout(() => {
       setDisplayPlantsComponents(true);
     }, 500)
