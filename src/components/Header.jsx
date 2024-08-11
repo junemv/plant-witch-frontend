@@ -29,7 +29,6 @@ const Header = (props) => {
 				activeUser={activeUser}
 				setActiveUserCallbackFunction={setActiveUserCallbackFunction}
 				fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserIdCallbackFunction}
-				fetchWateringAndRepottingScheduleByUserIdCallbackFunction={fetchWateringAndRepottingScheduleByUserIdCallbackFunction}
 				setActiveUsersPlantsCallbackFunction={setActiveUsersPlantsCallbackFunction}
 				setPlantsWateringAndRepottingScheduleCallbackFunction={setPlantsWateringAndRepottingScheduleCallbackFunction}
 				setDisplayPlantsComponentsCallbackFunction={setDisplayPlantsComponentsCallbackFunction}

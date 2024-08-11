@@ -17,7 +17,6 @@ const Plant = (props) => {
   const waterInterval = props.waterInterval;
   const repotInterval = props.repotInterval;
   const plantsWateringAndRepottingSchedule = props.plantsWateringAndRepottingSchedule;
-  // const scheduleBtnStyle = props.scheduleBtnStyle
 
   // variables
   const thisPlantsNextWatering = plantsWateringAndRepottingSchedule[id].daysUntilNextWatering
@@ -32,22 +31,13 @@ const Plant = (props) => {
   const [editMode, setEditMode] = useState(false);
   const [updatedPlantFormFields, setUpdatedPlantFormFields] = useState({
     name: name,
-    // commonName: commonName,
+    commonName: commonName,
     description: description
   });
   const [scheduleBtnStyle, setScheduleBtnStyle] = useState({
     watering: {style: "schedule-green", msg: `Water Me in: ${thisPlantsNextWatering} days`}, 
     repotting: {style: "schedule-green", msg: `Repot Me in: ${thisPlantsNextWatering} days`}
   });
-  // TODO 8/7 - 
-  // 1. create a state variable to store the three CSS style states for watering/repotting
-  //  > green = 3+ days
-  //  > yellow = 0-2 days
-  //  > red = -n days
-  // 2. Figure out margin issue 
-  // 3. build function to calculate watering/repotting days on frontend
-  // calc: watering interval - (current date - last watered/repotted date)
-  // 4. styling
 
   // Switches between edit and view modes
   const toggleEditMode = () => {
