@@ -4,6 +4,7 @@
 	background: var(--section-bg);
 	
 	grid-row: var(--container-row);
+	text-align: center;
 }
 
 #plant-list {
