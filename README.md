@@ -40,15 +40,12 @@ Dependencies can be installed by running `npm install`. Please let the team know
   - Plant
   - Dropdown
   - Header
-  - AIWitch
 - Move schedule calculation to the frontend
 - Update watering/repotting should update the plant component in the components variable
 
 ### Diana:
 - ~~Header Component~~
   - AI text field form
-- Finished CSS Styling
-  - AIWitch
 - Working on building the docker container for deployment of backend
 
 ### Natasha:
@@ -57,6 +54,9 @@ Dependencies can be installed by running `npm install`. Please let the team know
 - CSS Styling:
   - ~~NewPlantForm~~
   - ~~Adding icons for water and repot buttons~~
-  - Styling "Add new plant" button
+  - ~~Styling "Add new plant" button~~
+  - ~~Buttons to login, logout and select user~~
+  - AIWitch
 - ~~Finish Modal component~~
+- AIWitch history log (using modal?);
 
