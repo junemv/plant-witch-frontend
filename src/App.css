@@ -27,7 +27,7 @@
 
 .add-new-plant-btn:after {
   content: "";
-  background-color: #ffe54c;
+  background-color: #ffe052;
   width: 100%;
   z-index: -1;
   position: absolute;
