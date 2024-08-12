@@ -13,7 +13,6 @@ html {
   background-color: var(--common-green);
   display: grid;
   padding: 0;
-  /* grid-template: 1fr 1fr 1fr 1fr / 1fr 1fr 1fr 1fr; */
   margin-left: 3%;
   margin-right: 3%;
 }
@@ -41,6 +40,23 @@ code {
   font-weight: bold;
   color: var(--text-heading);
   text-align: center;
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+}
+
+#logo-2 {
+  font-family: cursive;
+  font-size: 3.5em;
+  color: var(--text-heading);
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+  translate: 20px;
+  letter-spacing: 2px;
+  position: relative;
+  top: -55px;
+  left: -20px;
 }
 
 /* classes */

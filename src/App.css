@@ -6,18 +6,16 @@
 
 #App-header {
   background-color: var(--section-bg);
-	/* grid-column: 1 / 1; */
-	grid-row: var(--container-row);
-  	/* grid-row: var(--container-row); */
+  border-radius: 50px
 }
 
 .add-new-plant-btn {
   font-size: 18px;
-  font-weight: 200;
+  font-weight: bold;
   letter-spacing: 1px;
   padding: 10px 17px 10px;
   outline: 0;
-  border: 1px solid black;
+  border: 2px solid black;
   cursor: pointer;
   position: relative;
   background-color: rgba(0, 0, 0, 0);

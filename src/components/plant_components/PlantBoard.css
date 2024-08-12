@@ -1,10 +1,8 @@
 /* IDs */
 #plant-board {
-	/* colors */
 	background: var(--section-bg);
-	
-	grid-row: var(--container-row);
 	text-align: center;
+	border-radius: 50px;
 }
 
 #plant-list {

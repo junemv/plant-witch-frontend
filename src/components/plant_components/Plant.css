@@ -6,6 +6,7 @@
 	padding: 30px;
 	width: 350px;
 	border-radius: 10px;
+	border: 8px solid var(--common-green);
 }
 
 /* classes */
@@ -42,10 +43,10 @@
 
 /* plant image */
 .plant-img {
-	width: 250px;
-	height: 250px;
-	padding-top: 30px;
-	border-radius: 50px;
+	width: 200px;
+	margin-top: 30px;
+	/* padding-top: 30px; */
+	border-radius: 20px;
 }
 
 /* watering and repotting section */

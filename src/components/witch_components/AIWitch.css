@@ -2,9 +2,9 @@
 #ai-witch {
 	background: white;
 	grid-row: var(--container-row);
-	/* margin: 2%;
-	margin-bottom: 2%; */
-	border-radius: 10px;
+	margin: 2%;
+	/* margin-bottom: 2%; */
+	border-radius: 30px;
 	padding: 20px;
 	display: flex;
 	flex-direction: column;

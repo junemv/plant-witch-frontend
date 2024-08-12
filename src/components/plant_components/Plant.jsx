@@ -185,14 +185,7 @@ const Plant = (props) => {
         { !editMode && (
           <div>
             <h2>{name}</h2>
-            {/* TODO - uncomment Common Name once implemented */}
-            <h3>Common Name: {commonName}</h3>
-            {/* {description && (
-              <p>
-                <b>Notes: </b>
-                {description}
-              </p>
-            )} */}
+            <p><b>Common Name: </b>{commonName}</p>
           </div>
         )}
         { editMode && (
@@ -208,14 +201,14 @@ const Plant = (props) => {
               </h3>
             </div>
             <div>
-              <h3>
-                Common Name:
+              <p>
+                <b>Common Name: </b>
                 <input name="common-name"
                 value={updatedPlantFormFields.commonName}
                 placeholder="Snake Plant, Monstera Deliciosa..." 
                 onChange={onPlantCommonNameChange}
                 />
-              </h3>
+              </p>
             </div>
             <button onClick={() => {toggleEditMode()}}>
               Cancel
@@ -247,8 +240,7 @@ const Plant = (props) => {
               Delete Plant
             </button>
           </div>
-        )
-        }
+        )}
       </li>
     </div>
   );

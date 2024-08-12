@@ -29,7 +29,8 @@ const Header = (props) => {
 				setPlantsWateringAndRepottingScheduleCallbackFunction={setPlantsWateringAndRepottingScheduleCallbackFunction}
 				setDisplayPlantsComponentsCallbackFunction={setDisplayPlantsComponentsCallbackFunction}
 				/>
-			<div id="logo">Plant Witch</div>
+			<h1 id="logo">Plant Witch</h1>
+			<h3 id="logo-2">Your Plant Assistant</h3>
 			{/* <div className="medium-heading">
 				Welcome {activeUser.firstName}!
 			</div> */}
