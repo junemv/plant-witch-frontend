@@ -17,8 +17,7 @@
 	padding-top: 10px;
 	width: 250px;
 	height: 30px;
-	display: inline-block
-	/* cursor: pointer; */
+	display: inline-block;
 }
 
 .schedule-yellow {
@@ -29,7 +28,6 @@
 	width: 250px;
 	height: 30px;
 	display: inline-block
-	/* cursor: pointer; */
 }
 
 .schedule-red {
@@ -40,7 +38,6 @@
 	width: 250px;
 	height: 30px;
 	display: inline-block
-	/* cursor: pointer; */
 }
 
 /* plant image */
@@ -48,6 +45,7 @@
 	width: 250px;
 	height: 250px;
 	padding-top: 30px;
+	border-radius: 50px;
 }
 
 /* watering and repotting section */
