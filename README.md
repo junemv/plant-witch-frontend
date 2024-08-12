@@ -49,8 +49,6 @@ Dependencies can be installed by running `npm install`. Please let the team know
 ### Diana:
 - ~~Header Component~~
   - AI text field form
-- Finished CSS Styling
-  - AIWitch
 - Working on building the docker container for deployment of backend
 
 ### Natasha:
@@ -60,5 +58,8 @@ Dependencies can be installed by running `npm install`. Please let the team know
   - ~~NewPlantForm~~
   - ~~Adding icons for water and repot buttons~~
   - ~~Styling "Add new plant" button~~
+  - ~~Buttons to login, logout and select user~~
+  - AIWitch
 - ~~Finish Modal component~~
+- AIWitch history log (using modal?);
 
