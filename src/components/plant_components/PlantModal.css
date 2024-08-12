@@ -47,8 +47,8 @@
 
 .header-list {
 	list-style: none;
-	padding: 0px;
-	margin: 10px;
+	padding-left: 20px;
+	margin: 0px;
 	justify-self: left;
 	text-align: left;
 }
