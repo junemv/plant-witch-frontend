@@ -63,6 +63,7 @@ return (
 						value={prompt}
 						placeholder="Ask me anything about plants!"
 						onChange={handleFormInput}
+						onKeyDown={handleFormInput}
 						
 						/>
 				<button className="send-btn" type="submit" ><img className="send-button-icon "src={sendIcon} alt="send-mail-icon"/></button>
