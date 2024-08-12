@@ -16,6 +16,7 @@ const Header = (props) => {
 	const setActiveUsersPlantsCallbackFunction = props.setActiveUsersPlantsCallbackFunction;
 	const setPlantsWateringAndRepottingScheduleCallbackFunction = props.setPlantsWateringAndRepottingScheduleCallbackFunction;
 	const setDisplayPlantsComponentsCallbackFunction = props.setDisplayPlantsComponentsCallbackFunction;
+	const setAiResponseCallbackFunction = props.setAiResponseCallbackFunction
 	const askWitchAI = props.askWitchAICallbackFunction;
 	// const saveWitchResponseToPlantCallbackFunction=props.saveWitchResponseToPlantCallbackFunction;
 
@@ -40,6 +41,7 @@ const Header = (props) => {
 					askWitchAI={askWitchAI} 
 					aiResponse={aiResponse}		
 					activeUsersPlants={activeUsersPlants}
+					setAiResponseCallbackFunction={setAiResponseCallbackFunction}
 				>
 				</AIWitch> 
 			}

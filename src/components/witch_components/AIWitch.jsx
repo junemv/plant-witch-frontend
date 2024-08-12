@@ -11,8 +11,8 @@ const AIWitch = (props) => {
 	const URL = process.env.REACT_APP_BACKEND_URL;
     const askWitchAI = props.askWitchAI;
     const aiResponse = props.aiResponse;
-	const activeUserPlants = props.activeUsersPlants
-	// const saveWitchResponseToPlantCallbackFunction = props.saveWitchResponseToPlantCallbackFunction;
+	const activeUserPlants = props.activeUsersPlants;
+	const setAiResponse = props.setAiResponseCallbackFunction;
     const [prompt, setPrompt] = useState('');
 	const [showModal, setShowModal] = useState(false);
 
@@ -20,6 +20,7 @@ const AIWitch = (props) => {
 	const saveWitchResponseToPlant = async (plantId, witchId) => {
 		try {
 			const response = await axios.patch(`${URL}/api/v1/witch_ai/${witchId}`, { plant_id: plantId });
+			setAiResponse(null);
 			return response.data;
 		} catch (error) {
 			console.error("Error saving AI response to plant:", error);
@@ -33,6 +34,7 @@ const AIWitch = (props) => {
 	
 	const handleCloseModal = () => {
 		setShowModal(false);
+		setPrompt('');
 	};
 
     const handleFormInput = (event) => {
@@ -44,6 +46,11 @@ const AIWitch = (props) => {
         event.preventDefault();
         askWitchAI(prompt);
     };
+
+	const onClose = () => {
+		setAiResponse(null);
+		setPrompt('');
+	}
 
 
 return (
@@ -65,7 +72,10 @@ return (
 			<div className="witch-response-container">
 				<h3>My witchy response:</h3>
 				<p className="witch-response">{aiResponse.response}</p>
-				<button className="save-response-button" onClick={handleShowAllPlants}>Save to Plant </button>
+				<div>
+					<button className="save-close-btns save-response-btn" onClick={handleShowAllPlants}>Save to Plant </button>
+					<button className="save-close-btns close-response-btn" onClick={onClose}>Close</button>
+				</div>
 			</div>
 			)}
 			<Modal show={showModal} onClose={handleCloseModal}>

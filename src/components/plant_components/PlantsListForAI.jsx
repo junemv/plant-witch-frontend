@@ -13,6 +13,7 @@ const PlantsListForAI = (props) => {
         if (aiResponse && aiResponse.id) {
             try {
                 await saveWitchResponseToPlant(plantId, aiResponse.id);
+                alert("Witch response saved!");
                 handleCloseModal();
             } catch (error) {
                 console.error("Failed to save response:", error);

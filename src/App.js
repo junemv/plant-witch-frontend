@@ -333,7 +333,7 @@ function App() {
             setDisplayPlantsComponents
           }
           askWitchAICallbackFunction={askWitchAI}
-          // saveWitchResponseToPlantCallbackFunction={saveWitchResponseToPlant}
+          setAiResponseCallbackFunction={setAiResponse}
         />
       </header>
       {activeUser.id && (

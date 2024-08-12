@@ -50,8 +50,7 @@ const PlantForm = (props) => {
       const plantDetails = response.data.data[0];
       const imageURL = plantDetails.default_image.small_url;
       const commonNameFetched = plantDetails.common_name;
-      // console.log("Plant", plantDetails);
-      // console.log("Photo", imageURL);
+
       if (imageURL !== "https://perenual.com/storage/image/upgrade_access.jpg") {
         setPlantsData((prevData) => ({ ...prevData, image: imageURL }));
       }
