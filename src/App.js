@@ -3,7 +3,6 @@ import "./App.css";
 import Header from "./components/Header";
 import PlantBoard from "./components/plant_components/PlantBoard";
 import NewPlantForm from "./components/plant_components/NewPlantForm";
-import AIWitch from "./components/witch_components/AIWitch";
 import sproutIcon from "./sprout.png";
 
 import axios from "axios";
@@ -334,6 +333,7 @@ function App() {
             setDisplayPlantsComponents
           }
           askWitchAICallbackFunction={askWitchAI}
+          // saveWitchResponseToPlantCallbackFunction={saveWitchResponseToPlant}
         />
       </header>
       {activeUser.id && (

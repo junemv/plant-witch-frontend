@@ -1,17 +1,31 @@
 import React, { useState } from 'react';
 import './AIWitch.css';
+import axios from "axios";
+
 import plantWitchIcon from '../../plant_witch_icon.png';
 import sendIcon from '../../send-mail-icon.png';
 import Modal from '../Modal';
 import PlantsListForAI from '../plant_components/PlantsListForAI';
 
 const AIWitch = (props) => {
-	// const demoUserData = props.demoUserData;
-  	const activeUser = props.activeUser;
+	const URL = process.env.REACT_APP_BACKEND_URL;
     const askWitchAI = props.askWitchAI;
     const aiResponse = props.aiResponse;
+	const activeUserPlants = props.activeUsersPlants
+	// const saveWitchResponseToPlantCallbackFunction = props.saveWitchResponseToPlantCallbackFunction;
     const [prompt, setPrompt] = useState('');
 	const [showModal, setShowModal] = useState(false);
+
+	// Save AI Response to a specific plant
+	const saveWitchResponseToPlant = async (plantId, witchId) => {
+		try {
+			const response = await axios.patch(`${URL}/api/v1/witch_ai/${witchId}`, { plant_id: plantId });
+			return response.data;
+		} catch (error) {
+			console.error("Error saving AI response to plant:", error);
+			throw error;
+		}	
+	};
 
 	const handleShowAllPlants = () => {
 		setShowModal(true);
@@ -30,7 +44,6 @@ const AIWitch = (props) => {
         event.preventDefault();
         askWitchAI(prompt);
     };
-
 
 
 return (
@@ -52,11 +65,16 @@ return (
 			<div className="witch-response-container">
 				<h3>My witchy response:</h3>
 				<p className="witch-response">{aiResponse.response}</p>
-				<button className="save-response-button" >Save to Plant </button>
+				<button className="save-response-button" onClick={handleShowAllPlants}>Save to Plant </button>
 			</div>
 			)}
 			<Modal show={showModal} onClose={handleCloseModal}>
-				<PlantsListForAI></PlantsListForAI>
+				<PlantsListForAI
+				aiResponse={aiResponse}	
+				activeUsersPlants={activeUserPlants}
+				saveWitchResponseToPlantCallbackFunction={saveWitchResponseToPlant}
+				handleCloseModalCallbackFunction={handleCloseModal}
+				/>
 			</Modal>
 	</div>
 );

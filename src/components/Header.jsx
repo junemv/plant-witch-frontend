@@ -1,7 +1,6 @@
 import React from "react";
 import Dropdown from "./Dropdown";
 import AIWitch from "./witch_components/AIWitch";
-import PlantsListForAI from "./plant_components/PlantsListForAI";
 import './Header.css';
 
 // Component includes a dropdown menu that allows the user to select a user from a list of demo users
@@ -13,12 +12,12 @@ const Header = (props) => {
 
 	// Callback functions
 	const fetchAllPlantsByUserIdCallbackFunction = props.fetchAllPlantsByUserIdCallbackFunction;
-	const fetchWateringAndRepottingScheduleByUserIdCallbackFunction = props.fetchWateringAndRepottingScheduleByUserIdCallbackFunction;
 	const setActiveUserCallbackFunction = props.setActiveUserCallbackFunction;
 	const setActiveUsersPlantsCallbackFunction = props.setActiveUsersPlantsCallbackFunction;
 	const setPlantsWateringAndRepottingScheduleCallbackFunction = props.setPlantsWateringAndRepottingScheduleCallbackFunction;
 	const setDisplayPlantsComponentsCallbackFunction = props.setDisplayPlantsComponentsCallbackFunction;
 	const askWitchAI = props.askWitchAICallbackFunction;
+	// const saveWitchResponseToPlantCallbackFunction=props.saveWitchResponseToPlantCallbackFunction;
 
 	return (
 		<div className="section-styling">
@@ -37,11 +36,11 @@ const Header = (props) => {
 			</div> */}
 			{/* - AI Component */}
 			{ activeUser.id && 
-				<AIWitch askWitchAI={askWitchAI} aiResponse={aiResponse}>
-				<PlantsListForAI 				
-					activeUser={activeUser}
+				<AIWitch 
+					askWitchAI={askWitchAI} 
+					aiResponse={aiResponse}		
 					activeUsersPlants={activeUsersPlants}
-				/>
+				>
 				</AIWitch> 
 			}
 		</div>
