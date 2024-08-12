@@ -2,12 +2,24 @@ import React, { useState } from 'react';
 import './AIWitch.css';
 import plantWitchIcon from '../../plant_witch_icon.png';
 import sendIcon from '../../send-mail-icon.png';
+import Modal from '../Modal';
+import PlantsListForAI from '../plant_components/PlantsListForAI';
 
 const AIWitch = (props) => {
+	// const demoUserData = props.demoUserData;
+  	const activeUser = props.activeUser;
     const askWitchAI = props.askWitchAI;
     const aiResponse = props.aiResponse;
-
     const [prompt, setPrompt] = useState('');
+	const [showModal, setShowModal] = useState(false);
+
+	const handleShowAllPlants = () => {
+		setShowModal(true);
+	};
+	
+	const handleCloseModal = () => {
+		setShowModal(false);
+	};
 
     const handleFormInput = (event) => {
         const value = event.target.value;
@@ -18,6 +30,8 @@ const AIWitch = (props) => {
         event.preventDefault();
         askWitchAI(prompt);
     };
+
+
 
 return (
 	<div id="ai-witch">
@@ -38,9 +52,12 @@ return (
 			<div className="witch-response-container">
 				<h3>My witchy response:</h3>
 				<p className="witch-response">{aiResponse.response}</p>
-				<button className="save-response-button" type="submit" >Save to Plant </button>
+				<button className="save-response-button" >Save to Plant </button>
 			</div>
 			)}
+			<Modal show={showModal} onClose={handleCloseModal}>
+				<PlantsListForAI></PlantsListForAI>
+			</Modal>
 	</div>
 );
 }
