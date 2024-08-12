@@ -20,11 +20,7 @@ const Header = (props) => {
 
 	return (
 		<div className="section-styling">
-			<div id="logo">Plant Witch</div>
-			{/* <div className="medium-heading">
-				Welcome {activeUser.firstName}!
-			</div> */}
-				<Dropdown 
+			<Dropdown 
 				demoUserData={demoUserData}
 				activeUser={activeUser}
 				setActiveUserCallbackFunction={setActiveUserCallbackFunction}
@@ -33,6 +29,10 @@ const Header = (props) => {
 				setPlantsWateringAndRepottingScheduleCallbackFunction={setPlantsWateringAndRepottingScheduleCallbackFunction}
 				setDisplayPlantsComponentsCallbackFunction={setDisplayPlantsComponentsCallbackFunction}
 				/>
+			<div id="logo">Plant Witch</div>
+			{/* <div className="medium-heading">
+				Welcome {activeUser.firstName}!
+			</div> */}
 			{/* - AI Component */}
 			{ activeUser.id && 
 				<AIWitch askWitchAI={askWitchAI} aiResponse={aiResponse} />
