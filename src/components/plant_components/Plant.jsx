@@ -3,6 +3,8 @@ import './Plant.css';
 import defaultImg from '../../assets/potted-plant-doodle.jpg';
 import shovelIcon from '../../shovel.png'
 import waterCanIcon from '../../watering-can.png';
+import Modal from "../Modal";
+import PlantModal from "./PlantModal";
 
 const Plant = (props) => {
   // props
@@ -38,10 +40,16 @@ const Plant = (props) => {
     watering: {style: "schedule-green", msg: `Water Me in: ${thisPlantsNextWatering} days`}, 
     repotting: {style: "schedule-green", msg: `Repot Me in: ${thisPlantsNextWatering} days`}
   });
+  const [showModal, setShowModal] = useState(false);
 
   // Switches between edit and view modes
   const toggleEditMode = () => {
     setEditMode(!editMode);
+  }
+
+  const handleShowPlantModal = () => {
+    setShowModal(!showModal);
+    console.log("showModal", showModal)
   }
 
   // event handler for deleting plants
@@ -131,13 +139,6 @@ const Plant = (props) => {
     })
   }
 
-  const onPlantDescriptionChange = (e) => {
-    setUpdatedPlantFormFields({
-      ...updatedPlantFormFields,
-      description: e.target.value
-    })
-  }
-
   const onPlantCommonNameChange = (e) => {
     setUpdatedPlantFormFields({
       ...updatedPlantFormFields,
@@ -160,22 +161,38 @@ const Plant = (props) => {
 
   return (
     <div id="plant-component">
+      <Modal 
+        show={showModal}
+        onClose={handleShowPlantModal}
+      >
+        <PlantModal 
+          id={id}
+          name={name}
+          commonName={commonName}
+          image={image}
+          description={description}
+          waterDate={waterDate}
+          repotDate={repotDate}
+          waterInterval={waterInterval}
+          repotInterval={repotInterval}
+          updatePlantCallbackFunction={updatePlant}
+        />
+      </Modal>
       <li key={key}>
         <img className="plant-img" src={ 
           image || defaultImg
-          // defaultImg
           } alt={`${name}`} />
         { !editMode && (
           <div>
             <h2>{name}</h2>
             {/* TODO - uncomment Common Name once implemented */}
             <h3>Common Name: {commonName}</h3>
-            {description && (
+            {/* {description && (
               <p>
                 <b>Notes: </b>
                 {description}
               </p>
-            )}
+            )} */}
           </div>
         )}
         { editMode && (
@@ -200,26 +217,12 @@ const Plant = (props) => {
                 />
               </h3>
             </div>
-            <div>
-              <h3>
-                Notes:
-                <input name="description"
-                value={updatedPlantFormFields.description}
-                placeholder="The happy plant by the window..." 
-                onChange={onPlantDescriptionChange}
-                />
-              </h3>
-            </div>
             <button onClick={() => {toggleEditMode()}}>
               Cancel
             </button>
             <input type="submit" value="Save Changes" />
           </form>
         )}
-        {/* <p>Water Date: {waterDate}</p> 
-        <p>Repot Date: {repotDate}</p>
-        <p>Water Interval: {waterInterval}</p>
-        <p>Repot Interval: {repotInterval}</p> */}
         { !editMode && (
           <div>
             <div className="water-repot-sec">
@@ -232,6 +235,9 @@ const Plant = (props) => {
             </div>
             <button onClick={() => {toggleEditMode()}}>
               Edit Plant
+            </button>
+            <button onClick={handleShowPlantModal}>
+              More Info
             </button>
           </div>
         )}
