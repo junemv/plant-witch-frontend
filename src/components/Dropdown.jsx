@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../components/Dropdown.css';
 
 // for demo puropses, this dropdown menu is used to set the active user
 function Dropdown(props) {
@@ -44,15 +45,15 @@ function Dropdown(props) {
   }
 
   return (
-    <div>
+    <div className="buttons-section">
       {!activeUser.id && (
-        <button onClick={() => setIsOpen(!isOpen)}>Select User</button>
+        <button id="login-btn" className = "log-in-out-users-btns" onClick={() => setIsOpen(!isOpen)}>Login</button>
       )}
-      {activeUser.id && (<button onClick={handleLogOut}>Log Out</button>)}
+      {activeUser.id && (<button id="logout-btn" className = "log-in-out-users-btns" onClick={handleLogOut}>Log Out</button>)}
       {isOpen && (
         <div>
           {options.map(option => (
-            <button key={option[0]} onClick={() => handleUserSelect(demoUserData[option[1]])}>
+            <button id="user-btn" className = "log-in-out-users-btns" key={option[0]} onClick={() => handleUserSelect(demoUserData[option[1]])}>
               {option[0]}
             </button>
           ))}
