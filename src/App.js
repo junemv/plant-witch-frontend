@@ -325,17 +325,23 @@ function App() {
             fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserId}
             setActiveUsersPlantsCallbackFunction={setActiveUsersPlants}
             setDisplayPlantsComponentsCallbackFunction={
-            setDisplayPlantsComponents
+              setDisplayPlantsComponents
             }
             askWitchAICallbackFunction={askWitchAI}
             setAiResponseCallbackFunction={setAiResponse}
             setChatHistoryCallbackFunction={setChatHistory}
+            setPlantsWateringAndRepottingScheduleCallbackFunction={
+              setPlantsWateringAndRepottingSchedule
+            }
           />
         </header>
         {activeUser.id && (
           <div id="App-body">
             {/* - Create New Plant component (using Modal component) */}
-            <button className="add-new-plant-btn" onClick={handleCreateNewPlant}>
+            <button
+              className="add-new-plant-btn"
+              onClick={handleCreateNewPlant}
+            >
               <img
                 className="sprout-icon"
                 src={sproutIcon}
@@ -374,9 +380,7 @@ function App() {
       </div>
       {activeUser.id && (
         <div id="footer">
-          <div id="footer-1">
-            ©2024 Plant Witch Team
-          </div>
+          <div id="footer-1">©2024 Plant Witch Team</div>
           <div>
             <button id="about-btn">About</button>
           </div>
