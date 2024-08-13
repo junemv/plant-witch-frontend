@@ -34,14 +34,17 @@ Dependencies can be installed by running `npm install`. Please let the team know
   - ~~Plant Component~~
 - ~~Build Folder structure~~
 - ~~Update Watering and Repotting logic~~
-- Basic CSS Styling
-  - App
-  - PlantBoard
-  - Plant
-  - Dropdown
-  - Header
-- Move schedule calculation to the frontend
-- Update watering/repotting should update the plant component in the components variable
+- ~~Basic CSS Styling~~
+  - ~~App~~
+  - ~~PlantBoard~~
+  - ~~Plant~~
+  - ~~Dropdown~~
+  - ~~Header~~
+  - ~~AIWitch~~
+- ~~Move schedule calculation to the frontend~~
+- ~~Update watering/repotting should update the plant component in the components variable~~
+- Build Plant Modal
+- Build out edit watering/repotting increments
 
 ### Diana:
 - ~~Header Component~~
