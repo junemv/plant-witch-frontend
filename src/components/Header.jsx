@@ -16,9 +16,9 @@ const Header = (props) => {
 	const setActiveUsersPlantsCallbackFunction = props.setActiveUsersPlantsCallbackFunction;
 	const setPlantsWateringAndRepottingScheduleCallbackFunction = props.setPlantsWateringAndRepottingScheduleCallbackFunction;
 	const setDisplayPlantsComponentsCallbackFunction = props.setDisplayPlantsComponentsCallbackFunction;
-	const setAiResponseCallbackFunction = props.setAiResponseCallbackFunction
+	const setAiResponseCallbackFunction = props.setAiResponseCallbackFunction;
+	const setChatHistoryCallbackFunction = props.setChatHistoryCallbackFunction;
 	const askWitchAI = props.askWitchAICallbackFunction;
-	// const saveWitchResponseToPlantCallbackFunction=props.saveWitchResponseToPlantCallbackFunction;
 
 	return (
 		<div className="section-styling">
@@ -31,6 +31,7 @@ const Header = (props) => {
 				setPlantsWateringAndRepottingScheduleCallbackFunction={setPlantsWateringAndRepottingScheduleCallbackFunction}
 				setDisplayPlantsComponentsCallbackFunction={setDisplayPlantsComponentsCallbackFunction}
 				setAiResponseCallbackFunction={setAiResponseCallbackFunction}
+				setChatHistoryCallbackFunction={setChatHistoryCallbackFunction}
 				/>
 			<div id="logo">Plant Witch</div>
 			{/* <div className="medium-heading">

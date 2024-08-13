@@ -27,8 +27,11 @@ function App() {
   ] = useState({});
 
   //AI Witch variable
+  const defaultPrompt = "How can I assist you today?";
   const [aiResponse, setAiResponse] = useState(null);
-
+  const [chatHistory, setChatHistory] = useState([
+    { role: "system", content: defaultPrompt },
+  ]);
   const [activeUserPlantComponents, setActiveUserPlantComponents] = useState(
     []
   );
@@ -293,11 +296,18 @@ function App() {
   //Call WitchAI
   const askWitchAI = (prompt) => {
     const userId = activeUser.id;
+    const newPrompt = { role: "user", content: prompt };
+    const updatedChatHistory = [...chatHistory, newPrompt];
 
     axios
-      .post(`${URL}/api/v1/witch_ai/ask_witch/${userId}`, { prompt })
+      .post(`${URL}/api/v1/witch_ai/ask_witch/${userId}`, updatedChatHistory)
       .then((res) => {
         setAiResponse(res.data);
+        setChatHistory((prevChat) => [
+          ...prevChat,
+          newPrompt,
+          { role: "assistant", content: res.data.response },
+        ]);
       })
       .catch((err) => {
         console.log(err);
@@ -334,6 +344,7 @@ function App() {
           }
           askWitchAICallbackFunction={askWitchAI}
           setAiResponseCallbackFunction={setAiResponse}
+          setChatHistoryCallbackFunction={setChatHistory}
         />
       </header>
       {activeUser.id && (

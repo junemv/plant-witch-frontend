@@ -13,9 +13,11 @@ function Dropdown(props) {
 	const setPlantsWateringAndRepottingSchedule = props.setPlantsWateringAndRepottingScheduleCallbackFunction;
   const setDisplayPlantsComponents = props.setDisplayPlantsComponentsCallbackFunction;
   const setAiResponse = props.setAiResponseCallbackFunction;
+  const setChatHistory = props.setChatHistoryCallbackFunction;
 
   const [isOpen, setIsOpen] = useState(false);
   const options = [];
+  const defaultPrompt = "How can I assist you today?";
 
 	// storing index in num and user data in user
 	if (demoUserData) {
@@ -39,6 +41,9 @@ function Dropdown(props) {
       setActiveUser({firstName: "Guest"})
       setActiveUsersPlants([]);
       setAiResponse(null);
+      setChatHistory([
+        { role: "system", content: defaultPrompt },
+      ])
       setPlantsWateringAndRepottingSchedule({});
       setDisplayPlantsComponents(false);
       // alert("You have been logged out.")
