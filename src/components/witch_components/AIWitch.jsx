@@ -52,6 +52,13 @@ const AIWitch = (props) => {
 		setPrompt('');
 	}
 
+	const submitOnEnter = (event) => {
+		if (event.key === "Enter" && !event.shiftKey) {
+			event.preventDefault();
+			handleSubmit(event);
+		}
+	}
+
 
 return (
 	<div id="ai-witch">
@@ -63,8 +70,7 @@ return (
 						value={prompt}
 						placeholder="Ask me anything about plants!"
 						onChange={handleFormInput}
-						onKeyDown={handleFormInput}
-						
+						onKeyDown={submitOnEnter}
 						/>
 				<button className="send-btn" type="submit" ><img className="send-button-icon "src={sendIcon} alt="send-mail-icon"/></button>
 			</form>
