@@ -2,28 +2,13 @@ html {
   /* color standards */
   --section-bg: #f7f0d3;
   --common-green: #81c781;
-  /* --common-green: #aacfaa; */
   --text-heading: #733e2c;
   --text-heading-light: #836d65;
 
-  /* size standards */
-  --container-row: 1 / 2;
-
-  /* html */
   background-color: var(--common-green);
-  display: grid;
-  padding: 0;
-  margin-left: 3%;
-  margin-right: 3%;
 }
 
 body {
-  margin:0 !important;
-  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; */
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -61,10 +46,13 @@ code {
 
 /* classes */
 .large-heading {
-  font-size: 2em;
+  font-family: cursive;
+  font-size: 3.5em;
+  letter-spacing: 2px;
   font-weight: bold;
   color: var(--text-heading);
   text-align: center;
+  padding-top: 20px;
 }
 
 .medium-heading {
@@ -76,4 +64,12 @@ code {
 
 .section-styling {
   padding: 3%;
+}
+
+.big-section {
+  background-color: var(--section-bg);
+  border-radius: 50px;
+  text-align: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }

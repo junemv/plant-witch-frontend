@@ -5,7 +5,7 @@
 	margin: 2%;
 	padding: 30px;
 	width: 350px;
-	border-radius: 10px;
+	border-radius: 20px;
 	border: 8px solid var(--common-green);
 }
 
@@ -86,5 +86,20 @@
 	box-shadow: 0 4px 4px 0 rgba(17, 96, 103, 0.3), 0 8px 12px 6px rgba(5, 36, 60, 0.15);
 }
 
+/* forms styling */
+.edit-form {
+	overflow-y: scroll;
+	height: 350px;
+	width: 95%;
+	background: beige;
+	border-radius: 10px;
+	padding: 20px;
+	text-align: start;
+	border: 3px solid #dbc6a3;
+	resize: none;
+}
 
+.notes-scrollbox-edit:focus {
+	border: 3px solid #ae8f5a;
+}
 

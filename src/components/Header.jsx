@@ -11,7 +11,6 @@ const Header = (props) => {
 
 	// Callback functions
 	const fetchAllPlantsByUserIdCallbackFunction = props.fetchAllPlantsByUserIdCallbackFunction;
-	const fetchWateringAndRepottingScheduleByUserIdCallbackFunction = props.fetchWateringAndRepottingScheduleByUserIdCallbackFunction;
 	const setActiveUserCallbackFunction = props.setActiveUserCallbackFunction;
 	const setActiveUsersPlantsCallbackFunction = props.setActiveUsersPlantsCallbackFunction;
 	const setPlantsWateringAndRepottingScheduleCallbackFunction = props.setPlantsWateringAndRepottingScheduleCallbackFunction;
@@ -31,9 +30,6 @@ const Header = (props) => {
 				/>
 			<h1 id="logo">Plant Witch</h1>
 			<h3 id="logo-2">Your Plant Assistant</h3>
-			{/* <div className="medium-heading">
-				Welcome {activeUser.firstName}!
-			</div> */}
 			{/* - AI Component */}
 			{ activeUser.id && 
 				<AIWitch askWitchAI={askWitchAI} aiResponse={aiResponse} />

@@ -192,7 +192,7 @@ const Plant = (props) => {
           <form onSubmit={onSubmit} onKeyDown={preventEnterSubmit}>
             <div>
               <h3>
-                Nickname:
+                <b>Nickname: </b>
                 <input name="name"
                 value={updatedPlantFormFields.name}
                 placeholder="Mr. Planty McPlantface, Kevin..." 
