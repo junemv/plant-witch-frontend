@@ -260,7 +260,7 @@ function App() {
     });
   };
 
-  // formats date to match backend
+  // helper - formats date to match backend
   const buildFormattedDate = () => {
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -322,7 +322,7 @@ function App() {
 
   const handleShowAboutModal = () => {
     setShowAboutModal(!showAboutModal);
-  };
+  }
 
   return (
     <div>
@@ -335,7 +335,6 @@ function App() {
           <Header
             demoUserData={demoUserData}
             activeUser={activeUser}
-            activeUsersPlants={activeUsersPlants}
             aiResponse={aiResponse}
             setActiveUserCallbackFunction={setActiveUser}
             fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserId}
@@ -397,14 +396,7 @@ function App() {
         <div id="footer">
           <div id="footer-1">©2024 Plant Witch Team</div>
           <div>
-            <button
-              id="about-btn"
-              onClick={() => {
-                handleShowAboutModal();
-              }}
-            >
-              About
-            </button>
+            <button id="about-btn" onClick={()=>{handleShowAboutModal()}}>About</button>
           </div>
         </div>
       )}
