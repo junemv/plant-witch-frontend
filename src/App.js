@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import PlantBoard from "./components/plant_components/PlantBoard";
 import NewPlantForm from "./components/plant_components/NewPlantForm";
 import sproutIcon from "./sprout.png";
+import AboutModal from "./components/AboutModal";
 
 import axios from "axios";
 import Modal from "./components/Modal";
@@ -39,6 +40,7 @@ function App() {
 
   // Modal variables
   const [showModal, setShowModal] = useState(false);
+  const [showAboutModal, setShowAboutModal] = useState(false);
 
   // USER FUNCTIONALITY:
   // Get all users - TODO: deprecate when userauth is added
@@ -281,7 +283,7 @@ function App() {
   };
 
   // AI FUNCTIONALITY:
-  //Call WitchAI
+  // Call WitchAI
   const askWitchAI = (prompt) => {
     const userId = activeUser.id;
     const newPrompt = { role: "user", content: prompt };
@@ -311,12 +313,18 @@ function App() {
     setShowModal(false);
   };
 
+  const handleShowAboutModal = () => {
+    setShowAboutModal(!showAboutModal);
+  }
+
   return (
     <div>
       <div id="App">
+        <Modal show={showAboutModal} onClose={handleShowAboutModal}>
+          <AboutModal></AboutModal>
+        </Modal>
         <header className="big-section">
           {/* Header Component */}
-          {}
           <Header
             demoUserData={demoUserData}
             activeUser={activeUser}
@@ -357,7 +365,6 @@ function App() {
                 handleCloseModalCallbackFunction={handleCloseModal}
               />
             </Modal>
-
             {/* - PlantBoard component */}
             <PlantBoard
               activeUsersPlants={activeUsersPlants}
@@ -382,7 +389,7 @@ function App() {
         <div id="footer">
           <div id="footer-1">©2024 Plant Witch Team</div>
           <div>
-            <button id="about-btn">About</button>
+            <button id="about-btn" onClick={()=>{handleShowAboutModal()}}>About</button>
           </div>
         </div>
       )}
