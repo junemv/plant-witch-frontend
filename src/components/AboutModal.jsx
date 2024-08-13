@@ -8,7 +8,7 @@ const AboutModal = (props) => {
 			<h2 className="large-heading-2">The Plant Witch Team</h2>
 			<ul className="medium-paragraph" id="about-list">
 				<li className="about-list-items">
-					Diana
+					Diana Martinez
 				</li>
 				<li className="about-list-items">
 					June Valentino
@@ -26,7 +26,16 @@ const AboutModal = (props) => {
 			<h2 className="large-heading-2">Art and Assets</h2>
 			<ul className="medium-paragraph" id="about-list">
 				<li className="about-list-items">
-					June Valentino
+					Art by June Valentino
+				</li>
+				<li className="about-list-items">
+					Icons by Freepik - Flaticon
+				</li>
+				<li className="about-list-items">
+					Icons by Freepik - Flaticon
+				</li>
+				<li className="about-list-items">
+					Photo by Scott Webb <br /> @scottwebb - Unsplash
 				</li>
 			</ul>
 		</div>

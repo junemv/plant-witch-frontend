@@ -239,14 +239,14 @@ function App() {
       for (const plant of activeUsersPlants) {
         if (plant.id === plantId) {
           if (endPoint === "water-date") {
-            plant.waterDate = new Date().toString();
+            plant.waterDate = buildFormattedDate()
             updateWateringAndRepottingEntry(
               plantId,
               endPoint,
               plant.waterInterval
             );
           } else if (endPoint === "repot-date") {
-            plant.repotDate = new Date().toString();
+            plant.repotDate = buildFormattedDate()
             updateWateringAndRepottingEntry(
               plantId,
               endPoint,
@@ -258,6 +258,13 @@ function App() {
       }
       setActiveUsersPlants(newPlantList);
     });
+  };
+
+  // formats date to match backend
+  const buildFormattedDate = () => {
+    const date = new Date();
+    const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    return formattedDate.toString();
   };
 
   // Delete plant
