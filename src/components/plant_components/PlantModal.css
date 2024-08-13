@@ -36,6 +36,7 @@
 
 /* classes */
 .plant-modal-img {
+
 	grid-column: 1 / 2;
 	grid-row: 1 / 2;
 	width: 75%;

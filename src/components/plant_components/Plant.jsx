@@ -186,6 +186,7 @@ const Plant = (props) => {
           <div>
             <h2>{name}</h2>
             <p><b>Common Name: </b>{commonName}</p>
+
           </div>
         )}
         { editMode && (
