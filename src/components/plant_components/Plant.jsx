@@ -31,7 +31,9 @@ const Plant = (props) => {
   const [updatedPlantFormFields, setUpdatedPlantFormFields] = useState({
     name: name,
     // commonName: commonName,
-    description: description
+    description: description,
+    waterInterval: waterInterval,
+    repotInterval: repotInterval
   });
   const [scheduleBtnStyle, setScheduleBtnStyle] = useState({
     watering: {style: "schedule-green", msg: `Water Me in: ${thisPlantsNextWatering} days`}, 
@@ -153,6 +155,20 @@ const Plant = (props) => {
     })
   }
 
+  const onWaterIntervalChange = (e) => {
+    setUpdatedPlantFormFields({
+      ...updatedPlantFormFields,
+      waterInterval: e.target.value
+    })
+  }
+
+  const onRepotIntervalChange = (e) => {
+    setUpdatedPlantFormFields({
+      ...updatedPlantFormFields,
+      repotInterval: e.target.value
+    })
+  }
+
   const onSubmit = (e) => {
     e.preventDefault();
     updatePlant(id, updatedPlantFormFields);
@@ -212,6 +228,26 @@ const Plant = (props) => {
                 value={updatedPlantFormFields.description}
                 placeholder="The happy plant by the window..." 
                 onChange={onPlantDescriptionChange}
+                />
+              </h3>
+            </div>
+            <div>
+              <h3>
+                Water Interval:
+                <input name="water-interval"
+                       value={updatedPlantFormFields.waterInterval}
+                       placeholder="7"
+                       onChange={onWaterIntervalChange}
+                />
+              </h3>
+            </div>
+            <div>
+              <h3>
+                Repot Interval:
+                <input name="repot-interval"
+                       value={updatedPlantFormFields.repotInterval}
+                       placeholder="12"
+                       onChange={onRepotIntervalChange}
                 />
               </h3>
             </div>
