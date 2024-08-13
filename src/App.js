@@ -85,18 +85,6 @@ function App() {
     );
   };
 
-  // Get one plant by ID
-  const fetchPlantById = (plantId) => {
-    axios
-      .get(`${URL}/api/v1/plants/${plantId}`)
-      .then((res) => {
-        console.log("res.data", res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   // Add new plant - sets plant to plant list and updates watering and repotting schedule
   const createNewPlantForSelectedUser = (data) => {
     axios
@@ -324,66 +312,74 @@ function App() {
   };
 
   return (
-    <div id="App">
-      <header id="App-header">
-        {/* Header Component */}
-        {}
-        <Header
-          demoUserData={demoUserData}
-          activeUser={activeUser}
-          aiResponse={aiResponse}
-          activeUsersPlants={activeUsersPlants}
-          setActiveUserCallbackFunction={setActiveUser}
-          fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserId}
-          setActiveUsersPlantsCallbackFunction={setActiveUsersPlants}
-          setPlantsWateringAndRepottingScheduleCallbackFunction={
-            setPlantsWateringAndRepottingSchedule
-          }
-          setDisplayPlantsComponentsCallbackFunction={
+    <div>
+      <div id="App">
+        <header className="big-section">
+          {/* Header Component */}
+          {}
+          <Header
+            demoUserData={demoUserData}
+            activeUser={activeUser}
+            aiResponse={aiResponse}
+            setActiveUserCallbackFunction={setActiveUser}
+            fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserId}
+            setActiveUsersPlantsCallbackFunction={setActiveUsersPlants}
+            setDisplayPlantsComponentsCallbackFunction={
             setDisplayPlantsComponents
-          }
-          askWitchAICallbackFunction={askWitchAI}
-          setAiResponseCallbackFunction={setAiResponse}
-          setChatHistoryCallbackFunction={setChatHistory}
-        />
-      </header>
-      {activeUser.id && (
-        <div id="App-body">
-          {/* - Create New Plant component (using Modal component) */}
-          <button className="add-new-plant-btn" onClick={handleCreateNewPlant}>
-            <img
-              className="sprout-icon"
-              src={sproutIcon}
-              alt="new-sprout-icon"
-            />
-            Add New Plant
-          </button>
-          <Modal show={showModal} onClose={handleCloseModal}>
-            <NewPlantForm
-              createNewPlantForSelectedUserCallbackFunction={
-                createNewPlantForSelectedUser
-              }
-              handleCloseModalCallbackFunction={handleCloseModal}
-            />
-          </Modal>
-
-          {/* - PlantBoard component */}
-          <PlantBoard
-            activeUsersPlants={activeUsersPlants}
-            plantsWateringAndRepottingSchedule={
-              plantsWateringAndRepottingSchedule
             }
-            activeUserPlantComponents={activeUserPlantComponents}
-            displayPlantsComponents={displayPlantsComponents}
-            deletePlantCallbackFunction={deletePlant}
-            updatePlantWateredOrRepottedCallbackFunction={
-              updatePlantWateredOrRepotted
-            }
-            updatePlantCallbackFunction={updatePlant}
-            setActiveUserPlantComponentsCallbackFunction={
-              setActiveUserPlantComponents
-            }
+            askWitchAICallbackFunction={askWitchAI}
+            setAiResponseCallbackFunction={setAiResponse}
+            setChatHistoryCallbackFunction={setChatHistory}
           />
+        </header>
+        {activeUser.id && (
+          <div id="App-body">
+            {/* - Create New Plant component (using Modal component) */}
+            <button className="add-new-plant-btn" onClick={handleCreateNewPlant}>
+              <img
+                className="sprout-icon"
+                src={sproutIcon}
+                alt="new-sprout-icon"
+              />
+              Add New Plant
+            </button>
+            <Modal show={showModal} onClose={handleCloseModal}>
+              <NewPlantForm
+                createNewPlantForSelectedUserCallbackFunction={
+                  createNewPlantForSelectedUser
+                }
+                handleCloseModalCallbackFunction={handleCloseModal}
+              />
+            </Modal>
+
+            {/* - PlantBoard component */}
+            <PlantBoard
+              activeUsersPlants={activeUsersPlants}
+              plantsWateringAndRepottingSchedule={
+                plantsWateringAndRepottingSchedule
+              }
+              activeUserPlantComponents={activeUserPlantComponents}
+              displayPlantsComponents={displayPlantsComponents}
+              deletePlantCallbackFunction={deletePlant}
+              updatePlantWateredOrRepottedCallbackFunction={
+                updatePlantWateredOrRepotted
+              }
+              updatePlantCallbackFunction={updatePlant}
+              setActiveUserPlantComponentsCallbackFunction={
+                setActiveUserPlantComponents
+              }
+            />
+          </div>
+        )}
+      </div>
+      {activeUser.id && (
+        <div id="footer">
+          <div id="footer-1">
+            ©2024 Plant Witch Team
+          </div>
+          <div>
+            <button id="about-btn">About</button>
+          </div>
         </div>
       )}
     </div>

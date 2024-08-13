@@ -1,23 +1,55 @@
 /* IDs */
 #App {
-  /* text-align: center; */
   vertical-align: center;
+  margin-left: 4%;
+  margin-right: 4%; 
 }
 
-#App-header {
-  background-color: var(--section-bg);
-	/* grid-column: 1 / 1; */
-	grid-row: var(--container-row);
-  	/* grid-row: var(--container-row); */
+#footer {
+  background-color: #a4d9a4;
+  width: 100%;
+  height: 50px;
+  margin-top: auto;
+  display: grid;
+	grid-template-columns: 90% 10%;
+	grid-template-rows: 90% 10%;
+}
+
+#footer-1 {
+  text-justify: left;
+  margin-top: 25px;
+  margin-left: 10px;
+}
+
+#footer-2 {
+  position: relative;
+}
+
+#about-btn {
+  margin-top: 5px;
+  height: 40px;
+  width: 120px;
+  font-size: 16px;
+  font-weight: bold;
+  border: 3px solid #ffc176;
+  border-radius: 5px;
+  background-color: #ffe052;
+  color: var(--text-heading);
+  cursor: pointer;
+}
+
+#about-btn:hover {
+  background-color: #ffe3c1;
+  border: 3px solid #f1cb22;
 }
 
 .add-new-plant-btn {
   font-size: 18px;
-  font-weight: 200;
+  font-weight: bold;
   letter-spacing: 1px;
   padding: 10px 17px 10px;
   outline: 0;
-  border: 1px solid black;
+  border: 2px solid black;
   cursor: pointer;
   position: relative;
   background-color: rgba(0, 0, 0, 0);

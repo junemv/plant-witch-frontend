@@ -33,10 +33,8 @@ const Header = (props) => {
 				setAiResponseCallbackFunction={setAiResponseCallbackFunction}
 				setChatHistoryCallbackFunction={setChatHistoryCallbackFunction}
 				/>
-			<div id="logo">Plant Witch</div>
-			{/* <div className="medium-heading">
-				Welcome {activeUser.firstName}!
-			</div> */}
+			<h1 id="logo">Plant Witch</h1>
+			<h3 id="logo-2">Your Plant Assistant</h3>
 			{/* - AI Component */}
 			{ activeUser.id && 
 				<AIWitch 

@@ -63,3 +63,6 @@ Dependencies can be installed by running `npm install`. Please let the team know
 - ~~Finish Modal component~~
 - AIWitch history log (using modal?);
 
+## Credits:
+Photo by <a href="https://unsplash.com/@shimikumi32?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Kumiko SHIMIZU</a> on <a href="https://unsplash.com/photos/selective-focus-of-green-plants-Pxa0yJ2Elxc?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+  
