@@ -8,6 +8,7 @@ const Header = (props) => {
 	const demoUserData = props.demoUserData;
 	const activeUser = props.activeUser;
 	const aiResponse = props.aiResponse;
+	const activeUsersPlants = props.activeUsersPlants
 
 	// Callback functions
 	const fetchAllPlantsByUserIdCallbackFunction = props.fetchAllPlantsByUserIdCallbackFunction;
@@ -15,7 +16,9 @@ const Header = (props) => {
 	const setActiveUsersPlantsCallbackFunction = props.setActiveUsersPlantsCallbackFunction;
 	const setPlantsWateringAndRepottingScheduleCallbackFunction = props.setPlantsWateringAndRepottingScheduleCallbackFunction;
 	const setDisplayPlantsComponentsCallbackFunction = props.setDisplayPlantsComponentsCallbackFunction;
+	const setAiResponseCallbackFunction = props.setAiResponseCallbackFunction
 	const askWitchAI = props.askWitchAICallbackFunction;
+	// const saveWitchResponseToPlantCallbackFunction=props.saveWitchResponseToPlantCallbackFunction;
 
 	return (
 		<div className="section-styling">
@@ -27,12 +30,19 @@ const Header = (props) => {
 				setActiveUsersPlantsCallbackFunction={setActiveUsersPlantsCallbackFunction}
 				setPlantsWateringAndRepottingScheduleCallbackFunction={setPlantsWateringAndRepottingScheduleCallbackFunction}
 				setDisplayPlantsComponentsCallbackFunction={setDisplayPlantsComponentsCallbackFunction}
+				setAiResponseCallbackFunction={setAiResponseCallbackFunction}
 				/>
 			<h1 id="logo">Plant Witch</h1>
 			<h3 id="logo-2">Your Plant Assistant</h3>
 			{/* - AI Component */}
 			{ activeUser.id && 
-				<AIWitch askWitchAI={askWitchAI} aiResponse={aiResponse} />
+				<AIWitch 
+					askWitchAI={askWitchAI} 
+					aiResponse={aiResponse}		
+					activeUsersPlants={activeUsersPlants}
+					setAiResponseCallbackFunction={setAiResponseCallbackFunction}
+				>
+				</AIWitch> 
 			}
 		</div>
 	);

@@ -3,7 +3,6 @@ import "./App.css";
 import Header from "./components/Header";
 import PlantBoard from "./components/plant_components/PlantBoard";
 import NewPlantForm from "./components/plant_components/NewPlantForm";
-import AIWitch from "./components/witch_components/AIWitch";
 import sproutIcon from "./sprout.png";
 
 import axios from "axios";
@@ -73,12 +72,15 @@ function App() {
     const newPlantsWateringAndRepottingSchedule = {};
     for (const plant of plants) {
       // console.log("plant", plant)
-      newPlantsWateringAndRepottingSchedule[plant.id] = calculateDaysUntilNextWateringRepotting(plant)
+      newPlantsWateringAndRepottingSchedule[plant.id] =
+        calculateDaysUntilNextWateringRepotting(plant);
     }
 
     // console.log("newPlantData", newPlantsWateringAndRepottingSchedule)
-    setPlantsWateringAndRepottingSchedule(newPlantsWateringAndRepottingSchedule);
-  }
+    setPlantsWateringAndRepottingSchedule(
+      newPlantsWateringAndRepottingSchedule
+    );
+  };
 
   // Add new plant - sets plant to plant list and updates watering and repotting schedule
   const createNewPlantForSelectedUser = (data) => {
@@ -86,19 +88,23 @@ function App() {
       .post(`${URL}/api/v1/plants/users/${activeUser.id}`, data)
       .then((res) => {
         // fetchWateringAndRepottingScheduleByPlant(res.data.id);
-        const plantWateringRepottingSchedule = calculateDaysUntilNextWateringRepotting(res.data);
-        const newWateringRepottingSchedule = createWateringAndRepottingEntry(res.data.id)
-        newWateringRepottingSchedule[res.data.id] = plantWateringRepottingSchedule;
+        const plantWateringRepottingSchedule =
+          calculateDaysUntilNextWateringRepotting(res.data);
+        const newWateringRepottingSchedule = createWateringAndRepottingEntry(
+          res.data.id
+        );
+        newWateringRepottingSchedule[res.data.id] =
+          plantWateringRepottingSchedule;
         setPlantsWateringAndRepottingSchedule(newWateringRepottingSchedule);
 
         alert(`Welcome, ${res.data.name}!`);
         const newPlantList = [];
-          for (const plant of activeUsersPlants) {
-            newPlantList.push(plant);
-          }
-          newPlantList.push(res.data);
+        for (const plant of activeUsersPlants) {
+          newPlantList.push(plant);
+        }
+        newPlantList.push(res.data);
 
-          setActiveUsersPlants(newPlantList);
+        setActiveUsersPlants(newPlantList);
         // Delay timer included to allow for watering and repotting schedule to be updated
         // setTimeout(() => {
         //   const newPlantList = [];
@@ -177,14 +183,17 @@ function App() {
     const waterInterval = plant.waterInterval;
     const repotInterval = plant.repotInterval;
 
-    const daysUntilNextWatering = waterInterval - Math.floor(
-      (todaysDate - prevWaterDate) / (1000 * 60 * 60 * 24)
-    );
-    const daysUntilNextRepotting = repotInterval - Math.floor(
-      (todaysDate - prevRepotDate) / (1000 * 60 * 60 * 24)
-    );
+    const daysUntilNextWatering =
+      waterInterval -
+      Math.floor((todaysDate - prevWaterDate) / (1000 * 60 * 60 * 24));
+    const daysUntilNextRepotting =
+      repotInterval -
+      Math.floor((todaysDate - prevRepotDate) / (1000 * 60 * 60 * 24));
 
-    return {daysUntilNextWatering : daysUntilNextWatering, daysUntilNextRepotting : daysUntilNextRepotting};
+    return {
+      daysUntilNextWatering: daysUntilNextWatering,
+      daysUntilNextRepotting: daysUntilNextRepotting,
+    };
   };
 
   // helper - Adds empty dictionary entry for plantId - shape: {plantId: {}}
