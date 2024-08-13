@@ -47,8 +47,8 @@ const PlantBoard = (props) => {
 
 
   return (
-    <div id="plant-board" className="section-styling">
-      <h1>My Plants</h1>
+    <div className="big-section">
+      <h1 className="large-heading">My Plants</h1>
       {/* Active User's Plant List */}
       {displayPlantsComponents && <ul id="plant-list">{activeUserPlantComponents}</ul>}
     </div>

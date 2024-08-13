@@ -51,7 +51,7 @@ const PlantModal = (props) => {
 	return (
 		<div id="plant-modal">
 			<div>
-			<img className="plant-img" src={ 
+			<img className="plant-modal-img" src={ 
 				image || defaultImg
 				} alt={`${name}`} 
 			/>
