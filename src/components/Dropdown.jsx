@@ -12,6 +12,7 @@ function Dropdown(props) {
   const setActiveUsersPlants = props.setActiveUsersPlantsCallbackFunction;
 	const setPlantsWateringAndRepottingSchedule = props.setPlantsWateringAndRepottingScheduleCallbackFunction;
   const setDisplayPlantsComponents = props.setDisplayPlantsComponentsCallbackFunction;
+  const setAiResponse = props.setAiResponseCallbackFunction;
 
   const [isOpen, setIsOpen] = useState(false);
   const options = [];
@@ -37,6 +38,7 @@ function Dropdown(props) {
     if (window.confirm("Are you sure you want to log out?") === true) {
       setActiveUser({firstName: "Guest"})
       setActiveUsersPlants([]);
+      setAiResponse(null);
       setPlantsWateringAndRepottingSchedule({});
       setDisplayPlantsComponents(false);
       // alert("You have been logged out.")
