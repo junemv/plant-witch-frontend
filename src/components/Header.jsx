@@ -8,15 +8,17 @@ const Header = (props) => {
 	const demoUserData = props.demoUserData;
 	const activeUser = props.activeUser;
 	const aiResponse = props.aiResponse;
+	const activeUsersPlants = props.activeUsersPlants
 
 	// Callback functions
 	const fetchAllPlantsByUserIdCallbackFunction = props.fetchAllPlantsByUserIdCallbackFunction;
-	const fetchWateringAndRepottingScheduleByUserIdCallbackFunction = props.fetchWateringAndRepottingScheduleByUserIdCallbackFunction;
 	const setActiveUserCallbackFunction = props.setActiveUserCallbackFunction;
 	const setActiveUsersPlantsCallbackFunction = props.setActiveUsersPlantsCallbackFunction;
 	const setPlantsWateringAndRepottingScheduleCallbackFunction = props.setPlantsWateringAndRepottingScheduleCallbackFunction;
 	const setDisplayPlantsComponentsCallbackFunction = props.setDisplayPlantsComponentsCallbackFunction;
+	const setAiResponseCallbackFunction = props.setAiResponseCallbackFunction
 	const askWitchAI = props.askWitchAICallbackFunction;
+	// const saveWitchResponseToPlantCallbackFunction=props.saveWitchResponseToPlantCallbackFunction;
 
 	return (
 		<div className="section-styling">
@@ -28,6 +30,7 @@ const Header = (props) => {
 				setActiveUsersPlantsCallbackFunction={setActiveUsersPlantsCallbackFunction}
 				setPlantsWateringAndRepottingScheduleCallbackFunction={setPlantsWateringAndRepottingScheduleCallbackFunction}
 				setDisplayPlantsComponentsCallbackFunction={setDisplayPlantsComponentsCallbackFunction}
+				setAiResponseCallbackFunction={setAiResponseCallbackFunction}
 				/>
 			<div id="logo">Plant Witch</div>
 			{/* <div className="medium-heading">
@@ -35,7 +38,13 @@ const Header = (props) => {
 			</div> */}
 			{/* - AI Component */}
 			{ activeUser.id && 
-				<AIWitch askWitchAI={askWitchAI} aiResponse={aiResponse} />
+				<AIWitch 
+					askWitchAI={askWitchAI} 
+					aiResponse={aiResponse}		
+					activeUsersPlants={activeUsersPlants}
+					setAiResponseCallbackFunction={setAiResponseCallbackFunction}
+				>
+				</AIWitch> 
 			}
 		</div>
 	);
