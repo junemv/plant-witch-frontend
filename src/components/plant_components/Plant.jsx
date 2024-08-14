@@ -8,6 +8,7 @@ import PlantModal from "./PlantModal";
 
 const Plant = (props) => {
   // props
+  const plant = props.plant;
   const key = props.key;
   const id = props.id;
   const name = props.name;
@@ -130,8 +131,11 @@ const Plant = (props) => {
 
   useEffect(() => {
     handleWateringAndRepottingStyle(thisPlantsNextWatering, "water-date")
+  }, [plantsWateringAndRepottingSchedule])
+
+  useEffect(() => {
     handleWateringAndRepottingStyle(thisPlantsNextRepotting, "repot-date")
-  }, [])
+  }, [plantsWateringAndRepottingSchedule])
 
   // FORM FUNCTIONS
   const onPlantNameChange = (e) => {
@@ -165,6 +169,10 @@ const Plant = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     updatePlant(id, updatedPlantFormFields);
+    // handleWateringAndRepottingStyle(updatedPlantSchedule.daysUntilNextWatering, "water-date")
+    // handleWateringAndRepottingStyle(updatedPlantSchedule.daysUntilNextRepotting, "repot-date")
+    // console.log("Water",updatedPlantSchedule.daysUntilNextWatering)
+    // console.log("Repot",updatedPlantSchedule.daysUntilNextRepotting)
     toggleEditMode(!editMode);
   }
 

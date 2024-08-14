@@ -2,34 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="89b3242c-577d-4e1f-a31e-cd3193f99d36" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/AboutModal.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/AboutModal.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/plant_components/PlantModal.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/plant_components/PlantModal.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/plant_components/PlantsListForAI.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/plant_components/PlantsListForAI.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/plant_witch_icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/send-mail-icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shovel.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sprout.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/watering-can.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dropdown.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dropdown.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dropdown.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dropdown.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Modal.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Modal.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Modal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Modal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/plant_components/NewPlantForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/plant_components/NewPlantForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/plant_components/Plant.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/plant_components/Plant.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/plant_components/Plant.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/plant_components/Plant.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/plant_components/PlantBoard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/plant_components/PlantBoard.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/plant_components/PlantBoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/plant_components/PlantBoard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/witch_components/AIWitch.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/witch_components/AIWitch.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/witch_components/AIWitch.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/witch_components/AIWitch.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
