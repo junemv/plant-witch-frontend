@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../components/Dropdown.css';
 
 // for demo puropses, this dropdown menu is used to set the active user
 function Dropdown(props) {
@@ -8,13 +9,15 @@ function Dropdown(props) {
   // callback functions
 	const setActiveUser = props.setActiveUserCallbackFunction;
 	const fetchAllPlantsByUserId = props.fetchAllPlantsByUserIdCallbackFunction;
-  const fetchWateringAndRepottingScheduleByUserId = props.fetchWateringAndRepottingScheduleByUserIdCallbackFunction;
   const setActiveUsersPlants = props.setActiveUsersPlantsCallbackFunction;
 	const setPlantsWateringAndRepottingSchedule = props.setPlantsWateringAndRepottingScheduleCallbackFunction;
   const setDisplayPlantsComponents = props.setDisplayPlantsComponentsCallbackFunction;
+  const setAiResponse = props.setAiResponseCallbackFunction;
+  const setChatHistory = props.setChatHistoryCallbackFunction;
 
   const [isOpen, setIsOpen] = useState(false);
   const options = [];
+  const defaultPrompt = "How can I assist you today?";
 
 	// storing index in num and user data in user
 	if (demoUserData) {
@@ -28,7 +31,6 @@ function Dropdown(props) {
     setIsOpen(!isOpen)
 		setActiveUser(user);
 		fetchAllPlantsByUserId(user.id);
-    fetchWateringAndRepottingScheduleByUserId(user.id);
     setTimeout(() => {
       setDisplayPlantsComponents(true);
     }, 500)
@@ -38,6 +40,10 @@ function Dropdown(props) {
     if (window.confirm("Are you sure you want to log out?") === true) {
       setActiveUser({firstName: "Guest"})
       setActiveUsersPlants([]);
+      setAiResponse(null);
+      setChatHistory([
+        { role: "system", content: defaultPrompt },
+      ])
       setPlantsWateringAndRepottingSchedule({});
       setDisplayPlantsComponents(false);
       // alert("You have been logged out.")
@@ -46,15 +52,15 @@ function Dropdown(props) {
   }
 
   return (
-    <div>
+    <div className="buttons-section">
       {!activeUser.id && (
-        <button onClick={() => setIsOpen(!isOpen)}>Select User</button>
+        <button id="login-btn" className = "log-in-out-users-btns" onClick={() => setIsOpen(!isOpen)}>Login</button>
       )}
-      {activeUser.id && (<button onClick={handleLogOut}>Log Out</button>)}
+      {activeUser.id && (<button id="logout-btn" className = "log-in-out-users-btns" onClick={handleLogOut}>Log Out</button>)}
       {isOpen && (
         <div>
           {options.map(option => (
-            <button key={option[0]} onClick={() => handleUserSelect(demoUserData[option[1]])}>
+            <button id="user-btn" className = "log-in-out-users-btns" key={option[0]} onClick={() => handleUserSelect(demoUserData[option[1]])}>
               {option[0]}
             </button>
           ))}

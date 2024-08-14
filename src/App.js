@@ -3,7 +3,8 @@ import "./App.css";
 import Header from "./components/Header";
 import PlantBoard from "./components/plant_components/PlantBoard";
 import NewPlantForm from "./components/plant_components/NewPlantForm";
-import AIWitch from "./components/witch_components/AIWitch";
+import sproutIcon from "./sprout.png";
+import AboutModal from "./components/AboutModal";
 
 import axios from "axios";
 import Modal from "./components/Modal";
@@ -21,11 +22,17 @@ function App() {
   // Plant Variables
   const [activeUsersPlants, setActiveUsersPlants] = useState([]);
   // stored by {id: {daysUntilNextWatering: 0, daysUntilNextRepotting: 0}}
-  const [plantsWateringAndRepottingSchedule, setPlantsWateringAndRepottingSchedule] = useState({});
+  const [
+    plantsWateringAndRepottingSchedule,
+    setPlantsWateringAndRepottingSchedule,
+  ] = useState({});
 
   //AI Witch variable
+  const defaultPrompt = "How can I assist you today?";
   const [aiResponse, setAiResponse] = useState(null);
-
+  const [chatHistory, setChatHistory] = useState([
+    { role: "system", content: defaultPrompt },
+  ]);
   const [activeUserPlantComponents, setActiveUserPlantComponents] = useState(
     []
   );
@@ -33,6 +40,7 @@ function App() {
 
   // Modal variables
   const [showModal, setShowModal] = useState(false);
+  const [showAboutModal, setShowAboutModal] = useState(false);
 
   // USER FUNCTIONALITY:
   // Get all users - TODO: deprecate when userauth is added
@@ -56,23 +64,27 @@ function App() {
       .get(`${URL}/api/v1/plants/users/${userId}`)
       .then((res) => {
         setActiveUsersPlants(res.data);
-        console.log("plants:", res.data);
+        // console.log("plants:", res.data);
+        buildScheduleFromPlants(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  // Get one plant by ID
-  const fetchPlantById = (plantId) => {
-    axios
-      .get(`${URL}/api/v1/plants/${plantId}`)
-      .then((res) => {
-        console.log("res.data", res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const buildScheduleFromPlants = (plants) => {
+    // console.log("plants", plants)
+    const newPlantsWateringAndRepottingSchedule = {};
+    for (const plant of plants) {
+      // console.log("plant", plant)
+      newPlantsWateringAndRepottingSchedule[plant.id] =
+        calculateDaysUntilNextWateringRepotting(plant);
+    }
+
+    // console.log("newPlantData", newPlantsWateringAndRepottingSchedule)
+    setPlantsWateringAndRepottingSchedule(
+      newPlantsWateringAndRepottingSchedule
+    );
   };
 
   // Add new plant - sets plant to plant list and updates watering and repotting schedule
@@ -80,20 +92,34 @@ function App() {
     axios
       .post(`${URL}/api/v1/plants/users/${activeUser.id}`, data)
       .then((res) => {
-        fetchWateringAndRepottingScheduleByPlant(res.data.id);
-        console.log("plant data", res.data);
+        // fetchWateringAndRepottingScheduleByPlant(res.data.id);
+        const plantWateringRepottingSchedule =
+          calculateDaysUntilNextWateringRepotting(res.data);
+        const newWateringRepottingSchedule = createWateringAndRepottingEntry(
+          res.data.id
+        );
+        newWateringRepottingSchedule[res.data.id] =
+          plantWateringRepottingSchedule;
+        setPlantsWateringAndRepottingSchedule(newWateringRepottingSchedule);
 
         alert(`Welcome, ${res.data.name}!`);
-        // Delay timer included to allow for watering and repotting schedule to be updated
-        setTimeout(() => {
-          const newPlantList = [];
-          for (const plant of activeUsersPlants) {
-            newPlantList.push(plant);
-          }
-          newPlantList.push(res.data);
+        const newPlantList = [];
+        for (const plant of activeUsersPlants) {
+          newPlantList.push(plant);
+        }
+        newPlantList.push(res.data);
 
-          setActiveUsersPlants(newPlantList);
-        }, 500);
+        setActiveUsersPlants(newPlantList);
+        // Delay timer included to allow for watering and repotting schedule to be updated
+        // setTimeout(() => {
+        //   const newPlantList = [];
+        //   for (const plant of activeUsersPlants) {
+        //     newPlantList.push(plant);
+        //   }
+        //   newPlantList.push(res.data);
+
+        //   setActiveUsersPlants(newPlantList);
+        // }, 500);
       })
       .catch((error) => {
         console.log(error, "create plant failed.");
@@ -122,36 +148,57 @@ function App() {
   };
 
   // Get all watering and repotting schedules by user ID - shape: {plantId: {wateringDate: n, repottingDate: n}}
-  const fetchWateringAndRepottingScheduleByUserId = (userId) => {
-    axios
-      .get(`${URL}/api/v1/plants/users/${userId}/plants_schedule`)
-      .then((res) => {
-        // console.log("watering and repotting days: ", res.data)
-        setPlantsWateringAndRepottingSchedule(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const fetchWateringAndRepottingScheduleByUserId = (userId) => {
+  //   axios
+  //     .get(`${URL}/api/v1/plants/users/${userId}/plants_schedule`)
+  //     .then((res) => {
+  //       // console.log("watering and repotting days: ", res.data)
+  //       setPlantsWateringAndRepottingSchedule(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   // Get and Set Watering and Repotting Interval - shape: {daysUntilNextWatering : n, daysUntilNextRepotting : n}
-  const fetchWateringAndRepottingScheduleByPlant = async (plantId) => {
-    await axios
-      .get(`${URL}/api/v1/plants/${plantId}/schedule`)
-      .then((res) => {
-        // console.log("plant id:", plantId, "res.data:", res.data)
-        const newPlantsWateringAndRepottingSchedule =
-          createWateringAndRepottingEntry(plantId);
-        newPlantsWateringAndRepottingSchedule[plantId] = res.data;
+  // const fetchWateringAndRepottingScheduleByPlant = async (plantId) => {
+  //   await axios
+  //     .get(`${URL}/api/v1/plants/${plantId}/schedule`)
+  //     .then((res) => {
+  //       // console.log("plant id:", plantId, "res.data:", res.data)
+  //       const newPlantsWateringAndRepottingSchedule =
+  //         createWateringAndRepottingEntry(plantId);
+  //       newPlantsWateringAndRepottingSchedule[plantId] = res.data;
 
-        // console.log("new Plant Schedule", newPlantsWateringAndRepottingSchedule)
-        setPlantsWateringAndRepottingSchedule(
-          newPlantsWateringAndRepottingSchedule
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  //       // console.log("new Plant Schedule", newPlantsWateringAndRepottingSchedule)
+  //       setPlantsWateringAndRepottingSchedule(
+  //         newPlantsWateringAndRepottingSchedule
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+  // calculate days until next watering or repotting - returns { daysUntilNextWatering : n, daysUntilNextRepotting : n }
+  const calculateDaysUntilNextWateringRepotting = (plant) => {
+    const todaysDate = new Date();
+
+    const prevWaterDate = new Date(plant.waterDate);
+    const prevRepotDate = new Date(plant.repotDate);
+    const waterInterval = plant.waterInterval;
+    const repotInterval = plant.repotInterval;
+
+    const daysUntilNextWatering =
+      waterInterval -
+      Math.floor((todaysDate - prevWaterDate) / (1000 * 60 * 60 * 24));
+    const daysUntilNextRepotting =
+      repotInterval -
+      Math.floor((todaysDate - prevRepotDate) / (1000 * 60 * 60 * 24));
+
+    return {
+      daysUntilNextWatering: daysUntilNextWatering,
+      daysUntilNextRepotting: daysUntilNextRepotting,
+    };
   };
 
   // helper - Adds empty dictionary entry for plantId - shape: {plantId: {}}
@@ -169,28 +216,42 @@ function App() {
     const newPlantsWateringAndRepottingSchedule =
       plantsWateringAndRepottingSchedule;
 
-    if (endPoint === "water-date")  {
-      newPlantsWateringAndRepottingSchedule[plantId]["daysUntilNextWatering"] = interval;
-      setPlantsWateringAndRepottingSchedule(newPlantsWateringAndRepottingSchedule);
+    if (endPoint === "water-date") {
+      newPlantsWateringAndRepottingSchedule[plantId]["daysUntilNextWatering"] =
+        interval;
+      setPlantsWateringAndRepottingSchedule(
+        newPlantsWateringAndRepottingSchedule
+      );
     } else if (endPoint === "repot-date") {
-      newPlantsWateringAndRepottingSchedule[plantId]["daysUntilNextRepotting"] = interval;
-      setPlantsWateringAndRepottingSchedule(newPlantsWateringAndRepottingSchedule);
+      newPlantsWateringAndRepottingSchedule[plantId]["daysUntilNextRepotting"] =
+        interval;
+      setPlantsWateringAndRepottingSchedule(
+        newPlantsWateringAndRepottingSchedule
+      );
     }
-  }
+  };
 
   // Update plant when watered or repotted
   const updatePlantWateredOrRepotted = (plantId, endPoint) => {
     axios.patch(`${URL}/api/v1/plants/${plantId}/${endPoint}`).then(() => {
-      console.log("old plant schedule", plantsWateringAndRepottingSchedule)
+      console.log("old plant schedule", plantsWateringAndRepottingSchedule);
       const newPlantList = [];
       for (const plant of activeUsersPlants) {
         if (plant.id === plantId) {
           if (endPoint === "water-date") {
             plant.waterDate = new Date().toString();
-            updateWateringAndRepottingEntry(plantId, endPoint, plant.waterInterval);
+            updateWateringAndRepottingEntry(
+              plantId,
+              endPoint,
+              plant.waterInterval
+            );
           } else if (endPoint === "repot-date") {
             plant.repotDate = new Date().toString();
-            updateWateringAndRepottingEntry(plantId, endPoint, plant.repotInterval);
+            updateWateringAndRepottingEntry(
+              plantId,
+              endPoint,
+              plant.repotInterval
+            );
           }
         }
         newPlantList.push(plant);
@@ -221,14 +282,22 @@ function App() {
       });
   };
 
-  //Call WitchAI
+  // AI FUNCTIONALITY:
+  // Call WitchAI
   const askWitchAI = (prompt) => {
     const userId = activeUser.id;
+    const newPrompt = { role: "user", content: prompt };
+    const updatedChatHistory = [...chatHistory, newPrompt];
 
     axios
-      .post(`${URL}/api/v1/witch_ai/ask_witch/${userId}`, { prompt })
+      .post(`${URL}/api/v1/witch_ai/ask_witch/${userId}`, updatedChatHistory)
       .then((res) => {
         setAiResponse(res.data);
+        setChatHistory((prevChat) => [
+          ...prevChat,
+          newPrompt,
+          { role: "assistant", content: res.data.response },
+        ]);
       })
       .catch((err) => {
         console.log(err);
@@ -244,60 +313,92 @@ function App() {
     setShowModal(false);
   };
 
-  return (
-    <div id="App">
-      <header id="App-header">
-        {/* Header Component */}
-        {}
-        <Header
-          demoUserData={demoUserData}
-          activeUser={activeUser}
-          setActiveUserCallbackFunction={setActiveUser}
-          fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserId}
-          fetchWateringAndRepottingScheduleByUserIdCallbackFunction={
-            fetchWateringAndRepottingScheduleByUserId
-          }
-          setActiveUsersPlantsCallbackFunction={setActiveUsersPlants}
-          setPlantsWateringAndRepottingScheduleCallbackFunction={
-            setPlantsWateringAndRepottingSchedule
-          }
-          setDisplayPlantsComponentsCallbackFunction={
-            setDisplayPlantsComponents
-          }
-        />
-      </header>
-      {activeUser.id && (
-        <div id="App-body">
-          {/* - AI Component */}
-          <AIWitch askWitchAI={askWitchAI} aiResponse={aiResponse} />
-          {/* - Create New Plant component (using Modal component) */}
-          <button onClick={handleCreateNewPlant}>Create Plant</button>
-          <Modal show={showModal} onClose={handleCloseModal}>
-            <NewPlantForm
-              createNewPlantForSelectedUserCallbackFunction={
-                createNewPlantForSelectedUser
-              }
-              handleCloseModalCallbackFunction={handleCloseModal}
-            />
-          </Modal>
+  const handleShowAboutModal = () => {
+    setShowAboutModal(!showAboutModal);
+  };
 
-          {/* - PlantBoard component */}
-          <PlantBoard
+  return (
+    <div>
+      <div id="App">
+        <Modal show={showAboutModal} onClose={handleShowAboutModal}>
+          <AboutModal></AboutModal>
+        </Modal>
+        <header className="big-section">
+          {/* Header Component */}
+          <Header
+            demoUserData={demoUserData}
+            activeUser={activeUser}
             activeUsersPlants={activeUsersPlants}
-            plantsWateringAndRepottingSchedule={
-              plantsWateringAndRepottingSchedule
+            aiResponse={aiResponse}
+            setActiveUserCallbackFunction={setActiveUser}
+            fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserId}
+            setActiveUsersPlantsCallbackFunction={setActiveUsersPlants}
+            setDisplayPlantsComponentsCallbackFunction={
+              setDisplayPlantsComponents
             }
-            activeUserPlantComponents={activeUserPlantComponents}
-            displayPlantsComponents={displayPlantsComponents}
-            deletePlantCallbackFunction={deletePlant}
-            updatePlantWateredOrRepottedCallbackFunction={
-              updatePlantWateredOrRepotted
-            }
-            updatePlantCallbackFunction={updatePlant}
-            setActiveUserPlantComponentsCallbackFunction={
-              setActiveUserPlantComponents
+            askWitchAICallbackFunction={askWitchAI}
+            setAiResponseCallbackFunction={setAiResponse}
+            setChatHistoryCallbackFunction={setChatHistory}
+            setPlantsWateringAndRepottingScheduleCallbackFunction={
+              setPlantsWateringAndRepottingSchedule
             }
           />
+        </header>
+        {activeUser.id && (
+          <div id="App-body">
+            {/* - Create New Plant component (using Modal component) */}
+            <button
+              className="add-new-plant-btn"
+              onClick={handleCreateNewPlant}
+            >
+              <img
+                className="sprout-icon"
+                src={sproutIcon}
+                alt="new-sprout-icon"
+              />
+              Add New Plant
+            </button>
+            <Modal show={showModal} onClose={handleCloseModal}>
+              <NewPlantForm
+                createNewPlantForSelectedUserCallbackFunction={
+                  createNewPlantForSelectedUser
+                }
+                handleCloseModalCallbackFunction={handleCloseModal}
+              />
+            </Modal>
+            {/* - PlantBoard component */}
+            <PlantBoard
+              activeUsersPlants={activeUsersPlants}
+              plantsWateringAndRepottingSchedule={
+                plantsWateringAndRepottingSchedule
+              }
+              activeUserPlantComponents={activeUserPlantComponents}
+              displayPlantsComponents={displayPlantsComponents}
+              deletePlantCallbackFunction={deletePlant}
+              updatePlantWateredOrRepottedCallbackFunction={
+                updatePlantWateredOrRepotted
+              }
+              updatePlantCallbackFunction={updatePlant}
+              setActiveUserPlantComponentsCallbackFunction={
+                setActiveUserPlantComponents
+              }
+            />
+          </div>
+        )}
+      </div>
+      {activeUser.id && (
+        <div id="footer">
+          <div id="footer-1">©2024 Plant Witch Team</div>
+          <div>
+            <button
+              id="about-btn"
+              onClick={() => {
+                handleShowAboutModal();
+              }}
+            >
+              About
+            </button>
+          </div>
         </div>
       )}
     </div>

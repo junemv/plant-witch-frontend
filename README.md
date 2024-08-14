@@ -34,21 +34,21 @@ Dependencies can be installed by running `npm install`. Please let the team know
   - ~~Plant Component~~
 - ~~Build Folder structure~~
 - ~~Update Watering and Repotting logic~~
-- Basic CSS Styling
-  - App
-  - PlantBoard
-  - Plant
-  - Dropdown
-  - Header
-  - AIWitch
-- Move schedule calculation to the frontend
-- Update watering/repotting should update the plant component in the components variable
+- ~~Basic CSS Styling~~
+  - ~~App~~
+  - ~~PlantBoard~~
+  - ~~Plant~~
+  - ~~Dropdown~~
+  - ~~Header~~
+  - ~~AIWitch~~
+- ~~Move schedule calculation to the frontend~~
+- ~~Update watering/repotting should update the plant component in the components variable~~
+- Build Plant Modal
+- Build out edit watering/repotting increments
 
 ### Diana:
 - ~~Header Component~~
   - AI text field form
-- Finished CSS Styling
-  - AIWitch
 - Working on building the docker container for deployment of backend
 
 ### Natasha:
@@ -56,6 +56,13 @@ Dependencies can be installed by running `npm install`. Please let the team know
 - ~~New Plant Form Component~~
 - CSS Styling:
   - ~~NewPlantForm~~
-  - Adding icons for water and repot buttons
+  - ~~Adding icons for water and repot buttons~~
+  - ~~Styling "Add new plant" button~~
+  - ~~Buttons to login, logout and select user~~
+  - AIWitch
 - ~~Finish Modal component~~
+- AIWitch history log (using modal?);
 
+## Credits:
+Photo by <a href="https://unsplash.com/@shimikumi32?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Kumiko SHIMIZU</a> on <a href="https://unsplash.com/photos/selective-focus-of-green-plants-Pxa0yJ2Elxc?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+  

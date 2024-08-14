@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import './Plant.css';
 import defaultImg from '../../assets/potted-plant-doodle.jpg';
+import shovelIcon from '../../shovel.png'
+import waterCanIcon from '../../watering-can.png';
+import Modal from "../Modal";
+import PlantModal from "./PlantModal";
 
 const Plant = (props) => {
   // props
@@ -15,7 +19,6 @@ const Plant = (props) => {
   const waterInterval = props.waterInterval;
   const repotInterval = props.repotInterval;
   const plantsWateringAndRepottingSchedule = props.plantsWateringAndRepottingSchedule;
-  // const scheduleBtnStyle = props.scheduleBtnStyle
 
   // variables
   const thisPlantsNextWatering = plantsWateringAndRepottingSchedule[id].daysUntilNextWatering
@@ -30,7 +33,7 @@ const Plant = (props) => {
   const [editMode, setEditMode] = useState(false);
   const [updatedPlantFormFields, setUpdatedPlantFormFields] = useState({
     name: name,
-    // commonName: commonName,
+    commonName: commonName,
     description: description,
     waterInterval: waterInterval,
     repotInterval: repotInterval
@@ -39,19 +42,16 @@ const Plant = (props) => {
     watering: {style: "schedule-green", msg: `Water Me in: ${thisPlantsNextWatering} days`}, 
     repotting: {style: "schedule-green", msg: `Repot Me in: ${thisPlantsNextWatering} days`}
   });
-  // TODO 8/7 - 
-  // 1. create a state variable to store the three CSS style states for watering/repotting
-  //  > green = 3+ days
-  //  > yellow = 0-2 days
-  //  > red = -n days
-  // 2. Figure out margin issue 
-  // 3. build function to calculate watering/repotting days on frontend
-  // calc: watering interval - (current date - last watered/repotted date)
-  // 4. styling
+  const [showModal, setShowModal] = useState(false);
 
   // Switches between edit and view modes
   const toggleEditMode = () => {
     setEditMode(!editMode);
+  }
+
+  const handleShowPlantModal = () => {
+    setShowModal(!showModal);
+    console.log("showModal", showModal)
   }
 
   // event handler for deleting plants
@@ -141,13 +141,6 @@ const Plant = (props) => {
     })
   }
 
-  const onPlantDescriptionChange = (e) => {
-    setUpdatedPlantFormFields({
-      ...updatedPlantFormFields,
-      description: e.target.value
-    })
-  }
-
   const onPlantCommonNameChange = (e) => {
     setUpdatedPlantFormFields({
       ...updatedPlantFormFields,
@@ -184,26 +177,39 @@ const Plant = (props) => {
 
   return (
     <div id="plant-component">
+      <Modal 
+        show={showModal}
+        onClose={handleShowPlantModal}
+      >
+        <PlantModal 
+          id={id}
+          name={name}
+          commonName={commonName}
+          image={image}
+          description={description}
+          waterDate={waterDate}
+          repotDate={repotDate}
+          waterInterval={waterInterval}
+          repotInterval={repotInterval}
+          updatePlantCallbackFunction={updatePlant}
+        />
+      </Modal>
       <li key={key}>
         <img className="plant-img" src={ 
           image || defaultImg
-          // defaultImg
           } alt={`${name}`} />
         { !editMode && (
           <div>
             <h2>{name}</h2>
-            {/* TODO - uncomment Common Name once implemented */}
-            <h3>Common Name: {commonName}</h3>
-            {description && (
-              <h3>Notes: {description}</h3>
-            )}
+            <p><b>Common Name: </b>{commonName}</p>
+
           </div>
         )}
         { editMode && (
           <form onSubmit={onSubmit} onKeyDown={preventEnterSubmit}>
             <div>
               <h3>
-                Nickname:
+                <b>Nickname: </b>
                 <input name="name"
                 value={updatedPlantFormFields.name}
                 placeholder="Mr. Planty McPlantface, Kevin..." 
@@ -212,24 +218,14 @@ const Plant = (props) => {
               </h3>
             </div>
             <div>
-              <h3>
-                Common Name:
+              <p>
+                <b>Common Name: </b>
                 <input name="common-name"
                 value={updatedPlantFormFields.commonName}
                 placeholder="Snake Plant, Monstera Deliciosa..." 
                 onChange={onPlantCommonNameChange}
                 />
-              </h3>
-            </div>
-            <div>
-              <h3>
-                Notes:
-                <input name="description"
-                value={updatedPlantFormFields.description}
-                placeholder="The happy plant by the window..." 
-                onChange={onPlantDescriptionChange}
-                />
-              </h3>
+              </p>
             </div>
             <div>
               <h3>
@@ -257,20 +253,21 @@ const Plant = (props) => {
             <input type="submit" value="Save Changes" />
           </form>
         )}
-        {/* <p>Water Date: {waterDate}</p> 
-        <p>Repot Date: {repotDate}</p>
-        <p>Water Interval: {waterInterval}</p>
-        <p>Repot Interval: {repotInterval}</p> */}
         { !editMode && (
           <div>
             <div className="water-repot-sec">
               <div className={scheduleBtnStyle.watering.style}>{scheduleBtnStyle.watering.msg}</div>
-              <button className="water-repot-btn" onClick={() => handleWateringAndRepotting(id, name, "water-date")} >Water</button>
+              <button className="water-repot-btn" onClick={() => handleWateringAndRepotting(id, name, "water-date")} ><img className="button-icon" src={waterCanIcon} alt="watering-can-icon"/></button>
+            </div>
+            <div className="water-repot-sec">  
               <div className={scheduleBtnStyle.repotting.style}>{scheduleBtnStyle.repotting.msg}</div>
-              <button className="water-repot-btn" onClick={() => handleWateringAndRepotting(id, name, "repot-date")}>Repot</button>
+              <button className="water-repot-btn" onClick={() => handleWateringAndRepotting(id, name, "repot-date")}><img className="button-icon" src={shovelIcon} alt="shovel-icon"/></button>
             </div>
             <button onClick={() => {toggleEditMode()}}>
               Edit Plant
+            </button>
+            <button onClick={handleShowPlantModal}>
+              More Info
             </button>
           </div>
         )}
@@ -280,8 +277,7 @@ const Plant = (props) => {
               Delete Plant
             </button>
           </div>
-        )
-        }
+        )}
       </li>
     </div>
   );

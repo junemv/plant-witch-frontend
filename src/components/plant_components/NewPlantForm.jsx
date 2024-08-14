@@ -50,8 +50,7 @@ const PlantForm = (props) => {
       const plantDetails = response.data.data[0];
       const imageURL = plantDetails.default_image.small_url;
       const commonNameFetched = plantDetails.common_name;
-      // console.log("Plant", plantDetails);
-      // console.log("Photo", imageURL);
+
       if (imageURL !== "https://perenual.com/storage/image/upgrade_access.jpg") {
         setPlantsData((prevData) => ({ ...prevData, image: imageURL }));
       }
@@ -71,7 +70,7 @@ const PlantForm = (props) => {
     <form onSubmit={handleFormSubmission} className="plant-submit-form">
       <h1>Create New Plant</h1>
       <div className="input-container">
-      <label>Nickname: </label>
+      <label>*Nickname: </label>
       <input
         className="input-item name-input"
         type="text"
@@ -84,7 +83,7 @@ const PlantForm = (props) => {
       ></input>
       </div>
       <div className="input-container">
-      <label>Common Name: </label>
+      <label>*Common Name: </label>
       <input
         className=" input-item commonName-input"
         type="text"
@@ -97,7 +96,7 @@ const PlantForm = (props) => {
       ></input>
       </div>
       <div className="input-container">
-      <label>Description: </label>
+      <label>Notes: </label>
         <input
           className="input-item description-input"
           type="text"
@@ -109,7 +108,7 @@ const PlantForm = (props) => {
       ></input>
       </div>
       <div className="input-container">
-      <label>Last Watered: </label>
+      <label>*Last Watered: </label>
         <input
           className="input-item lastWatered-input"
           type="date"
@@ -121,7 +120,7 @@ const PlantForm = (props) => {
       ></input>
       </div>
       <div className="input-container">
-      <label>Frequency: </label>
+      <label>*Watering Frequency: </label>
         <input
           className="input-item waterFrequency-input"
           type="number"
@@ -133,7 +132,7 @@ const PlantForm = (props) => {
       ></input>
       </div>
       <div className="input-container">
-      <label>Last Repoted: </label>
+      <label>*Last Repoted: </label>
       <input
           className="input-item lastRepoted-input"
           type="date"
@@ -145,7 +144,7 @@ const PlantForm = (props) => {
       ></input>
       </div>
       <div className="input-container">
-      <label>Frequency: </label>
+      <label>*Repotting Frequency: </label>
         <input
           className="input-item repotFrequency-input"
           type="number"
