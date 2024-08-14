@@ -52,8 +52,8 @@ const PlantModal = (props) => {
 						} alt={`${name}`} 
 					/>
 			
-					<div id="header">
-						<h1 className="heading-1">
+					<div className="header-contents" id="header">
+						<h1 id="heading-1">
 							{name}
 						</h1>
 						<ul className="header-list">
@@ -77,7 +77,7 @@ const PlantModal = (props) => {
 				</div>
 				
 				<div id="notes-body">
-					<h2 className="heading-2">
+					<h2 className="medium-heading">
 							Notes: 
 					</h2>
 					{ !editMode && (
@@ -86,26 +86,24 @@ const PlantModal = (props) => {
 						</p>
 					)}
 					{ editMode && (
-						<form onSubmit={onSubmit}>
-							<div>
-								<p>
-									<textarea name="notes" className="notes-scrollbox-edit"
-									value={updatedPlantFormFields.description}
-									placeholder="The happy plant by the window..." 
-									onChange={onPlantDescriptionChange}
-									/>
-								</p>
-							</div>
-							<input type="submit" value="Save Changes" />
-							<button onClick={toggleEditMode}>Cancel</button>
+						<form id="notes-form" onSubmit={onSubmit}>
+							<p>
+								<textarea name="notes" className="notes-scrollbox-edit"
+								value={updatedPlantFormFields.description}
+								placeholder="The happy plant by the window..." 
+								onChange={onPlantDescriptionChange}
+								/>
+							</p>
+							<input className="confirm-button" type="submit" value="Save Changes" />
+							<button className="cancel-button" onClick={toggleEditMode}>Cancel</button>
 						</form>
 					)}
 					{ !editMode && (
-						<button onClick={toggleEditMode}>Add Notes</button>
+						<button className="confirm-button" onClick={toggleEditMode}>Add Notes</button>
 					)}
 				</div>
 				<div className="saved-ai-box">
-					<h2 className="heading-2">Saved witch responses</h2>
+					<h2 className="medium-heading" id="heading-1">Saved Witch Responses:</h2>
 					<div className="ai-response-container">
 					{aiPlantHistory.map((ai) => (
 						<div className="ai-response-item">
