@@ -38,6 +38,7 @@ function App() {
     []
   );
   const [displayPlantsComponents, setDisplayPlantsComponents] = useState(false);
+  const [aiPlantHistory, setAiPlantHistory] = useState([]);
 
   // Modal variables
   const [showModal, setShowModal] = useState(false);
@@ -122,7 +123,7 @@ function App() {
       .patch(`${URL}/api/v1/plants/updates/${plantId}`, updatedPlantData)
       .then((res) => {
         const updatedPlantList = [];
-        const updatedPlantObj = {}
+        const updatedPlantObj = {};
         for (const plant of activeUsersPlants) {
           if (plant.id === plantId) {
             plant.name = updatedPlantData.name;
@@ -138,11 +139,13 @@ function App() {
           updatedPlantList.push(plant);
         }
         setActiveUsersPlants(updatedPlantList);
-        console.log(updatedPlantObj)
-        const newWateringandRepottingSchedule = plantsWateringAndRepottingSchedule
-        newWateringandRepottingSchedule.plantId = calculateDaysUntilNextWateringRepotting(updatedPlantObj)
-        console.log("THIS",newWateringandRepottingSchedule.plantId)
-        setPlantsWateringAndRepottingSchedule(newWateringandRepottingSchedule)
+        console.log(updatedPlantObj);
+        const newWateringandRepottingSchedule =
+          plantsWateringAndRepottingSchedule;
+        newWateringandRepottingSchedule.plantId =
+          calculateDaysUntilNextWateringRepotting(updatedPlantObj);
+        console.log("THIS", newWateringandRepottingSchedule.plantId);
+        setPlantsWateringAndRepottingSchedule(newWateringandRepottingSchedule);
         // return newWateringandRepottingSchedule.plantId
       })
       .catch((err) => {
@@ -210,14 +213,14 @@ function App() {
       for (const plant of activeUsersPlants) {
         if (plant.id === plantId) {
           if (endPoint === "water-date") {
-            plant.waterDate = buildFormattedDate()
+            plant.waterDate = buildFormattedDate();
             updateWateringAndRepottingEntry(
               plantId,
               endPoint,
               plant.waterInterval
             );
           } else if (endPoint === "repot-date") {
-            plant.repotDate = buildFormattedDate()
+            plant.repotDate = buildFormattedDate();
             updateWateringAndRepottingEntry(
               plantId,
               endPoint,
@@ -234,7 +237,9 @@ function App() {
   // helper - formats date to match backend
   const buildFormattedDate = () => {
     const date = new Date();
-    const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    const formattedDate = `${date.getFullYear()}-${
+      date.getMonth() + 1
+    }-${date.getDate()}`;
     return formattedDate.toString();
   };
 
@@ -282,6 +287,19 @@ function App() {
       });
   };
 
+  const fetchAllWitchResponsesForPlant = (plantId) => {
+    axios
+      .get(`${URL}/api/v1/witch_ai/plants/${plantId}`)
+      .then((res) => {
+        console.log("res", res.data);
+        setAiPlantHistory(res.data);
+        console.log("aiPlantHistory in App", aiPlantHistory);
+      })
+      .catch((err) => {
+        console.log(err, "Failed to fetch witch history.");
+      });
+  };
+
   // Handle Modal show up
   const handleCreateNewPlant = () => {
     setShowModal(true);
@@ -293,7 +311,7 @@ function App() {
 
   const handleShowAboutModal = () => {
     setShowAboutModal(!showAboutModal);
-  }
+  };
 
   return (
     <div>
@@ -359,6 +377,10 @@ function App() {
               setActiveUserPlantComponentsCallbackFunction={
                 setActiveUserPlantComponents
               }
+              aiPlantHistory={aiPlantHistory}
+              fetchAllWitchResponsesForPlantCallbackFunction={
+                fetchAllWitchResponsesForPlant
+              }
               calculateDaysUntilNextWateringRepottingCallbackFunction={
                 calculateDaysUntilNextWateringRepotting
               }
@@ -370,7 +392,14 @@ function App() {
         <div id="footer">
           <div id="footer-1">©2024 Plant Witch Team</div>
           <div>
-            <button id="about-btn" onClick={()=>{handleShowAboutModal()}}>About</button>
+            <button
+              id="about-btn"
+              onClick={() => {
+                handleShowAboutModal();
+              }}
+            >
+              About
+            </button>
           </div>
         </div>
       )}
