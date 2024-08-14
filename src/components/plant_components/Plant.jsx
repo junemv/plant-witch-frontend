@@ -8,6 +8,7 @@ import PlantModal from "./PlantModal";
 
 const Plant = (props) => {
   // props
+  const plant = props.plant;
   const key = props.key;
   const id = props.id;
   const name = props.name;
@@ -34,7 +35,9 @@ const Plant = (props) => {
   const [updatedPlantFormFields, setUpdatedPlantFormFields] = useState({
     name: name,
     commonName: commonName,
-    description: description
+    description: description,
+    waterInterval: waterInterval,
+    repotInterval: repotInterval
   });
   const [scheduleBtnStyle, setScheduleBtnStyle] = useState({
     watering: {style: "schedule-green", msg: `Water Me in: ${thisPlantsNextWatering} days`}, 
@@ -128,8 +131,11 @@ const Plant = (props) => {
 
   useEffect(() => {
     handleWateringAndRepottingStyle(thisPlantsNextWatering, "water-date")
+  }, [plantsWateringAndRepottingSchedule])
+
+  useEffect(() => {
     handleWateringAndRepottingStyle(thisPlantsNextRepotting, "repot-date")
-  }, [])
+  }, [plantsWateringAndRepottingSchedule])
 
   // FORM FUNCTIONS
   const onPlantNameChange = (e) => {
@@ -146,9 +152,27 @@ const Plant = (props) => {
     })
   }
 
+  const onWaterIntervalChange = (e) => {
+    setUpdatedPlantFormFields({
+      ...updatedPlantFormFields,
+      waterInterval: e.target.value
+    })
+  }
+
+  const onRepotIntervalChange = (e) => {
+    setUpdatedPlantFormFields({
+      ...updatedPlantFormFields,
+      repotInterval: e.target.value
+    })
+  }
+
   const onSubmit = (e) => {
     e.preventDefault();
     updatePlant(id, updatedPlantFormFields);
+    // handleWateringAndRepottingStyle(updatedPlantSchedule.daysUntilNextWatering, "water-date")
+    // handleWateringAndRepottingStyle(updatedPlantSchedule.daysUntilNextRepotting, "repot-date")
+    // console.log("Water",updatedPlantSchedule.daysUntilNextWatering)
+    // console.log("Repot",updatedPlantSchedule.daysUntilNextRepotting)
     toggleEditMode(!editMode);
   }
 
@@ -211,6 +235,27 @@ const Plant = (props) => {
                 />
               </p>
             </div>
+            <div>
+              <p className="medium-paragraph" >
+                <b>Water Interval: </b>
+                <input className="edit-form" name="water-interval"
+                value={updatedPlantFormFields.waterInterval}
+                placeholder="7"
+                onChange={onWaterIntervalChange}
+                />
+              </p>
+            </div>
+            <div>
+              <p className="medium-paragraph" >
+                <b>Repot Interval: </b>
+                <input className="edit-form" name="repot-interval"
+                value={updatedPlantFormFields.repotInterval}
+                placeholder="12"
+                onChange={onRepotIntervalChange}
+                />
+              </p>
+            </div>
+            <button onClick={() => {toggleEditMode()}}>
             <button className="cancel-button" onClick={() => {toggleEditMode()}}>
               Cancel
             </button>

@@ -122,15 +122,28 @@ function App() {
       .patch(`${URL}/api/v1/plants/updates/${plantId}`, updatedPlantData)
       .then((res) => {
         const updatedPlantList = [];
+        const updatedPlantObj = {}
         for (const plant of activeUsersPlants) {
           if (plant.id === plantId) {
             plant.name = updatedPlantData.name;
             plant.description = updatedPlantData.description;
             plant.commonName = updatedPlantData.commonName;
+            plant.waterInterval = updatedPlantData.waterInterval;
+            plant.repotInterval = updatedPlantData.repotInterval;
+            updatedPlantObj.repotDate = plant.repotDate;
+            updatedPlantObj.waterDate = plant.waterDate;
+            updatedPlantObj.repotInterval = updatedPlantData.repotInterval;
+            updatedPlantObj.waterInterval = updatedPlantData.waterInterval;
           }
           updatedPlantList.push(plant);
         }
         setActiveUsersPlants(updatedPlantList);
+        console.log(updatedPlantObj)
+        const newWateringandRepottingSchedule = plantsWateringAndRepottingSchedule
+        newWateringandRepottingSchedule.plantId = calculateDaysUntilNextWateringRepotting(updatedPlantObj)
+        console.log("THIS",newWateringandRepottingSchedule.plantId)
+        setPlantsWateringAndRepottingSchedule(newWateringandRepottingSchedule)
+        // return newWateringandRepottingSchedule.plantId
       })
       .catch((err) => {
         console.log(err);
@@ -345,6 +358,9 @@ function App() {
               updatePlantCallbackFunction={updatePlant}
               setActiveUserPlantComponentsCallbackFunction={
                 setActiveUserPlantComponents
+              }
+              calculateDaysUntilNextWateringRepottingCallbackFunction={
+                calculateDaysUntilNextWateringRepotting
               }
             />
           </div>
