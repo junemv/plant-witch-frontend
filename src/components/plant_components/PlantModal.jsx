@@ -42,21 +42,6 @@ const PlantModal = (props) => {
     toggleEditMode(!editMode);
   }
 
-	// textarea.addEventListener('keydown', function(event) { 
-	// 	if (event.key === 'Enter') { 
-	// 		event.preventDefault(); // Prevent the default line break behavior 
-	// 		this.value += '\n'; // Add a newline character to the textarea 
-	// 		// Update the character count accordingly 
-	// 		characterCount.textContent = this.value.length; 
-	// 	} 
-	// }); 
-
-	const preventEnterSubmit = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault()
-    };
-  }
-
 	return (
 		<div id="plant-modal">
 			<div>
@@ -97,7 +82,7 @@ const PlantModal = (props) => {
 					</p>
 				)}
 				{ editMode && (
-					<form onSubmit={onSubmit} onKeyDown={preventEnterSubmit}>
+					<form onSubmit={onSubmit}>
 						<div>
 							<p>
 								<textarea name="notes" className="notes-scrollbox-edit"

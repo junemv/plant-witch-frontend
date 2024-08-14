@@ -208,27 +208,27 @@ const Plant = (props) => {
           } alt={`${name}`} />
         { !editMode && (
           <div>
-            <h2>{name}</h2>
-            <p><b>Common Name: </b>{commonName}</p>
+            <h2 className="medium-heading" >{name}</h2>
+            <p className="medium-paragraph" >{commonName}</p>
 
           </div>
         )}
         { editMode && (
           <form onSubmit={onSubmit} onKeyDown={preventEnterSubmit}>
             <div>
-              <h3>
+              <p className="medium-paragraph" >
                 <b>Nickname: </b>
-                <input name="name"
+                <input className="edit-form" name="name"
                 value={updatedPlantFormFields.name}
                 placeholder="Mr. Planty McPlantface, Kevin..." 
                 onChange={onPlantNameChange}
                 />
-              </h3>
+              </p>
             </div>
             <div>
-              <p>
+              <p className="medium-paragraph" >
                 <b>Common Name: </b>
-                <input name="common-name"
+                <input className="edit-form" name="common-name"
                 value={updatedPlantFormFields.commonName}
                 placeholder="Snake Plant, Monstera Deliciosa..." 
                 onChange={onPlantCommonNameChange}
@@ -236,29 +236,30 @@ const Plant = (props) => {
               </p>
             </div>
             <div>
-              <h3>
-                Water Interval:
-                <input name="water-interval"
-                       value={updatedPlantFormFields.waterInterval}
-                       placeholder="7"
-                       onChange={onWaterIntervalChange}
+              <p className="medium-paragraph" >
+                <b>Water Interval: </b>
+                <input className="edit-form" name="water-interval"
+                value={updatedPlantFormFields.waterInterval}
+                placeholder="7"
+                onChange={onWaterIntervalChange}
                 />
-              </h3>
+              </p>
             </div>
             <div>
-              <h3>
-                Repot Interval:
-                <input name="repot-interval"
-                       value={updatedPlantFormFields.repotInterval}
-                       placeholder="12"
-                       onChange={onRepotIntervalChange}
+              <p className="medium-paragraph" >
+                <b>Repot Interval: </b>
+                <input className="edit-form" name="repot-interval"
+                value={updatedPlantFormFields.repotInterval}
+                placeholder="12"
+                onChange={onRepotIntervalChange}
                 />
-              </h3>
+              </p>
             </div>
             <button onClick={() => {toggleEditMode()}}>
+            <button className="cancel-button" onClick={() => {toggleEditMode()}}>
               Cancel
             </button>
-            <input type="submit" value="Save Changes" />
+            <input className="confirm-button" type="submit" value="Save Changes" />
           </form>
         )}
         { !editMode && (
@@ -271,17 +272,17 @@ const Plant = (props) => {
               <div className={scheduleBtnStyle.repotting.style}>{scheduleBtnStyle.repotting.msg}</div>
               <button className="water-repot-btn" onClick={() => handleWateringAndRepotting(id, name, "repot-date")}><img className="button-icon" src={shovelIcon} alt="shovel-icon"/></button>
             </div>
-            <button onClick={() => {toggleEditMode()}}>
+            <button className="confirm-button" onClick={() => {toggleEditMode()}}>
               Edit Plant
             </button>
-            <button onClick={handleShowPlantModal}>
+            <button className="confirm-button" onClick={handleShowPlantModal}>
               More Info
             </button>
           </div>
         )}
         { editMode && (
           <div>
-            <button onClick={() => handleDelete(id)}>
+            <button className="delete-button" onClick={() => handleDelete(id)}>
               Delete Plant
             </button>
           </div>
