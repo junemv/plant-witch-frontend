@@ -6,7 +6,10 @@ const PlantBoard = (props) => {
   const activeUsersPlants = props.activeUsersPlants;
   const plantsWateringAndRepottingSchedule= props.plantsWateringAndRepottingSchedule
   const activeUserPlantComponents = props.activeUserPlantComponents;
-  const displayPlantsComponents = props.displayPlantsComponents
+  const displayPlantsComponents = props.displayPlantsComponents;
+  const aiPlantHistory = props.aiPlantHistory;
+  const fetchAllWitchResponsesForPlantCallbackFunction = props.fetchAllWitchResponsesForPlantCallbackFunction;
+
 
   // callback functions
   const deletePlantCallbackFunction = props.deletePlantCallbackFunction;
@@ -36,6 +39,9 @@ const PlantBoard = (props) => {
             deletePlantCallbackFunction={deletePlantCallbackFunction}
             updatePlantWateredOrRepottedCallbackFunction={updatePlantWateredOrRepottedCallbackFunction}
             updatePlantCallbackFunction={updatePlantCallbackFunction}
+            aiPlantHistory={aiPlantHistory}
+            fetchAllWitchResponsesForPlantCallbackFunction={fetchAllWitchResponsesForPlantCallbackFunction}
+
           />
         )
       }

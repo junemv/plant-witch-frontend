@@ -12,9 +12,11 @@ const PlantModal = (props) => {
 	const repotDate = props.repotDate;
 	const waterInterval = props.waterInterval;
 	const repotInterval = props.repotInterval;
+	const aiPlantHistory = props.aiPlantHistory;
 
 	// callback functions
 	const updatePlant = props.updatePlantCallbackFunction;
+	// const fetchAllWitchResponsesForPlant = props.fetchAllWitchResponsesForPlantCallbackFunction;
 
 	// state variables
 	const [editMode, setEditMode] = useState(false);
@@ -59,45 +61,48 @@ const PlantModal = (props) => {
 
 	return (
 		<div id="plant-modal">
-			<div>
-			<img className="plant-modal-img" src={ 
-				image || defaultImg
-				} alt={`${name}`} 
-			/>
+			<div id="info-box">
+				<img className="plant-modal-img" src={ 
+					image || defaultImg
+					} alt={`${name}`} 
+				/>
+		
+				<div id="header">
+					<h1 className="heading-1">
+						{name}
+					</h1>
+					<ul className="header-list">
+						<li>
+							<b>Common Name: </b>{commonName}
+						</li>
+						<li>
+							<b>Last Watered: </b>{waterDate}
+						</li>
+						<li>
+							<b>Watering Interval: </b>Every {waterInterval} Days
+						</li>
+						<li>
+							<b>Last Repotted: </b>{repotDate}
+						</li>
+						<li>
+							<b>Repotting Interval: </b>Every {repotInterval} Days
+						</li>
+					</ul>
+				</div>
 			</div>
-			<div id="header">
-				<h1 className="heading-1">
-					{name}
-				</h1>
-				<ul className="header-list">
-					<li>
-						<b>Common Name: </b>{commonName}
-					</li>
-					<li>
-						<b>Last Watered: </b>{waterDate}
-					</li>
-					<li>
-						<b>Watering Interval: </b>Every {waterInterval} Days
-					</li>
-					<li>
-						<b>Last Repotted: </b>{repotDate}
-					</li>
-					<li>
-						<b>Repotting Interval: </b>Every {repotInterval} Days
-					</li>
-				</ul>
-			</div>
-			<h2 className="heading-2">
-					Notes: 
-			</h2>
-			<div id="body">
+
+			
+			<div id="notes-body">
+				<h2 className="heading-2">
+						Notes: 
+				</h2>
 				{ !editMode && (
 					<p className="notes-scrollbox">
-						{description}
+						{description}	``
 					</p>
 				)}
 				{ editMode && (
-					<form onSubmit={onSubmit} onKeyDown={preventEnterSubmit}>
+					<form onSubmit={onSubmit}>
 						<div>
 							<p>
 								<textarea name="notes" className="notes-scrollbox-edit"
@@ -115,6 +120,18 @@ const PlantModal = (props) => {
 					<button onClick={toggleEditMode}>Add Notes</button>
 				)}
 			</div>
+			<div className="saved-ai-box">
+				<h2 className="heading-2">Saved witch responses</h2>
+				<div className="ai-response-container">
+				{aiPlantHistory.map((ai) => (
+					<div className="ai-response-item">
+						{ai.response}
+					</div>
+					))}
+			</div>
+		</div>
+
+		
 		</div>
 	)
 }

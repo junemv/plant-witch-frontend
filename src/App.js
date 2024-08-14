@@ -37,6 +37,7 @@ function App() {
     []
   );
   const [displayPlantsComponents, setDisplayPlantsComponents] = useState(false);
+  const [aiPlantHistory, setAiPlantHistory] = useState([]);
 
   // Modal variables
   const [showModal, setShowModal] = useState(false);
@@ -304,6 +305,19 @@ function App() {
       });
   };
 
+  const fetchAllWitchResponsesForPlant = (plantId) => {
+    axios
+      .get(`${URL}/api/v1/witch_ai/plants/${plantId}`)
+      .then((res) => {
+        console.log("res", res.data);
+        setAiPlantHistory(res.data);
+        console.log("aiPlantHistory in App", aiPlantHistory);
+      })
+      .catch((err) => {
+        console.log(err, "Failed to fetch witch history.");
+      });
+  };
+
   // Handle Modal show up
   const handleCreateNewPlant = () => {
     setShowModal(true);
@@ -381,6 +395,10 @@ function App() {
               updatePlantCallbackFunction={updatePlant}
               setActiveUserPlantComponentsCallbackFunction={
                 setActiveUserPlantComponents
+              }
+              aiPlantHistory={aiPlantHistory}
+              fetchAllWitchResponsesForPlantCallbackFunction={
+                fetchAllWitchResponsesForPlant
               }
             />
           </div>

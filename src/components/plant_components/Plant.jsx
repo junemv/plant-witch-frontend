@@ -19,6 +19,7 @@ const Plant = (props) => {
   const waterInterval = props.waterInterval;
   const repotInterval = props.repotInterval;
   const plantsWateringAndRepottingSchedule = props.plantsWateringAndRepottingSchedule;
+  const aiPlantHistory = props.aiPlantHistory;
 
   // variables
   const thisPlantsNextWatering = plantsWateringAndRepottingSchedule[id].daysUntilNextWatering
@@ -28,6 +29,8 @@ const Plant = (props) => {
   const deletePlant = props.deletePlantCallbackFunction;
   const updatePlant = props.updatePlantCallbackFunction;
   const updatePlantWateredOrRepotted = props.updatePlantWateredOrRepottedCallbackFunction;
+  const fetchAllWitchResponsesForPlant = props.fetchAllWitchResponsesForPlantCallbackFunction;
+
 
   // state variables
   const [editMode, setEditMode] = useState(false);
@@ -158,6 +161,10 @@ const Plant = (props) => {
     };
   }
 
+  // retrieves all ai responses for one plant
+  const getAllWitchResponsesForPlant = (plantId) => {
+    fetchAllWitchResponsesForPlant(plantId);
+    }
 
   return (
     <div id="plant-component">
@@ -176,6 +183,8 @@ const Plant = (props) => {
           waterInterval={waterInterval}
           repotInterval={repotInterval}
           updatePlantCallbackFunction={updatePlant}
+          aiPlantHistory={aiPlantHistory}
+          // fetchAllWitchResponsesForPlantCallbackFunction={fetchAllWitchResponsesForPlantCallbackFunction}
         />
       </Modal>
       <li key={key}>
@@ -230,7 +239,7 @@ const Plant = (props) => {
             <button onClick={() => {toggleEditMode()}}>
               Edit Plant
             </button>
-            <button onClick={handleShowPlantModal}>
+            <button onClick={()=> {handleShowPlantModal(); getAllWitchResponsesForPlant(id);}}>
               More Info
             </button>
           </div>
