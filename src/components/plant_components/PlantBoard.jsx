@@ -6,22 +6,27 @@ const PlantBoard = (props) => {
   const activeUsersPlants = props.activeUsersPlants;
   const plantsWateringAndRepottingSchedule= props.plantsWateringAndRepottingSchedule
   const activeUserPlantComponents = props.activeUserPlantComponents;
-  const displayPlantsComponents = props.displayPlantsComponents
+  const displayPlantsComponents = props.displayPlantsComponents;
+  const aiPlantHistory = props.aiPlantHistory;
+  const fetchAllWitchResponsesForPlantCallbackFunction = props.fetchAllWitchResponsesForPlantCallbackFunction;
+
 
   // callback functions
   const deletePlantCallbackFunction = props.deletePlantCallbackFunction;
   const updatePlantWateredOrRepottedCallbackFunction = props.updatePlantWateredOrRepottedCallbackFunction;
   const updatePlantCallbackFunction = props.updatePlantCallbackFunction;
   const setActiveUserPlantComponents = props.setActiveUserPlantComponentsCallbackFunction;
+  const calculateDaysUntilNextWateringRepottingCallbackFunction = props.calculateDaysUntilNextWateringRepottingCallbackFunction;
 
-  // Loop builds list of Plant components using active user's Plant state variable 
+  // Loop builds list of Plant components using active user's Plant state variable
   setTimeout(() => {
     const newActiveUsersPlantComponents = []
   
     if (activeUsersPlants) {
       for (const plant of activeUsersPlants) {
         newActiveUsersPlantComponents.push(
-          <Plant 
+          <Plant
+            plant={plant}
             key={plant.id}
             id={plant.id}
             name={plant.name}
@@ -36,6 +41,9 @@ const PlantBoard = (props) => {
             deletePlantCallbackFunction={deletePlantCallbackFunction}
             updatePlantWateredOrRepottedCallbackFunction={updatePlantWateredOrRepottedCallbackFunction}
             updatePlantCallbackFunction={updatePlantCallbackFunction}
+            aiPlantHistory={aiPlantHistory}
+            fetchAllWitchResponsesForPlantCallbackFunction={fetchAllWitchResponsesForPlantCallbackFunction}
+            calculateDaysUntilNextWateringRepottingCallbackFunction={calculateDaysUntilNextWateringRepottingCallbackFunction}
           />
         )
       }
