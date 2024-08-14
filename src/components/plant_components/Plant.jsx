@@ -8,6 +8,7 @@ import PlantModal from "./PlantModal";
 
 const Plant = (props) => {
   // props
+  const plant = props.plant;
   const key = props.key;
   const id = props.id;
   const name = props.name;
@@ -37,7 +38,9 @@ const Plant = (props) => {
   const [updatedPlantFormFields, setUpdatedPlantFormFields] = useState({
     name: name,
     commonName: commonName,
-    description: description
+    description: description,
+    waterInterval: waterInterval,
+    repotInterval: repotInterval
   });
   const [scheduleBtnStyle, setScheduleBtnStyle] = useState({
     watering: {style: "schedule-green", msg: `Water Me in: ${thisPlantsNextWatering} days`}, 
@@ -131,8 +134,11 @@ const Plant = (props) => {
 
   useEffect(() => {
     handleWateringAndRepottingStyle(thisPlantsNextWatering, "water-date")
+  }, [plantsWateringAndRepottingSchedule])
+
+  useEffect(() => {
     handleWateringAndRepottingStyle(thisPlantsNextRepotting, "repot-date")
-  }, [])
+  }, [plantsWateringAndRepottingSchedule])
 
   // FORM FUNCTIONS
   const onPlantNameChange = (e) => {
@@ -149,9 +155,27 @@ const Plant = (props) => {
     })
   }
 
+  const onWaterIntervalChange = (e) => {
+    setUpdatedPlantFormFields({
+      ...updatedPlantFormFields,
+      waterInterval: e.target.value
+    })
+  }
+
+  const onRepotIntervalChange = (e) => {
+    setUpdatedPlantFormFields({
+      ...updatedPlantFormFields,
+      repotInterval: e.target.value
+    })
+  }
+
   const onSubmit = (e) => {
     e.preventDefault();
     updatePlant(id, updatedPlantFormFields);
+    // handleWateringAndRepottingStyle(updatedPlantSchedule.daysUntilNextWatering, "water-date")
+    // handleWateringAndRepottingStyle(updatedPlantSchedule.daysUntilNextRepotting, "repot-date")
+    // console.log("Water",updatedPlantSchedule.daysUntilNextWatering)
+    // console.log("Repot",updatedPlantSchedule.daysUntilNextRepotting)
     toggleEditMode(!editMode);
   }
 
@@ -193,38 +217,58 @@ const Plant = (props) => {
           } alt={`${name}`} />
         { !editMode && (
           <div>
-            <h2>{name}</h2>
-            <p><b>Common Name: </b>{commonName}</p>
+            <h2 className="medium-heading" >{name}</h2>
+            <p className="medium-paragraph" >{commonName}</p>
 
           </div>
         )}
         { editMode && (
-          <form onSubmit={onSubmit} onKeyDown={preventEnterSubmit}>
-            <div>
-              <h3>
-                <b>Nickname: </b>
-                <input name="name"
-                value={updatedPlantFormFields.name}
-                placeholder="Mr. Planty McPlantface, Kevin..." 
-                onChange={onPlantNameChange}
-                />
-              </h3>
-            </div>
-            <div>
-              <p>
-                <b>Common Name: </b>
-                <input name="common-name"
-                value={updatedPlantFormFields.commonName}
-                placeholder="Snake Plant, Monstera Deliciosa..." 
-                onChange={onPlantCommonNameChange}
-                />
-              </p>
-            </div>
-            <button onClick={() => {toggleEditMode()}}>
-              Cancel
-            </button>
-            <input type="submit" value="Save Changes" />
-          </form>
+            <form onSubmit={onSubmit} onKeyDown={preventEnterSubmit}>
+              <div>
+                <p className="medium-paragraph" >
+                  <b>Nickname: </b>
+                  <input className="edit-form" name="name"
+                         value={updatedPlantFormFields.name}
+                         placeholder="Mr. Planty McPlantface, Kevin..."
+                         onChange={onPlantNameChange}
+                  />
+                </p>
+              </div>
+              <div>
+                <p className="medium-paragraph" >
+                  <b>Common Name: </b>
+                  <input className="edit-form" name="common-name"
+                         value={updatedPlantFormFields.commonName}
+                         placeholder="Snake Plant, Monstera Deliciosa..."
+                         onChange={onPlantCommonNameChange}
+                  />
+                </p>
+              </div>
+              <div>
+                <p className="medium-paragraph" >
+                  <b>Water Interval: </b>
+                  <input className="edit-form" name="water-interval"
+                         value={updatedPlantFormFields.waterInterval}
+                         placeholder="7"
+                         onChange={onWaterIntervalChange}
+                  />
+                </p>
+              </div>
+              <div>
+                <p className="medium-paragraph" >
+                  <b>Repot Interval: </b>
+                  <input className="edit-form" name="repot-interval"
+                         value={updatedPlantFormFields.repotInterval}
+                         placeholder="12"
+                         onChange={onRepotIntervalChange}
+                  />
+                </p>
+              </div>
+              <button className="cancel-button" onClick={() => {toggleEditMode()}}>
+                Cancel
+              </button>
+              <input className="confirm-button" type="submit" value="Save Changes" />
+            </form>
         )}
         { !editMode && (
           <div>
@@ -236,17 +280,17 @@ const Plant = (props) => {
               <div className={scheduleBtnStyle.repotting.style}>{scheduleBtnStyle.repotting.msg}</div>
               <button className="water-repot-btn" onClick={() => handleWateringAndRepotting(id, name, "repot-date")}><img className="button-icon" src={shovelIcon} alt="shovel-icon"/></button>
             </div>
-            <button onClick={() => {toggleEditMode()}}>
+            <button className="confirm-button" onClick={() => {toggleEditMode()}}>
               Edit Plant
             </button>
-            <button onClick={()=> {handleShowPlantModal(); getAllWitchResponsesForPlant(id);}}>
+            <button className="confirm-button" onClick={()=> {handleShowPlantModal(); getAllWitchResponsesForPlant(id);}}>
               More Info
             </button>
           </div>
         )}
         { editMode && (
           <div>
-            <button onClick={() => handleDelete(id)}>
+            <button className="delete-button" onClick={() => handleDelete(id)}>
               Delete Plant
             </button>
           </div>

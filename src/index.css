@@ -3,8 +3,8 @@ html {
   --section-bg: #f7f0d3;
   --common-green: #9cd89c;
   --text-heading: #733e2c;
-  --text-heading-light: #836d65;
-  --text-paragraph: #8c675a;
+  --text-heading-light: #866a60;
+  --text-paragraph: #9c857c;
 
   background-color: var(--common-green);
 }
@@ -68,10 +68,11 @@ code {
 }
 
 .medium-heading {
-  font-size: 1.5em;
+  font-size: 1.8em;
   font-weight: bold;
   color: var(--text-heading-light);
   text-align: center;
+  margin: 1%;
 }
 
 .section-styling {
@@ -89,4 +90,5 @@ code {
 .medium-paragraph {
   color: var(--text-paragraph);
   font-size: 1.2em;
+  margin: 1%;
 }
