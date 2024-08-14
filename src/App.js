@@ -21,6 +21,7 @@ function App() {
 
   // Plant Variables
   const [activeUsersPlants, setActiveUsersPlants] = useState([]);
+
   // stored by {id: {daysUntilNextWatering: 0, daysUntilNextRepotting: 0}}
   const [
     plantsWateringAndRepottingSchedule,
@@ -92,7 +93,6 @@ function App() {
     axios
       .post(`${URL}/api/v1/plants/users/${activeUser.id}`, data)
       .then((res) => {
-        // fetchWateringAndRepottingScheduleByPlant(res.data.id);
         const plantWateringRepottingSchedule =
           calculateDaysUntilNextWateringRepotting(res.data);
         const newWateringRepottingSchedule = createWateringAndRepottingEntry(
@@ -110,16 +110,6 @@ function App() {
         newPlantList.push(res.data);
 
         setActiveUsersPlants(newPlantList);
-        // Delay timer included to allow for watering and repotting schedule to be updated
-        // setTimeout(() => {
-        //   const newPlantList = [];
-        //   for (const plant of activeUsersPlants) {
-        //     newPlantList.push(plant);
-        //   }
-        //   newPlantList.push(res.data);
-
-        //   setActiveUsersPlants(newPlantList);
-        // }, 500);
       })
       .catch((error) => {
         console.log(error, "create plant failed.");
@@ -147,38 +137,6 @@ function App() {
       });
   };
 
-  // Get all watering and repotting schedules by user ID - shape: {plantId: {wateringDate: n, repottingDate: n}}
-  // const fetchWateringAndRepottingScheduleByUserId = (userId) => {
-  //   axios
-  //     .get(`${URL}/api/v1/plants/users/${userId}/plants_schedule`)
-  //     .then((res) => {
-  //       // console.log("watering and repotting days: ", res.data)
-  //       setPlantsWateringAndRepottingSchedule(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
-  // Get and Set Watering and Repotting Interval - shape: {daysUntilNextWatering : n, daysUntilNextRepotting : n}
-  // const fetchWateringAndRepottingScheduleByPlant = async (plantId) => {
-  //   await axios
-  //     .get(`${URL}/api/v1/plants/${plantId}/schedule`)
-  //     .then((res) => {
-  //       // console.log("plant id:", plantId, "res.data:", res.data)
-  //       const newPlantsWateringAndRepottingSchedule =
-  //         createWateringAndRepottingEntry(plantId);
-  //       newPlantsWateringAndRepottingSchedule[plantId] = res.data;
-
-  //       // console.log("new Plant Schedule", newPlantsWateringAndRepottingSchedule)
-  //       setPlantsWateringAndRepottingSchedule(
-  //         newPlantsWateringAndRepottingSchedule
-  //       );
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
   // calculate days until next watering or repotting - returns { daysUntilNextWatering : n, daysUntilNextRepotting : n }
   const calculateDaysUntilNextWateringRepotting = (plant) => {
     const todaysDate = new Date();
@@ -239,14 +197,14 @@ function App() {
       for (const plant of activeUsersPlants) {
         if (plant.id === plantId) {
           if (endPoint === "water-date") {
-            plant.waterDate = new Date().toString();
+            plant.waterDate = buildFormattedDate()
             updateWateringAndRepottingEntry(
               plantId,
               endPoint,
               plant.waterInterval
             );
           } else if (endPoint === "repot-date") {
-            plant.repotDate = new Date().toString();
+            plant.repotDate = buildFormattedDate()
             updateWateringAndRepottingEntry(
               plantId,
               endPoint,
@@ -258,6 +216,13 @@ function App() {
       }
       setActiveUsersPlants(newPlantList);
     });
+  };
+
+  // helper - formats date to match backend
+  const buildFormattedDate = () => {
+    const date = new Date();
+    const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    return formattedDate.toString();
   };
 
   // Delete plant
@@ -315,7 +280,7 @@ function App() {
 
   const handleShowAboutModal = () => {
     setShowAboutModal(!showAboutModal);
-  };
+  }
 
   return (
     <div>
@@ -328,7 +293,6 @@ function App() {
           <Header
             demoUserData={demoUserData}
             activeUser={activeUser}
-            activeUsersPlants={activeUsersPlants}
             aiResponse={aiResponse}
             setActiveUserCallbackFunction={setActiveUser}
             fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserId}
@@ -390,14 +354,7 @@ function App() {
         <div id="footer">
           <div id="footer-1">©2024 Plant Witch Team</div>
           <div>
-            <button
-              id="about-btn"
-              onClick={() => {
-                handleShowAboutModal();
-              }}
-            >
-              About
-            </button>
+            <button id="about-btn" onClick={()=>{handleShowAboutModal()}}>About</button>
           </div>
         </div>
       )}

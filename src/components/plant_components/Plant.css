@@ -1,11 +1,13 @@
 /* IDs */
 #plant-component {
 	background: white;
+	display: flex;
 	list-style: none;
 	margin: 2%;
 	padding: 30px;
 	width: 350px;
 	border-radius: 20px;
+	justify-content: center;
 	border: 8px solid var(--common-green);
 }
 
@@ -89,17 +91,65 @@
 /* forms styling */
 .edit-form {
 	overflow-y: scroll;
-	height: 350px;
-	width: 95%;
+	width: 80%;
 	background: beige;
 	border-radius: 10px;
-	padding: 20px;
-	text-align: start;
+	padding: 10px;
 	border: 3px solid #dbc6a3;
 	resize: none;
 }
 
-.notes-scrollbox-edit:focus {
+.edit-form:focus {
 	border: 3px solid #ae8f5a;
 }
 
+.confirm-button {
+	background-color: #3b9f3f;
+	color: white; 
+	font-weight: bold;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 20px;
+	margin: 10px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.cancel-button {
+	background-color: #af4f4c;
+	color: white; 
+	font-weight: bold;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 20px;
+	margin: 10px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.confirm-button:hover {
+	background-color: #219227;
+	transform: scale(1.1)
+}
+
+.cancel-button:hover {
+	background-color: #974542;
+	transform: scale(1.1)
+}
+
+.delete-button {
+	background-color: #4c4747;
+	color: white; 
+	font-weight: bold;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 20px;
+	/* margin: 10px; */
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.delete-button:hover {
+	background-color: #2c2929;
+	transform: scale(1.1)
+}
