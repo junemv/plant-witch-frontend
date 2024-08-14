@@ -325,6 +325,7 @@ function App() {
             demoUserData={demoUserData}
             activeUser={activeUser}
             aiResponse={aiResponse}
+            activeUsersPlants={activeUsersPlants}
             setActiveUserCallbackFunction={setActiveUser}
             fetchAllPlantsByUserIdCallbackFunction={fetchAllPlantsByUserId}
             setActiveUsersPlantsCallbackFunction={setActiveUsersPlants}
