@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './Plant.css';
-import defaultImg from '../../assets/potted-plant-doodle.jpg';
+import defaultImg from '../../assets/default-image.png';
 import shovelIcon from '../../shovel.png'
 import waterCanIcon from '../../watering-can.png';
 import Modal from "../Modal";
@@ -134,11 +134,11 @@ const Plant = (props) => {
 
   useEffect(() => {
     handleWateringAndRepottingStyle(thisPlantsNextWatering, "water-date")
-  }, [plantsWateringAndRepottingSchedule])
+  }, [thisPlantsNextWatering])
 
   useEffect(() => {
     handleWateringAndRepottingStyle(thisPlantsNextRepotting, "repot-date")
-  }, [plantsWateringAndRepottingSchedule])
+  }, [thisPlantsNextRepotting])
 
   // FORM FUNCTIONS
   const onPlantNameChange = (e) => {
