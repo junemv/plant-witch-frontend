@@ -214,53 +214,52 @@ const Plant = (props) => {
           </div>
         )}
         { editMode && (
-          <form onSubmit={onSubmit} onKeyDown={preventEnterSubmit}>
-            <div>
-              <p className="medium-paragraph" >
-                <b>Nickname: </b>
-                <input className="edit-form" name="name"
-                value={updatedPlantFormFields.name}
-                placeholder="Mr. Planty McPlantface, Kevin..." 
-                onChange={onPlantNameChange}
-                />
-              </p>
-            </div>
-            <div>
-              <p className="medium-paragraph" >
-                <b>Common Name: </b>
-                <input className="edit-form" name="common-name"
-                value={updatedPlantFormFields.commonName}
-                placeholder="Snake Plant, Monstera Deliciosa..." 
-                onChange={onPlantCommonNameChange}
-                />
-              </p>
-            </div>
-            <div>
-              <p className="medium-paragraph" >
-                <b>Water Interval: </b>
-                <input className="edit-form" name="water-interval"
-                value={updatedPlantFormFields.waterInterval}
-                placeholder="7"
-                onChange={onWaterIntervalChange}
-                />
-              </p>
-            </div>
-            <div>
-              <p className="medium-paragraph" >
-                <b>Repot Interval: </b>
-                <input className="edit-form" name="repot-interval"
-                value={updatedPlantFormFields.repotInterval}
-                placeholder="12"
-                onChange={onRepotIntervalChange}
-                />
-              </p>
-            </div>
-            <button onClick={() => {toggleEditMode()}}>
-            <button className="cancel-button" onClick={() => {toggleEditMode()}}>
-              Cancel
-            </button>
-            <input className="confirm-button" type="submit" value="Save Changes" />
-          </form>
+            <form onSubmit={onSubmit} onKeyDown={preventEnterSubmit}>
+              <div>
+                <p className="medium-paragraph" >
+                  <b>Nickname: </b>
+                  <input className="edit-form" name="name"
+                         value={updatedPlantFormFields.name}
+                         placeholder="Mr. Planty McPlantface, Kevin..."
+                         onChange={onPlantNameChange}
+                  />
+                </p>
+              </div>
+              <div>
+                <p className="medium-paragraph" >
+                  <b>Common Name: </b>
+                  <input className="edit-form" name="common-name"
+                         value={updatedPlantFormFields.commonName}
+                         placeholder="Snake Plant, Monstera Deliciosa..."
+                         onChange={onPlantCommonNameChange}
+                  />
+                </p>
+              </div>
+              <div>
+                <p className="medium-paragraph" >
+                  <b>Water Interval: </b>
+                  <input className="edit-form" name="water-interval"
+                         value={updatedPlantFormFields.waterInterval}
+                         placeholder="7"
+                         onChange={onWaterIntervalChange}
+                  />
+                </p>
+              </div>
+              <div>
+                <p className="medium-paragraph" >
+                  <b>Repot Interval: </b>
+                  <input className="edit-form" name="repot-interval"
+                         value={updatedPlantFormFields.repotInterval}
+                         placeholder="12"
+                         onChange={onRepotIntervalChange}
+                  />
+                </p>
+              </div>
+              <button className="cancel-button" onClick={() => {toggleEditMode()}}>
+                Cancel
+              </button>
+              <input className="confirm-button" type="submit" value="Save Changes" />
+            </form>
         )}
         { !editMode && (
           <div>
