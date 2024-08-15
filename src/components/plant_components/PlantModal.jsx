@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './PlantModal.css';
-import defaultImg from '../../assets/potted-plant-doodle.jpg';
+import defaultImg from '../../assets/default-image.png';
 
 const PlantModal = (props) => {
 	const id = props.id;
