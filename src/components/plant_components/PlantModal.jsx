@@ -83,7 +83,7 @@ const PlantModal = (props) => {
 				</h2>
 				{ !editMode && (
 					<p className="notes-scrollbox">
-						{description}	``
+						{description}
 					</p>
 				)}
 				{ editMode && (
