@@ -30,7 +30,10 @@
 	border-radius: 10px;
 	height: 200px;
 	width: 70%;
+}
 
+#notes-form {
+	width: 100%;
 }
 
 #notes-body {
@@ -40,7 +43,11 @@
 	justify-content: center;
 	align-items: center;
 	width: 100%;
+}
 
+#heading-1 {
+	padding: 10px;
+	margin: 0px;
 }
 
 /* classes */
@@ -59,14 +66,8 @@
 	text-align: left;
 }
 
-.heading-1 {
-	padding: 10px;
-	margin: 0px;
-}
-
 .heading-2 {
 	padding: 10px;
-
 }
 
 .notes-scrollbox {
@@ -77,18 +78,19 @@
 	text-align: left;
 	justify-items: center;
 	width: 95%;
-
+	height: 50px;
 }
 
 .notes-scrollbox-edit {
 	overflow-y: scroll;
 	background: beige;
 	border-radius: 10px;
-	padding: 20px;
+	padding: 15px;
 	text-align: start;
 	border: 3px solid #dbc6a3;
 	resize: none;
 	width: 95%;
+	height: 50px;
 }
 
 .notes-scrollbox-edit:focus {
@@ -111,7 +113,6 @@
 	justify-content: center;
 	align-items: center;
 	overflow-y: scroll;
-
 }
 
 .ai-response-item {
@@ -120,5 +121,8 @@
 	border-radius: 8px;
 	padding: 10px;
 	margin-top: 16px;
+}
 
+.header-contents {
+	color: #3d3d62;
 }

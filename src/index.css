@@ -3,8 +3,8 @@ html {
   --section-bg: #f7f0d3;
   --common-green: #9cd89c;
   --text-heading: #733e2c;
-  --text-heading-light: #866a60;
-  --text-paragraph: #9c857c;
+  --text-heading-light: #75609E;
+  --text-paragraph: #c99ebe;
 
   background-color: var(--common-green);
 }

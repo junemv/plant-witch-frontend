@@ -11,10 +11,18 @@
 	width: 600px;
 	height: auto;
 	border-radius: 10px;
+	overflow: scroll;
+}
+
+#spacing {
+	padding-top: 100px;
 }
 
 #about-list {
 	list-style: none;
+	text-align: center;
+	margin-left: 0px;
+	padding-left: 0px;
 }
 
 /* classes */
